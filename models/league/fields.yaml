@@ -1,0 +1,10 @@
+# ===================================
+#  Field Definitions
+# ===================================
+
+fields:
+
+    name:
+        label: League
+        span: left
+        placeholder: League Name

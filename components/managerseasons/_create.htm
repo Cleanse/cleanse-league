@@ -1,0 +1,22 @@
+{% if flashSuccess == false %}
+{{ form_open(__SELF__.getFormAttributes) }}
+
+{% for field in __SELF__.fields %}
+
+{{ __SELF__.getFieldHtmlCode(field)|raw }}
+
+{% endfor %}
+
+{{ __SELF__.getSubmitButtonHtmlCode({})|raw }}
+
+{{ form_close() }}
+{% endif %}
+
+<hr>
+<a href="javascript:;"
+   data-request="{{ __SELF__ }}::onUpdate"
+   data-request-data="mode: 'cancel'"
+   data-request-update="'{{ __SELF__ ~ '::default' }}': '#editor-area'"
+   class="cancel btn btn-danger">
+    Cancel
+</a>

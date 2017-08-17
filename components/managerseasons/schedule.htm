@@ -1,0 +1,24 @@
+<h1>Manage Schedule</h1>
+<a href="javascript:;"
+   data-request="{{ __SELF__ }}::onSchedule"
+   data-request-data="mode: 'schedule'"
+   data-request-update="'{{ __SELF__ ~ '::schedule' }}': '#editor-area'"
+   class="list-group-item mb-4">Refresh</a>
+
+<div id="test-schedule">
+    {% for r in result %}
+    <p><strong>Week</strong></p>
+        {% for m in r %}
+        <p>{{ m[0]|join(', ') }} vs {{ m[1]|join(', ') }}</p>
+        {% endfor %}
+    {% endfor %}
+</div>
+
+<hr>
+<a href="javascript:;"
+   data-request="{{ __SELF__ }}::onUpdate"
+   data-request-data="mode: 'cancel'"
+   data-request-update="'{{ __SELF__ ~ '::default' }}': '#editor-area'"
+   class="cancel btn btn-danger">
+    Cancel
+</a>

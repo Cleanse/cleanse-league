@@ -1,0 +1,16 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+name: League
+form: ~/plugins/cleanse/league/models/league/fields.yaml
+modelClass: Cleanse\League\Models\League
+defaultRedirect: cleanse/league/leagues
+
+create:
+    redirect: cleanse/league/leagues/update/:id
+    redirectClose: cleanse/league/leagues
+
+update:
+    redirect: cleanse/league/leagues
+    redirectClose: cleanse/league/leagues

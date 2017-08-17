@@ -1,0 +1,7 @@
+<div class="league-bracket">
+    {% if format %}
+    {% partial __SELF__~'::double-elimination' %}
+    {% else %}
+    {% partial __SELF__~'::svg-double' %}
+    {% endif %}
+</div>

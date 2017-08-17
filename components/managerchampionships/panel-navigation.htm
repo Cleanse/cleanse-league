@@ -1,0 +1,20 @@
+<div class="list-group">
+    <a href="/manager" class="list-group-item active">
+        &lt; Back to League Panel
+    </a>
+    <span class="small">If season is complete show champ tourney features.</span>
+    <a href="/manager/championship/finals/begin" class="list-group-item list-group-item-action">Start Championship Finals</a>
+    <a href="/manager/championship/finals/end" class="list-group-item list-group-item-action">Complete Championship Finals</a>
+</div>
+
+<div class="dropdown">
+    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Select Championship Season
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        {% for championship in championships %}
+        <a class="dropdown-item" href="/manager/championship/{{ championship.id }}">{{ championship.name }}</a>
+        {% endfor %}
+    </div>
+</div>

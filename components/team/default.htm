@@ -1,0 +1,85 @@
+<div class="jumbotron jumbotron-fluid jumbotron-league-bg">
+    <div class="container">
+        <h1 class="display-3">{{ team.name }}</h1>
+        <p class="lead">Since {{ team.created_at|date('M d, Y') }}</p>
+        <hr>
+        <h3>Seasonal Results</h3>
+        <ul class="list-group">
+            <li class="list-group-item">
+                <div class="team-event p-2 col font-weight-bold">
+                    Season
+                </div>
+                <div class="team-match-scores p-2 col font-weight-bold">
+                    Match W-L
+                </div>
+                <div class="team-games-scores p-2 col font-weight-bold">
+                    Games W-L-T
+                </div>
+            </li>
+
+            {% for e in team.event_teams %}
+            {% if e.teamable_type == 'championship' %}
+            <li class="list-group-item list-group-item-action list-group-item-success d-flex flex-row">
+                <div class="p-2 col">
+                    {{ e.teamable.name }}
+                </div>
+                <div class="p-2 col">
+                    {{ e.match_wins }}-{{ e.match_losses }}
+                </div>
+                <div class="p-2 col">
+                    {{ e.game_wins }}-{{ e.game_losses }}-{{ e.game_ties }}
+                </div>
+            </li>
+            {% endif %}
+            {% endfor %}
+
+            {% for e in team.event_teams %}
+            {% if e.teamable_type == 'season' %}
+            <li class="list-group-item list-group-item-action list-group-item-info d-flex flex-row">
+                <div class="p-2 col">
+                    {{ e.teamable.name }}
+                </div>
+                <div class="p-2 col">
+                    {{ e.match_wins }}-{{ e.match_losses }}
+                </div>
+                <div class="p-2 col">
+                    {{ e.game_wins }}-{{ e.game_losses }}-{{ e.game_ties }}
+                </div>
+            </li>
+            {% endif %}
+            {% endfor %}
+
+            {% for e in team.event_teams %}
+            {% if e.teamable_type == 'tourney' %}
+            <li class="list-group-item list-group-item-action list-group-item-warning d-flex flex-row">
+                <div class="p-2 col">
+                    {{ e.teamable.name }}
+                </div>
+                <div class="p-2 col">
+                    {{ e.match_wins }}-{{ e.match_losses }}
+                </div>
+                <div class="p-2 col">
+                    {{ e.game_wins }}-{{ e.game_losses }}-{{ e.game_ties }}
+                </div>
+            </li>
+            {% endif %}
+            {% endfor %}
+
+            {% for e in team.event_teams %}
+            {% if e.teamable_type == 'event' %}
+            <li class="list-group-item list-group-item-action list-group-item-danger d-flex flex-row">
+                <div class="p-2 col">
+                    {{ e.teamable.name }}
+                </div>
+                <div class="p-2 col">
+                    {{ e.match_wins }}-{{ e.match_losses }}
+                </div>
+                <div class="p-2 col">
+                    {{ e.game_wins }}-{{ e.game_losses }}-{{ e.game_ties }}
+                </div>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>

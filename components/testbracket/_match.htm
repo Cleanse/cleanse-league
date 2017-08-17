@@ -1,0 +1,39 @@
+<svg x="{{ match.x }}" y="{{ match.y }}" class="match" data-match-number="{{ match.number }}">
+    <text x="11" y="31" width="24" height="10" text-anchor="middle" class="match-number">{{ match.number }}</text>
+    <rect x="24" y="3" width="204" height="49" rx="3" ry="3" class="match-wrapper-background"></rect>
+    <rect x="26" y="5" width="200" height="45" rx="3" ry="3" class="match-base-background"></rect>
+    <g class="match-clip-path">
+        {% for team in match.teams %}
+        <svg x="0" y="{{ team.home ? '5' : '28' }}" class="match-player">
+            <title>{{ team.name }}</title>
+            <defs>
+                <clipPath id="clipPath-{{ team.name }}">
+                    <rect x="50" y="0" width="143" height="22"></rect>
+                </clipPath>
+                <clipPath id="portraitClipPath-{{ team.name }}">
+                    <path></path>
+                </clipPath>
+            </defs>
+            <path d="M 50 0 h 147 v 22 h -147 Z" class="match-player-background"></path>
+            <path d="M 26 0 h 24 v 22 h -24 Z" class="match-seed-background"></path>
+            <text x="38" y="14" width="10" height="12" text-anchor="middle" class="match-seed">{{ team.seed }}</text>
+            {% if team.logo %}
+            <g clip-path>
+                <image xmlns:xlink="http://www.w3.org/1999/xlink"
+                       xlink:href="{{ team.logo }}"
+                       x="53" y="1" height="18" width="18">
+                </image>
+            </g>
+            {% endif %}
+            <text clip-path="url(#clipPath-{{ team.name }})" x="{{ team.logo ? '75' : '53' }}" y="15" width="147" height="12"
+                  text-anchor="start" class="match-player-name">{{ team.name }}
+            </text>
+            <path d="M 197 0 h 29 v 22 h -29 Z"
+                  class="match-player-score-background {{ match.winner ? ' winner' }}"></path>
+            <text x="211" y="15" width="21" height="12" text-anchor="middle"
+                  class="match-player-score {{ match.winner ? ' winner' }}">{{ team.score }}
+            </text>
+        </svg>
+        {% endfor %}
+    </g>
+</svg>

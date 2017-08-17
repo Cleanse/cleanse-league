@@ -1,0 +1,9 @@
+{% if championship %}
+    {% partial '@championship' %}
+{% elseif seasonal %}
+    {% partial '@seasonal' %}
+{% elseif season %}
+    {% partial '@season' %}
+{% else %}
+<h1 style="color: #fff;">None.</h1>
+{% endif %}

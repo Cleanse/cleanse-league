@@ -1,0 +1,20 @@
+<h1>Schedule</h1>
+<div id="teams">
+    <h3>By Team:</h3>
+    {% for team in teams %}
+        {{ team.name }}
+    {% endfor %}
+</div>
+
+<div id="week-number">
+    <h3>Week {{ week }}</h3>
+
+    {% for match in matches %}
+        {% if match.complete > 0 %}
+            {{ match.team_one }} vs {{ match.team_two }}
+        {% else %}
+            {{ match.team_one.score }}{{ match.team_one }} vs {{ match.team_two }}{{ match.team_two.score }}
+        {% endif %}
+        <a href="/league/{{ league.slug }}/match/{{ match.id }}">View Details</a>
+    {% endfor %}
+</div>

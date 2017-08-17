@@ -1,0 +1,11 @@
+# Pages
+- about
+- rules
+- vision
+- team
+- player
+- schedule
+- stats
+- stat-categories
+- bracket
+- signup (forum)

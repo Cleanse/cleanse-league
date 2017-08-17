@@ -1,0 +1,121 @@
+<dic style="color: #fff">
+    <h1>{{ tourney.name }}</h1>
+</dic>
+
+<div class="league-bracket-holder">
+    <svg class="bracket-svg" width="975" height="450" viewBox="0 0 975 450">
+        <defs>
+            <filter id="white-glow" x="-5000%" y="-5000%" width="10000%" height="10000%">
+                <feFlood result="flood" flood-color="#ffffff" flood-opacity="1"></feFlood>
+                <feComposite in="flood" result="mask" in2="SourceGraphic" operator="in"></feComposite>
+                <feMorphology in="mask" result="dilated" operator="dilate" radius="2"></feMorphology>
+                <feGaussianBlur in="dilated" result="blurred" stdDeviation="5"></feGaussianBlur>
+                <feMerge>
+                    <feMergeNode in="blurred"></feMergeNode>
+                    <feMergeNode in="SourceGraphic"></feMergeNode>
+                </feMerge>
+            </filter>
+            <clipPath id="matchClipPath">
+                <rect x="26" y="5" width="204" height="49" rx="3" ry="3"/>
+            </clipPath>
+        </defs>
+        <g class="bracket-rounds-row winners">
+            <svg class="round" x="0">
+                <g class="round-label">
+                    <rect width="243" height="25"></rect>
+                    <text x="122" y="17" width="243" height="15" text-anchor="middle">Round 1</text>
+                </g>
+            </svg>
+            <svg class="round" x="244">
+                <g class="round-label">
+                    <rect width="243" height="25"></rect>
+                    <text x="122" y="17" width="243" height="15" text-anchor="middle">Round 2</text>
+                </g>
+            </svg>
+            <svg class="round" x="488">
+                <g class="round-label">
+                    <rect width="243" height="25"></rect>
+                    <text x="122" y="17" width="243" height="15" text-anchor="middle">Semi Finals</text>
+                </g>
+            </svg>
+            <svg class="round" x="732">
+                <g class="round-label">
+                    <rect width="243" height="25"></rect>
+                    <text x="122" y="17" width="243" height="15" text-anchor="middle">Finals</text>
+                </g>
+            </svg>
+        </g>
+        <g class="bracket-rounds-row losers" transform="translate(0, 280)">
+            <svg class="round" x="0">
+                <g class="round-label">
+                    <rect width="243" height="25"></rect>
+                    <text x="122" y="17" width="243" height="15" text-anchor="middle">Losers Round 1</text>
+                </g>
+            </svg>
+            <svg class="round" x="244">
+                <g class="round-label">
+                    <rect width="243" height="25"></rect>
+                    <text x="122" y="17" width="243" height="15" text-anchor="middle">Losers Round 2</text>
+                </g>
+            </svg>
+            <svg class="round" x="488">
+                <g class="round-label">
+                    <rect width="243" height="25"></rect>
+                    <text x="122" y="17" width="243" height="15" text-anchor="middle">Losers Round 3</text>
+                </g>
+            </svg>
+            <svg class="round" x="732">
+                <g class="round-label">
+                    <rect width="243" height="25"></rect>
+                    <text x="122" y="17" width="243" height="15" text-anchor="middle">Losers Round 4</text>
+                </g>
+            </svg>
+        </g>
+        <g class="bracket-lines">
+            <svg x="0" y="62" data-match-id="1">
+                <path d="M 228 1 L 236 1 L 236 27" class="bracket-line" data-line-length="41"></path>
+            </svg>
+            <svg x="0" y="89" data-match-id="2">
+                <path d="M 228 26 L 236 26 L 236 1 L 244 1" class="bracket-line" data-line-length="41"></path>
+            </svg>
+            <svg x="0" y="170" data-match-id="3">
+                <path d="M 228 1 L 236 1 L 236 27" class="bracket-line" data-line-length="41"></path>
+            </svg>
+            <svg x="0" y="197" data-match-id="4">
+                <path d="M 228 26 L 236 26 L 236 1 L 244 1" class="bracket-line" data-line-length="41"></path>
+            </svg>
+            <svg x="0" y="394" data-match-id="5">
+                <path d="M 228 26 L 236 26 L 236 1 L 244 1" class="bracket-line" data-line-length="41"></path>
+            </svg>
+            <svg x="0" y="340" data-match-id="6">
+                <path d="M 228 26 L 236 26 L 236 1 L 244 1" class="bracket-line" data-line-length="41"></path>
+            </svg>
+            <svg x="244" y="89" data-match-id="7">
+                <path d="M 228 1 L 236 1 L 236 53.999999999999986" class="bracket-line"
+                      data-line-length="67.99999999999999"></path>
+            </svg>
+            <svg x="244" y="143" data-match-id="8">
+                <path d="M 228 53.000000000000014 L 236 53.000000000000014 L 236 1 L 244 1" class="bracket-line"
+                      data-line-length="68.00000000000001"></path>
+            </svg>
+            <svg x="244" y="367" data-match-id="9">
+                <path d="M 228 26 L 236 26 L 236 1 L 244 1" class="bracket-line" data-line-length="41"></path>
+            </svg>
+            <svg x="244" y="340" data-match-id="10">
+                <path d="M 228 1 L 236 1 L 236 27" class="bracket-line" data-line-length="41"></path>
+            </svg>
+            <svg x="488" y="340" data-match-id="11">
+                <path d="M 228 26 L 236 26 L 236 1 L 244 1" class="bracket-line" data-line-length="41"></path>
+            </svg>
+            <svg x="488" y="143" data-match-id="12">
+                <path d="M 228 1 L 236 1 L 236 26.000000000000014 L 244 26.000000000000014" class="bracket-line"
+                      data-line-length="41.000000000000014"></path>
+            </svg>
+        </g>
+        <g class="bracket-matchups">
+            {% for match in matches %}
+            {% partial "@_match" match=match %}
+            {% endfor %}
+        </g>
+    </svg>
+</div>

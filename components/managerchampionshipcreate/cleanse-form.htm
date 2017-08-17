@@ -1,0 +1,13 @@
+{% if flashSuccess == false %}
+{{ form_open(__SELF__.getFormAttributes) }}
+
+{% for field in __SELF__.fields %}
+
+    {{ __SELF__.getFieldHtmlCode(field)|raw }}
+
+{% endfor %}
+
+{{ __SELF__.getSubmitButtonHtmlCode({})|raw }}
+
+{{ form_close() }}
+{% endif %}

@@ -1,0 +1,15 @@
+{% if flashSuccess == false %}
+    {{ form_open(__SELF__.getFormAttributes) }}
+
+        {% for field in __SELF__.fields %}
+
+        {{ __SELF__.getFieldHtmlCode(field)|raw }}
+
+        {% endfor %}
+
+        {{ __SELF__.getSubmitButtonHtmlCode({})|raw }}
+
+    {{ form_close() }}
+{% else %}
+    Updated. <a href="/manager/league">Back to Manage League</a> or <a href="/manager">Back to Manager Panel</a>.
+{% endif %}

@@ -1,0 +1,26 @@
+<div id="cleanse-league-form-message">
+    {% partial __SELF__~'::cleanse-message' %}
+</div>
+
+<div class="container-fluid league-admin-bg">
+    <div class="row">
+        <div class="col-md-9 push-md-3">
+            <h4>2017 Aether League Championship Series <a href="/edit">(edit)</a></h4>
+            <p>Summer Split <a href="/edit">(edit)</a></p>
+            <hr>
+            <nav class="nav nav-pills flex-column flex-sm-row league-nav">
+                <a class="flex-sm-fill text-sm-center nav-link active" href="#">Active</a>
+                <a class="flex-sm-fill text-sm-center nav-link" href="#">Link</a>
+                <a class="flex-sm-fill text-sm-center nav-link" href="#">Link</a>
+                <a class="flex-sm-fill text-sm-center nav-link disabled" href="#">Disabled</a>
+            </nav>
+            <p>
+                - Notes<br>
+                - <a href="#">Marshal</a>: Need screenshots from Team BoxeR vs Team EM.
+            </p>
+        </div>
+        <div class="col-md-3 pull-md-9 manager-sections">
+            {% partial __SELF__~'::panel-navigation' %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+{% if user.findByRole('aether-admin') %}
+<div id="cleanse-league-form-message">
+    {% partial __SELF__~'::cleanse-message' %}
+</div>
+
+<nav class="breadcrumb">
+    <a class="breadcrumb-item" href="/manager">Manager</a>
+    <span class="breadcrumb-item active">Edit {{ league.name }}</span>
+</nav>
+
+<div id="cleanse-league-form" class="container-fluid league-admin-bg">
+    {% partial __SELF__~'::cleanse-form' %}
+</div>
+{% endif %}

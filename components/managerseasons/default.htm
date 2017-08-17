@@ -1,0 +1,30 @@
+<div class="league-admin-bg row">
+
+    <div class="nav col-auto">
+        <div class="list-group">
+            <a href="/manager" class="list-group-item active">
+                Back to League Manager Panel
+            </a>
+            <a href="/manager/seasons" class="list-group-item">Manage Seasons</a>
+            <a href="javascript:;"
+               data-request="{{ __SELF__ }}::onUpdate"
+               data-request-data="mode: 'schedule'"
+               data-request-update="'{{ __SELF__ ~ '::_schedule' }}': '#editor-area'"
+               class="list-group-item">Manage Schedule</a>
+            <a href="/manager/teams" class="list-group-item">Manage Teams</a>
+            <a href="/manager/players" class="list-group-item">Manage Players</a>
+            <a href="/manager/admin" class="list-group-item">Manage Admin</a>
+            <a href="/manager/logs" class="list-group-item disabled">View Admin Log</a>
+        </div>
+    </div>
+
+    <div id="editor-area" class="col">
+        <a href="javascript:;"
+           data-request="{{ __SELF__ }}::onUpdate"
+           data-request-data="mode: 'create'"
+           data-request-update="'{{ __SELF__ ~ '::_create' }}': '#editor-area'"
+           class="create btn btn-primary">
+            Create
+        </a>
+    </div>
+</div>

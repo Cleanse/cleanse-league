@@ -1,0 +1,17 @@
+<div class="brackets">
+    <div class="d-flex flex-row group{{ groups + 1 }}" id="b0">
+        {% for g in 1..groups %}
+        <div class="d-flex flex-column justify-content-around r{{ g }}">
+            {% for gg in grouped[g] %}
+            <div class="alert alert-success">
+                <div class="bracketbox">
+                    <span class="info">{{ gg.bracketNo }}</span>
+                    <span class="teama">{{ gg.teamnames[0] }}</span>
+                    <span class="teamb">{{ gg.teamnames[1] }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</div>

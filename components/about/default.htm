@@ -1,0 +1,6 @@
+<div class="jumbotron-league-bg">
+    <h1 class="display-3">About {{ about.name ? about.name : 'Aether League' }}</h1>
+    <div class="jumbotron-sub-text">
+        {{ about.about_html ? about.about_html|raw : '<p>Coming soon.</p>' }}
+    </div>
+</div>

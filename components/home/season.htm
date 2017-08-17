@@ -1,0 +1,17 @@
+<div class="jumbotron-league-bg">
+    <div class="container-fluid">
+        <p>Matches</p>
+        <h1>{{ season.name }}</h1>
+        <div class="card-columns">
+            {% for m in season.matches %}
+            <div class="card">
+                <div class="card-block">
+                    <h4>{{ m.one.team.name }}</h4>
+                    vs
+                    <h4>{{ m.two.team.name }}</h4>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
