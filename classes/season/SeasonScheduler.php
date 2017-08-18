@@ -1,4 +1,4 @@
-<?php namespace cleanse\league\classes\season;
+<?php namespace Cleanse\League\Classes\Season;
 
 use Log;
 use Cleanse\League\Classes\Scheduler;
@@ -33,7 +33,10 @@ class SeasonScheduler extends Scheduler
             $date = $this->yearWeek($startDate, $w);
 
             foreach ($week as $match) {
-                $this->addMatch($season, $match[0]['id'], $match[1]['id'], $date);
+                //Check for BYE weeks.
+                if (isset($match[0]['id']) && isset($match[1]['id'])) {
+                    $this->addMatch($season, $match[0]['id'], $match[1]['id'], $date);
+                }
             }
 
             $w++;

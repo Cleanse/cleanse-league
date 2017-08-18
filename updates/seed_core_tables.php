@@ -9,6 +9,7 @@ use Cleanse\League\Models\Tournament;
 use Cleanse\League\Models\Match;
 use Cleanse\League\Models\Team;
 use Cleanse\League\Models\EventTeam;
+use Cleanse\League\Classes\Season\SeasonScheduler as Scheduler;
 
 class SeedCoreTables extends Seeder
 {
@@ -26,7 +27,7 @@ class SeedCoreTables extends Seeder
 
         $championship = $aether->championships()->firstOrCreate([
             'name' => '2017 Aether League Championship Series',
-            'seasonal_rules' => '**Hey** *bae*!'
+            'championship_rules' => '**Hey** *bae*!'
         ]);
 
         $season = $championship->seasons()->firstOrCreate([
@@ -51,7 +52,7 @@ class SeedCoreTables extends Seeder
         /**
          * Add some teams.
          */
-        $teams = ['Cats', 'Insomnia', 'RareX', 'Ninjas', 'Dread', 'Lupins', 'Lucky Charms', 'Octopi'];
+        $teams = ['Cats', 'Insomnia', 'RareX', 'Ninjas', 'Dread', 'Lupins', 'Lucky Charms'];
 
         foreach ($teams as $team) {
             $t_{$team} = Team::firstOrCreate([
@@ -66,18 +67,12 @@ class SeedCoreTables extends Seeder
         /**
          * Create Seasonal Schedule
          */
-        $input = $season->teams->toArray();
-
-        for ($i = 0; $i < sizeof($input); $i++) {
-            $k = $input[$i];
-            for ($j = $i + 1; $j < sizeof($input); $j++) {
-                $v = $input[$j];
-
-                $season->matches()->firstOrCreate([
-                    'team_one' => $k['id'],
-                    'team_two' => $v['id']
-                ]);
-            }
-        }
+        $schedReqs = [
+            'season' => $season->id,
+            'weeks' => 12,
+            'start' => '2018-1-31'
+        ];
+        $schedule = new Scheduler;
+        $schedule->createSchedule($schedReqs);
     }
 }

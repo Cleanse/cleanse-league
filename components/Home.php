@@ -1,5 +1,6 @@
 <?php namespace Cleanse\League\Components;
 
+use Log;
 use Cms\Classes\ComponentBase;
 use Cleanse\League\Models\League;
 use Cleanse\League\Models\Championship;
@@ -69,14 +70,15 @@ class Home extends ComponentBase
         }
 
         //Check if season has matches left
-        $thisWeek = '';
+        $take = 4; //count($teams)/2
         $seasonMatches = Season::whereHas('matches', function ($query) {
             $query->whereNull('winner_id');
         })
             ->with([
-            'matches' => function ($query) use ($thisWeek) {
+            'matches' => function ($query) use ($take) {
                 $query->whereNull('winner_id');
-                $query->where('takes_place_at', $thisWeek);
+                $query->orderBy('takes_place_at', 'asc');
+                $query->take($take);
                 $query->with(['one' => function ($q) {
                     $q->with('team');
                 }, 'two' => function ($q) {
@@ -86,7 +88,6 @@ class Home extends ComponentBase
         ])->first();
 
         if (isset($seasonMatches)) {
-            //dd($seasonMatches->toArray());
             $this->season = $this->page['season'] = $seasonMatches;
             return;
         }
