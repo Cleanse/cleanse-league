@@ -1,22 +1,23 @@
 # League Plugin
+Not functional - yet.
 
 ## Components
-/l - home
-/l/vision - league vision
-/l/about - league about
+/l - home  
+/l/vision - league vision  
+/l/about - league about  
 
-/l/rules & /c/rules - rules for the current championship series
-/c/:champ-slug/teams - team list ordered by cs points
+/l/rules & /c/rules - rules for the current championship series  
+/c/:champ-slug/teams - team list ordered by cs points  
 
 /s/:season-slug/teams - team list ordered by win loss
 
-/l/schedule - schedule for current week
+/l/schedule - schedule for current week  
 /l/schedule/:season/:week - schedule for specific week
 
 /l/match/:id
 
-/l/team/:id
-/l/team/:id/schedule
+/l/team/:id  
+/l/team/:id/schedule  
 
 
 # League
