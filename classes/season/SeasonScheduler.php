@@ -1,5 +1,6 @@
 <?php namespace cleanse\league\classes\season;
 
+use Log;
 use Cleanse\League\Classes\Scheduler;
 use Cleanse\League\Models\Season;
 
@@ -8,32 +9,38 @@ class SeasonScheduler extends Scheduler
     public function createSchedule($postData)
     {
         if (!isset($postData['season'])) {
-            return 'Error, no season was selected.';
+            $error = 'Error, no season was selected.';
+
+            Log::error($error);
+            return $error;
         }
 
         $season = Season::whereId($postData['season'])->with('teams', 'matches')->first();
 
         if ($season->matches()->count() > 0) {
-            return 'Error, this season has a schedule.';
+            $error = 'Error, this season has a schedule.';
+
+            Log::error($error);
+            return;
         }
 
-        $matches = $this->buildSchedule($season->teams()->toArray(), $postData['weeks'] ?? null);
+        $matches = $this->buildSchedule($season->teams->toArray(), $postData['weeks'] ?? null);
 
         $startDate = $postData['start'];
 
         $w = 0;
-        foreach ($matches as $match) {
+        foreach ($matches as $week) {
             $date = $this->yearWeek($startDate, $w);
 
-            foreach ($match as $m) {
-                $this->addMatch($season, $m[$aId], $m[$bId], $date);
+            foreach ($week as $match) {
+                $this->addMatch($season, $match[0]['id'], $match[1]['id'], $date);
             }
 
             $w++;
         }
     }
 
-    private function addMatch($season, $teamA, $teamB, $date)
+    private function addMatch(Season $season, $teamA, $teamB, $date)
     {
         $season->matches()->firstOrCreate([
             'team_one' => $teamA,

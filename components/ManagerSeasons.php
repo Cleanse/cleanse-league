@@ -367,8 +367,6 @@ class ManagerSeasons extends ComponentBase
         $schedule = new Scheduler;
 
         try {
-            dd($this->post);
-
             $this->page['result'] = $schedule->createSchedule($this->post);
 
             Flash::success('Schedule was created.');
@@ -378,7 +376,7 @@ class ManagerSeasons extends ComponentBase
         } catch (Exception $e) {
             $this->page['result'] = 'Caught exception: ' . $e->getMessage();
 
-            Flash::error('Something went wrong creating schedule.');
+            Flash::error('Something went wrong creating schedule: '.$e->getMessage());
         }
     }
 }

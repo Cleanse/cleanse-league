@@ -176,6 +176,6 @@ class Scheduler
         $gameDate = strtotime($date);
         $gameDate = strtotime('+'.$plus.' week', $gameDate);
 
-        return date('YW', $gameDate);
+        return date('Y-m-d H:i:s', $gameDate);
     }
 }
