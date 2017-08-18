@@ -1,17 +1,17 @@
 <?php namespace Cleanse\League\Components;
 
+use Exception;
 use Flash;
 use Input;
 use Redirect;
 use Request;
 use Session;
 use Validator;
-use Illuminate\Support\MessageBag;
 use Cms\Classes\ComponentBase;
+use Illuminate\Support\MessageBag;
 use Cleanse\League\Classes\FormHelper;
 use Cleanse\League\Models\Season;
-
-use Cleanse\League\Classes\Scheduler;
+use Cleanse\League\Classes\Season\SeasonScheduler as Scheduler;
 
 class ManagerSeasons extends ComponentBase
 {
@@ -64,6 +64,10 @@ class ManagerSeasons extends ComponentBase
     {
         $mode = post('mode', 'create');
         $this->page['mode'] = $mode;
+
+        if ($mode == 'schedule') {
+            $this->page['season'] = Season::whereNull('finished_at')->get();
+        }
     }
 
     public function onFormSend()
@@ -111,6 +115,9 @@ class ManagerSeasons extends ComponentBase
         }
     }
 
+    /**
+     * @return array
+     */
     public function getFormAttributes()
     {
         $attributes = [];
@@ -242,7 +249,6 @@ class ManagerSeasons extends ComponentBase
         }
 
         return false;
-
     }
 
     /**
@@ -335,10 +341,44 @@ class ManagerSeasons extends ComponentBase
         }
     }
 
-    public function onSchedule()
+    /**
+     * @return array
+     */
+    public function getScheduleFormAttributes()
     {
-        $schedule = new Scheduler();
+        $attributes = [];
 
-        $this->page['result'] = $schedule->buildSchedule();
+        $attributes['method'] = 'POST';
+        $attributes['data-request'] = $this->alias . '::onFormSendSchedule';
+        $attributes['data-request-update'] = "'" . $this->alias . "::cleanse-message':'#cleanse-league-form-message','"
+            . $this->alias . "::schedule':'#editor-area'";
+        $attributes['data-request-confirm'] = 'Is the information correct?';
+
+        return $attributes;
+    }
+
+    /**
+     * Schedule maker method
+     */
+    public function onFormSendSchedule()
+    {
+        $this->post = Input::all();
+
+        $schedule = new Scheduler;
+
+        try {
+            dd($this->post);
+
+            $this->page['result'] = $schedule->createSchedule($this->post);
+
+            Flash::success('Schedule was created.');
+            Session::flash('flashSuccess', true);
+
+            $this->post = [];
+        } catch (Exception $e) {
+            $this->page['result'] = 'Caught exception: ' . $e->getMessage();
+
+            Flash::error('Something went wrong creating schedule.');
+        }
     }
 }

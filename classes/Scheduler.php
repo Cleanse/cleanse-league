@@ -3,60 +3,33 @@
 class Scheduler
 {
     /**
-     * @param int $weeks
-     * @param int $teams
+     * @param $teams
+     * @param int $rounds
+     * @param bool $randomize
+     * @return array|string
      */
-    public function buildSchedule($weeks = 12, $teams = 8)
+    public function buildSchedule($teams, $rounds = 12, $randomize = false)
     {
-        return $this->aah();
-
-        $weeks = 12;
-        $teams = [
-            [0 => 'Ab'],
-            [1 => 'Cd'],
-            [2 => 'Ef'],
-            [3 => 'Gh'],
-            [4 => 'Ij'],
-            [5 => 'Kl'],
-            [6 => 'Op']
-        ];
-
-        //Check if team count is odd
-        if ($teams % 2 !== 0) {
-            $byeKey = count($teams) + 1;
-            $teams[] = [$byeKey => 'BYE'];
+        if ($randomize) {
+            shuffle($teams);
         }
 
-        //split teams in half
+        return $this->createMatches($teams, $rounds);
+
+        //If teams > rounds, create divisions.
         if ($teams > $weeks) {
-            $size = count($teams) / 2;
-            $newTeams = array_chunk($teams, $size, true);
-
-            foreach ($newTeams as $division) {
-                $divSize = count($division);
-
-                for ($i = 0; $i < $divSize; $i++) {
-                    $a = $division[$i];
-                    for ($j = $i + 1; $j < $divSize; $j++) {
-                        $b = $division[$j];
-
-                        $perfect[] = [$a, $b];
-                    }
-                }
-            }
-
-            print_r($perfect);
-
             //split teams in half
+            $divisions = $this->createDivisions($teams);
+
             //Make a perfect schedule for split teams
+            $dSeasons = [];
+            foreach ($divisions as $division) {
+                $dSeasons[] = $this->createDivisionMatches($division);
+            }
 
             //match teams vs opposing divisions for remaining weeks
         } else {
-            //Make a perfect schedule for teams
-
-            //slice middle chunk of perfect as new var
-            //reverse new var
-            //append new var to perfect.
+            return '';
         }
 
         //Shuffle overall weeks
@@ -92,60 +65,103 @@ class Scheduler
         }
     }
 
-    public function countTeams($input)
+    public function createDivisions($teams)
     {
-        for ($i = 0; $i < sizeof($input); $i++) {
-            $k = $input[$i];
-            for ($j = $i + 1; $j < sizeof($input); $j++) {
-                $v = $input[$j];
+        $size = count($teams) / 2;
+        $newTeams = array_chunk($teams, $size, true);
 
-                $season->matches()->firstOrCreate([
-                    'team_one' => $k['id'],
-                    'team_two' => $v['id']
-                ]);
+        foreach ($newTeams as $division) {
+            $divSize = count($division);
+
+            for ($i = 0; $i < $divSize; $i++) {
+                $a = $division[$i];
+                for ($j = $i + 1; $j < $divSize; $j++) {
+                    $b = $division[$j];
+
+                    $divisions[] = [$a, $b];
+                }
             }
         }
+
+        return $divisions;
     }
 
     /**
      * Thanks https://en.wikipedia.org/wiki/Round-robin_tournament#Scheduling_algorithm
      *
-     * @param int $weeks
+     * @param int $rounds
      * @param array $teams
      * @return array
      */
-    public function aah($weeks = 12, $teams = [1, 2, 3, 4, 5, 6, 7, 8])
+    public function createMatches($teams, $rounds = 12)
     {
-        $halfTeams = count($teams) / 2;
+        //Check if team count is odd
+        if (count($teams) % 2 !== 0) {
+            $teams[] = 'BYE';
+        }
 
+        $halfTeams = count($teams) / 2;
         $mTeams = $teams;
+
         array_shift($mTeams);
+
         $count = count($mTeams);
 
         $schedule = [];
-        for ($i = 0; $i < $weeks; $i++) {
+        for ($i = 0; $i < $rounds; $i++) {
+
             $teamIndex = $i % $count;
 
             $schedule[$i][] = [$teams[0], $mTeams[$teamIndex]];
 
             for ($j = 1; $j < $halfTeams; $j++) {
-                $teamA = ($i + $j) % $count;
-                $teamB = ($i  + $count - $j) % $count;
+                $firstTeam = ($i + $j) % $count;
+                $secondTeam = ($i + $count - $j) % $count;
 
-                $schedule[$i][] = [$mTeams[$teamA], $mTeams[$teamB]];
+                $schedule[$i][] = [$mTeams[$firstTeam], $mTeams[$secondTeam]];
             }
         }
 
-        return $schedule;
+        return array_reverse($schedule);
     }
 
-    private function addMatch($teamA, $teamB, $date)
+    /**
+     * WIP, Needs to replace byes with an opposing division match.
+     * @param $teams
+     * @return array
+     */
+    public function createDivisionMatches($teams)
     {
-        $season->matches()->firstOrCreate([
-            'team_one' => $teamA,
-            'team_two' => $teamB,
-            'takes_place_at' => $date
-        ]);
+        //Check if team count is odd
+        if (count($teams) % 2 !== 0) {
+            $teams[] = 'BYE';
+        }
+
+        $rounds = count($teams);
+
+        $halfTeams = count($teams) / 2;
+        $mTeams = $teams;
+
+        array_shift($mTeams);
+
+        $count = count($mTeams);
+
+        $schedule = [];
+        for ($i = 0; $i < $rounds; $i++) {
+
+            $teamIndex = $i % $count;
+
+            $schedule[$i][] = [$teams[0], $mTeams[$teamIndex]];
+
+            for ($j = 1; $j < $halfTeams; $j++) {
+                $firstTeam = ($i + $j) % $count;
+                $secondTeam = ($i + $count - $j) % $count;
+
+                $schedule[$i][] = [$mTeams[$firstTeam], $mTeams[$secondTeam]];
+            }
+        }
+
+        return array_reverse($schedule);
     }
 
     public function weeksTeamsDiff($weeks, $teams)
@@ -155,8 +171,11 @@ class Scheduler
         return $diff;
     }
 
-    public function yearWeek()
+    public function yearWeek($date, $plus = 0)
     {
-        return date("YW");
+        $gameDate = strtotime($date);
+        $gameDate = strtotime('+'.$plus.' week', $gameDate);
+
+        return date('YW', $gameDate);
     }
 }

@@ -1,13 +1,7 @@
-<h1>Manage Schedule</h1>
-<a href="javascript:;"
-   data-request="{{ __SELF__ }}::onSchedule"
-   data-request-data="mode: 'schedule'"
-   data-request-update="'{{ __SELF__ ~ '::schedule' }}': '#editor-area'"
-   class="list-group-item mb-4">Refresh</a>
-
+<h1>Generated Schedule</h1>
 <div id="test-schedule">
-    {% for r in result %}
-    <p><strong>Week</strong></p>
+    {% for key, r in result %}
+    <p><strong>Week {{ key + 1 }}</strong></p>
         {% for m in r %}
         <p>{{ m[0]|join(', ') }} vs {{ m[1]|join(', ') }}</p>
         {% endfor %}
