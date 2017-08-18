@@ -83,7 +83,7 @@ class AddLeagueTables extends Migration
             $table->integer('winner_id')->unsigned()->nullable();
             $table->string('matchable_id')->index();
             $table->string('matchable_type');
-            $table->dateTime('takes_place_at')->index()->nullable();
+            $table->timestamp('takes_place_at')->index()->nullable();
             $table->timestamps();
         });
     }
