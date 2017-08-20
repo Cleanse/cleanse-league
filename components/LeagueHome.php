@@ -9,7 +9,7 @@ use Cleanse\League\Models\Match;
 
 use Cleanse\League\Models\EventTeam;
 
-class Home extends ComponentBase
+class LeagueHome extends ComponentBase
 {
     public $league;
     public $championship;
@@ -70,7 +70,7 @@ class Home extends ComponentBase
         }
 
         //Check if season has matches left
-        $take = 4; //count($teams)/2
+        $take = 3; //count($teams)/2
         $seasonMatches = Season::whereHas('matches', function ($query) {
             $query->whereNull('winner_id');
         })

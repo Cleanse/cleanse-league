@@ -30,32 +30,30 @@ class Plugin extends PluginBase
     {
         return [
             //frontend "done"
-            'Cleanse\League\Components\Home' => 'cleanseLeagueHome',
-            'Cleanse\League\Components\About' => 'cleanseLeagueAbout',
-            'Cleanse\League\Components\Rules' => 'cleanseLeagueRules',
-            'Cleanse\League\Components\Vision' => 'cleanseLeagueVision',
-            'Cleanse\League\Components\Team' => 'cleanseLeagueTeam',
-            'Cleanse\League\Components\SeasonSchedule' => 'cleanseLeagueSeasonSchedule',
+            'Cleanse\League\Components\LeagueAbout' => 'cleanseLeagueAbout',
+            'Cleanse\League\Components\LeagueHome' => 'cleanseLeagueHome',
+            'Cleanse\League\Components\LeagueRules' => 'cleanseLeagueRules',
+            'Cleanse\League\Components\LeagueTeam' => 'cleanseLeagueTeam',
+            'Cleanse\League\Components\LeagueVision' => 'cleanseLeagueVision',
 
+            'Cleanse\League\Components\SeasonSchedule' => 'cleanseLeagueSeasonSchedule',
 
             //manager
             'Cleanse\League\Components\ManagerPanel' => 'cleanseLeagueManager',
             'Cleanse\League\Components\ManagerLeague' => 'cleanseLeagueManagerLeague',
             'Cleanse\League\Components\ManagerChampionships' => 'cleanseLeagueManagerChampionships',
-            'Cleanse\League\Components\ManagerChampionship' => 'cleanseLeagueManagerChampionship', //?
-            'Cleanse\League\Components\ManagerChampionshipCreate' => 'cleanseLeagueManagerChampionshipCreate', //?
-
             'Cleanse\League\Components\ManagerSeasons' => 'cleanseLeagueManagerSeasons',
-
-            //moving to new plugin
-            'Cleanse\League\Components\Highlight' => 'cleanseLeagueHighlight',
 
             //test
             'Cleanse\League\Components\TestBracket' => 'leagueBracket',
 
+            //moving to new plugin
+            'Cleanse\League\Components\Highlight' => 'cleanseLeagueHighlight',
+
             //tbd
             'Cleanse\League\Components\SeasonStandings' => 'cleanseLeagueSeasonStandings',
             'Cleanse\League\Components\SeasonStats' => 'cleanseLeagueSeasonStats',
+
             'Cleanse\League\Components\SeasonTeam' => 'cleanseLeagueSeasonTeam',
             'Cleanse\League\Components\SeasonPlayer' => 'cleanseLeagueSeasonPlayer',
 
@@ -64,7 +62,7 @@ class Plugin extends PluginBase
 
             'Cleanse\League\Components\ManagerLog' => 'cleanseLeagueManagerLog',
 
-            'Cleanse\League\Components\History' => 'cleanseLeagueHistory', //
+            'Cleanse\League\Components\History' => 'cleanseLeagueHistory'
         ];
     }
 

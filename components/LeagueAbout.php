@@ -3,7 +3,7 @@
 use Cms\Classes\ComponentBase;
 use Cleanse\League\Models\League;
 
-class About extends ComponentBase
+class LeagueAbout extends ComponentBase
 {
     public $about;
 
