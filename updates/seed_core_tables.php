@@ -41,13 +41,13 @@ class SeedCoreTables extends Seeder
             'name' => 'Team Tryhard Monthly Tourney'
         ]);
 
-        $season->tourneys()->firstOrCreate([
-            'name' => 'Inaugural Season Tourney'
-        ]);
-
-        $tourney = $championship->tourneys()->firstOrCreate([
-            'name' => 'Champ Tourney'
-        ]);
+//        $season->tourneys()->firstOrCreate([
+//            'name' => 'Inaugural Season Tourney'
+//        ]);
+//
+//        $tourney = $championship->tourneys()->firstOrCreate([
+//            'name' => 'Champ Tourney'
+//        ]);
 
         /**
          * Add some teams.

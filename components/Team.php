@@ -18,12 +18,6 @@ class Team extends ComponentBase
     public function defineProperties()
     {
         return [
-            'team' => [
-                'title'       => 'Team unique id.',
-                'description' => 'Team unique shortcode id.',
-                'default'     => '{{ :team }}',
-                'type'        => 'string',
-            ],
             'slug' => [
                 'title'       => 'Team Slug',
                 'description' => 'Team slug.',
@@ -42,13 +36,11 @@ class Team extends ComponentBase
 
     public function getTeam()
     {
-        $teamId = $this->property('team');
+        $teamId = $this->property('slug');
 
-        $team = TeamModel::whereId($teamId)
+        $team = TeamModel::whereSlug($teamId)
             ->with('event_teams.teamable')
             ->first();
-
-        //dd($team->toArray());
 
         if (!$team || !$team->exists) {
             $this->setStatusCode(404);

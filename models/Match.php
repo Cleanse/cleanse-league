@@ -43,6 +43,11 @@ class Match extends Model
             'Cleanse\League\Models\EventTeam',
             'key' => 'id',
             'otherKey' => 'team_two'
+        ],
+        'winner' => [
+            'Cleanse\League\Models\EventTeam',
+            'key' => 'id',
+            'otherKey' => 'winner_id'
         ]
     ];
 }

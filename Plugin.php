@@ -29,13 +29,14 @@ class Plugin extends PluginBase
     public function registerComponents()
     {
         return [
-            //frontend
-            'Cleanse\League\Components\About' => 'cleanseLeagueAbout',
-            'Cleanse\League\Components\History' => 'cleanseLeagueHistory', //
+            //frontend "done"
             'Cleanse\League\Components\Home' => 'cleanseLeagueHome',
+            'Cleanse\League\Components\About' => 'cleanseLeagueAbout',
             'Cleanse\League\Components\Rules' => 'cleanseLeagueRules',
             'Cleanse\League\Components\Vision' => 'cleanseLeagueVision',
             'Cleanse\League\Components\Team' => 'cleanseLeagueTeam',
+            'Cleanse\League\Components\SeasonSchedule' => 'cleanseLeagueSeasonSchedule',
+
 
             //manager
             'Cleanse\League\Components\ManagerPanel' => 'cleanseLeagueManager',
@@ -53,7 +54,6 @@ class Plugin extends PluginBase
             'Cleanse\League\Components\TestBracket' => 'leagueBracket',
 
             //tbd
-            'Cleanse\League\Components\SeasonSchedule' => 'cleanseLeagueSeasonSchedule',
             'Cleanse\League\Components\SeasonStandings' => 'cleanseLeagueSeasonStandings',
             'Cleanse\League\Components\SeasonStats' => 'cleanseLeagueSeasonStats',
             'Cleanse\League\Components\SeasonTeam' => 'cleanseLeagueSeasonTeam',
@@ -63,6 +63,8 @@ class Plugin extends PluginBase
             'Cleanse\League\Components\TournamentBracket' => 'cleanseLeagueTourneyBracket',
 
             'Cleanse\League\Components\ManagerLog' => 'cleanseLeagueManagerLog',
+
+            'Cleanse\League\Components\History' => 'cleanseLeagueHistory', //
         ];
     }
 

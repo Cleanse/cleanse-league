@@ -1,0 +1,28 @@
+<div class="jumbotron-league-bg">
+    <div class="container-fluid">
+        <h1>Schedule</h1>
+        <div class="btn-group btn-group-sm justify-content-between mb-2" role="group" aria-label="Team Page Links">
+            {% for team in teams %}
+            <a class="btn btn-outline-info" href="/league/team/{{ team.team.slug }}">{{ team.team.name }}</a>
+            {% endfor %}
+        </div>
+
+        {% for key, week in matches %}
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Matches</li>
+            <li class="breadcrumb-item active">{{ key|date('M d, Y') }}</li>
+        </ol>
+        <div class="card-group mb-5">
+            {% for match in week %}
+            <div class="card">
+                <div class="card-block">
+                    <h4>{{ match.one.team.name }}</h4>
+                    vs
+                    <h4>{{ match.two.team.name }}</h4>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</div>

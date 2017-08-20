@@ -4,12 +4,12 @@
         <h1>{{ season.name }}</h1>
         <div class="card-columns">
             {% for m in season.matches %}
-            <div class="card">
+            <div class="card season-match">
                 <div class="card-block">
                     <h3>{{ m.takes_place_at|date('M d, Y') }}</h3>
-                    <h4>{{ m.one.team.name }}</h4>
+                    <h4><a href="/league/team/{{ m.one.team.slug }}">{{ m.one.team.name }}</a></h4>
                     vs
-                    <h4>{{ m.two.team.name }}</h4>
+                    <h4><a href="/league/team/{{ m.two.team.slug }}">{{ m.two.team.name }}</a></h4>
                 </div>
             </div>
             {% endfor %}

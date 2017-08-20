@@ -24,8 +24,6 @@ a:hover, a:active, a:focus {
     color: var(--blue-light);
 }
 
-
-
 .league-admin-bg {
     padding: 16px;
     background: rgba(236, 238, 239, 1);
@@ -95,6 +93,11 @@ a:hover, a:active, a:focus {
 .vision-excerpt p {
     font-size: 1.25rem;
     font-weight: 300;
+}
+
+.season-match h3 {
+    color: #000;
+    font-size: .9rem;
 }
 
 /* Round Title Bar */
