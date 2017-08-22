@@ -50,4 +50,8 @@ class Match extends Model
             'otherKey' => 'winner_id'
         ]
     ];
+
+    public $hasMany = [
+        'games' => 'Cleanse\League\Models\Game'
+    ];
 }
