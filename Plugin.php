@@ -35,6 +35,7 @@ class Plugin extends PluginBase
             'Cleanse\League\Components\LeagueRules' => 'cleanseLeagueRules',
             'Cleanse\League\Components\LeagueTeam' => 'cleanseLeagueTeam',
             'Cleanse\League\Components\LeagueVision' => 'cleanseLeagueVision',
+            'Cleanse\League\Components\LeagueMatch' => 'cleanseLeagueMatch',
 
             'Cleanse\League\Components\SeasonSchedule' => 'cleanseLeagueSeasonSchedule',
 

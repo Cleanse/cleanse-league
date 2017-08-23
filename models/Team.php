@@ -1,6 +1,5 @@
 <?php namespace Cleanse\League\Models;
 
-use Db;
 use Model;
 
 /**

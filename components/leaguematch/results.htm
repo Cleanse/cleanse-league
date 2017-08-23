@@ -1,0 +1,41 @@
+<div class="container-fluid league-wrapper">
+    <h1>Match between {{ match.one.team.name }} and {{ match.two.team.name }}</h1>
+    <div class="match-date-type d-flex justify-content-between">
+        <p>{{ match.takes_place_at|date('l, M d, Y') }}</p>
+        <p>{{ match.matchable_type|capitalize }} Match</p>
+    </div>
+    <div class="row match-up">
+        <div class="col m-2 team-one">
+            {% if match.winner_id == match.team_one %}
+            <p>Winner</p>
+            {% else %}
+            <p>&nbsp;</p>
+            {% endif %}
+            <h2 class="hidden-sm-down">{{ match.one.team.name }}</h2>
+            <h2 class="hidden-md-up">{{ match.one.team.initials }}</h2>
+            <p>{{ match.team_one_score ?? 0 }}</p>
+        </div>
+        <div class="col m-2 team-two">
+            {% if match.winner_id == match.team_two %}
+            <p>Winner</p>
+            {% else %}
+            <p>&nbsp;</p>
+            {% endif %}
+            <h2 class="hidden-sm-down">{{ match.two.team.name }}</h2>
+            <h2 class="hidden-md-up">{{ match.two.team.initials }}</h2>
+            <p>{{ match.team_two_score ?? 0 }}</p>
+        </div>
+    </div>
+
+    <!-- Games will be tabbed. VODs will be in the tabs, if any, as well as ss's of the results.
+    <div class="match-games">
+        <h3>Games:</h3>
+        <ol>
+            <li>Game 1</li>
+            <li>Game 2</li>
+            <li>Game 3</li>
+            <li>Game 4</li>
+            <li>Game 5</li>
+        </ol>
+    </div> -->
+</div>

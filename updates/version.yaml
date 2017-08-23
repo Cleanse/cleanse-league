@@ -1,10 +1,9 @@
 1.0.1:
     - Initialize plugin.
     - add_league_tables.php
-1.0.2:
     - Teams and Players; oh my.
     - add_team_player_tables.php
-1.0.9:
     - Seed the League Plugin.
     - seed_core_tables.php
     - seed_league_user_groups.php
+1.1.1: We're in beta.

@@ -9,9 +9,9 @@ use Model;
  * @property integer $team_two
  * @property integer $winner_id
  */
-class Game extends Model
+class MatchGame extends Model
 {
-    public $table = 'cleanse_league_games';
+    public $table = 'cleanse_league_match_games';
 
     /***
      * Screenshot

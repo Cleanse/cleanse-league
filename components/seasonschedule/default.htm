@@ -7,22 +7,24 @@
             {% endfor %}
         </div>
 
+        {% set weekNum = 1 %}
         {% for key, week in matches %}
         <ol class="breadcrumb">
-            <li class="breadcrumb-item active">Matches</li>
+            <li class="breadcrumb-item active">Week {{ weekNum }}</li>
             <li class="breadcrumb-item active">{{ key|date('M d, Y') }}</li>
         </ol>
         <div class="card-group mb-5">
             {% for match in week %}
-            <div class="card">
+            <a class="card" href="/league/match/{{ match.id }}">
                 <div class="card-block">
                     <h4>{{ match.one.team.name }}</h4>
                     vs
                     <h4>{{ match.two.team.name }}</h4>
                 </div>
-            </div>
+            </a>
             {% endfor %}
         </div>
+        {{ weekNum + 1 }}
         {% endfor %}
     </div>
 </div>

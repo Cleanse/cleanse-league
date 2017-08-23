@@ -13,6 +13,7 @@ class AddTeamPlayerTables extends Migration
             $table->string('id')->unique()->index();
             $table->string('name');
             $table->string('slug');
+            $table->string('initials')->nullable();
             $table->timestamps();
         });
 

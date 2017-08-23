@@ -19,6 +19,13 @@ class SeedCoreTables extends Seeder
             'name' => 'Team Tryhard Monthly'
         ]);
 
+        /**
+         * Create test tournaments.
+         */
+        $tryhard->tourneys()->firstOrCreate([
+            'name' => 'Team Tryhard Monthly Tourney'
+        ]);
+
         $aether = League::firstOrCreate([
             'name' => 'Aether League',
             'about' => 'We want this to be as successful as possible so SE can take note and maybe in the distant 
@@ -27,7 +34,7 @@ class SeedCoreTables extends Seeder
 
         $championship = $aether->championships()->firstOrCreate([
             'name' => '2017 Aether League Championship Series',
-            'championship_rules' => '**Hey** *bae*!'
+            'championship_rules' => '**No ACT!**'
         ]);
 
         $season = $championship->seasons()->firstOrCreate([
@@ -35,24 +42,9 @@ class SeedCoreTables extends Seeder
         ]);
 
         /**
-         * Create test tournaments.
-         */
-        $tryhard->tourneys()->firstOrCreate([
-            'name' => 'Team Tryhard Monthly Tourney'
-        ]);
-
-//        $season->tourneys()->firstOrCreate([
-//            'name' => 'Inaugural Season Tourney'
-//        ]);
-//
-//        $tourney = $championship->tourneys()->firstOrCreate([
-//            'name' => 'Champ Tourney'
-//        ]);
-
-        /**
          * Add some teams.
          */
-        $teams = ['Cats', 'Insomnia', 'RareX', 'Ninjas', 'Dread', 'Lupins', 'Lucky Charms'];
+        $teams = ['Insomnia', 'Cats', 'RareX', 'Ninjas', 'Dread', 'Lupins', 'Lucky Charms'];
 
         foreach ($teams as $team) {
             $t_{$team} = Team::firstOrCreate([

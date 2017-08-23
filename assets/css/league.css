@@ -100,6 +100,38 @@ a:hover, a:active, a:focus {
     font-size: .9rem;
 }
 
+/* Match */
+.league-wrapper {
+    background: var(--white-azure);
+}
+
+.league-wrapper h1 {
+    text-indent: -9999px;
+}
+
+.match-date-type {
+    padding: 0 1.1rem;
+}
+
+.match-up .team-one {
+    border-radius: 1rem;
+    border: 1px solid var(--blue-light);
+}
+
+.match-up .team-two {
+    border-radius: 1rem;
+    border: 1px solid var(--green-dark);
+}
+
+.match-up h2 {
+    font-size: 1.125rem;
+    text-align: center;
+}
+
+.match-up p {
+    text-align: center;
+}
+
 /* Round Title Bar */
 .bracket-rounds-row {
     opacity: 1;

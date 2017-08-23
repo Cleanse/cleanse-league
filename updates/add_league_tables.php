@@ -75,21 +75,33 @@ class AddLeagueTables extends Migration
         Schema::create('cleanse_league_matches', function($table)
         {
             $table->engine = 'InnoDB';
-            $table->increments('id');
-            $table->integer('team_one')->unsigned()->index();
-            $table->integer('team_two')->unsigned()->index();
+            $table->string('id')->unique()->index();
+            $table->integer('team_one')->unsigned();
+            $table->integer('team_two')->unsigned();
             $table->integer('team_one_score')->unsigned()->nullable();
             $table->integer('team_two_score')->unsigned()->nullable();
             $table->integer('winner_id')->unsigned()->nullable();
             $table->string('matchable_id')->index();
             $table->string('matchable_type');
-            $table->timestamp('takes_place_at')->index()->nullable();
+            $table->timestamp('takes_place_at')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('cleanse_league_match_games', function($table)
+        {
+            $table->engine = 'InnoDB';
+            $table->increments('id');
+            $table->string('match_id')->index();
+            $table->integer('team_one')->unsigned();
+            $table->integer('team_two')->unsigned();
+            $table->integer('winner_id')->unsigned()->nullable();
             $table->timestamps();
         });
     }
 
     public function down()
     {
+        Schema::dropIfExists('cleanse_league_match_games');
         Schema::dropIfExists('cleanse_league_matches');
         Schema::dropIfExists('cleanse_league_tournaments');
         Schema::dropIfExists('cleanse_league_seasons');

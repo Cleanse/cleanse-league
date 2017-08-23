@@ -1,8 +1,6 @@
 <?php namespace Cleanse\League\Models;
 
-use Markdown;
 use Model;
-use Str;
 
 /**
  * @property integer $id
@@ -17,7 +15,16 @@ use Str;
  */
 class Match extends Model
 {
+    use \Cleanse\Urls\Classes\Shareable;
+
     public $table = 'cleanse_league_matches';
+    protected $primaryKey = 'id';
+    public $incrementing = false;
+
+    /**
+     * @var array Generate shareable string for primary key.
+     */
+    protected $shareable = ['id' => ['default']];
 
     /**
      * The attributes that are mass assignable.
