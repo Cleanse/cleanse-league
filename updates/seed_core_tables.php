@@ -44,11 +44,19 @@ class SeedCoreTables extends Seeder
         /**
          * Add some teams.
          */
-        $teams = ['Insomnia', 'Cats', 'RareX', 'Ninjas', 'Dread', 'Lupins', 'Lucky Charms'];
+        $teams = [
+            'Aether' => 'AET',
+            'Chaos' => 'CHS',
+            'Elemental' => 'ELE',
+            'Gaia' => 'GAI',
+            'Mana' => 'MNA',
+            'Primal' => 'PRM'
+        ];
 
-        foreach ($teams as $team) {
+        foreach ($teams as $team => $ini) {
             $t_{$team} = Team::firstOrCreate([
-                'name' => $team
+                'name' => $team,
+                'initials' => $ini
             ]);
 
             $season->teams()->firstOrCreate([
@@ -62,7 +70,7 @@ class SeedCoreTables extends Seeder
         $schedReqs = [
             'season' => $season->id,
             'weeks' => 12,
-            'start' => '2018-1-31'
+            'start' => '2017-8-13'
         ];
         $schedule = new Scheduler;
         $schedule->createSchedule($schedReqs);

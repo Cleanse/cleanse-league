@@ -2,7 +2,7 @@
 :root {
     --black-primary: #010001;
     --white-azure: #CFEBF8;
-    --blue-medium: #90C8CF;
+    --blue-medium: #00CE97;
     --blue-light: #B0D9DD;
     --green-dark: #1E2C30;
     --neon-orange: #ff3800;
@@ -64,6 +64,10 @@ a:hover, a:active, a:focus {
     text-decoration: none;
 }
 
+.navbar-inverse .navbar-nav .nav-link:focus, .navbar-inverse .navbar-nav .nav-link:hover {
+    color: var(--blue-light);
+}
+
 .jumbotron-league-bg {
     padding: 1.25rem;
     background: url("/themes/pvpaissa/assets/images/xiv-jobs.png") bottom center var(--green-dark);
@@ -102,7 +106,8 @@ a:hover, a:active, a:focus {
 
 /* Match */
 .league-wrapper {
-    background: var(--white-azure);
+    padding-bottom: 1rem;
+    background: #fff;
 }
 
 .league-wrapper h1 {
@@ -111,16 +116,17 @@ a:hover, a:active, a:focus {
 
 .match-date-type {
     padding: 0 1.1rem;
+    border-bottom: 1px solid #ddd;
 }
 
-.match-up .team-one {
-    border-radius: 1rem;
-    border: 1px solid var(--blue-light);
+.match-date-type p {
+    margin-bottom: .1rem;
+    font-weight: bold;
 }
 
-.match-up .team-two {
-    border-radius: 1rem;
-    border: 1px solid var(--green-dark);
+.match-up {
+    background: var(--green-dark);
+    color: var(--blue-medium);
 }
 
 .match-up h2 {
@@ -130,6 +136,11 @@ a:hover, a:active, a:focus {
 
 .match-up p {
     text-align: center;
+}
+
+.tab-content>.tab-pane {
+    padding: 1.125rem;
+    background: #fff;
 }
 
 /* Round Title Bar */
