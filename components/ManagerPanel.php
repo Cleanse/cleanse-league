@@ -14,6 +14,6 @@ class ManagerPanel extends ComponentBase
 
     public function onRun()
     {
-        //hi
+        $this->addCss('/plugins/cleanse/league/assets/css/league.css');
     }
 }
