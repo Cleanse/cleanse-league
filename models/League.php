@@ -7,8 +7,6 @@ use Model;
  * @property integer $id
  * @property string $name
  * @property string $slug
- * @property string $vision
- * @property string $vision_html
  * @property string $about
  * @property string $about_html
  */
@@ -43,7 +41,6 @@ class League extends Model
      */
     public function beforeSave()
     {
-        $this->vision_html = Markdown::parse(trim($this->vision));
         $this->about_html = Markdown::parse(trim($this->about));
     }
 
@@ -53,7 +50,6 @@ class League extends Model
     public function storeFormData($data)
     {
         $name_field_value = NULL;
-        $vision_field_value = NULL;
         $about_field_value = NULL;
 
         foreach ($data as $key => $value) {
@@ -66,17 +62,12 @@ class League extends Model
                 $name_field_value = e($value['value']);
             }
 
-            if (empty($vision_field_value) and $key == 'vision') {
-                $vision_field_value = e($value['value']);
-            }
-
             if (empty($about_field_value) and $key == 'about') {
                 $about_field_value = e($value['value']);
             }
         }
 
         $this->name = $name_field_value;
-        $this->vision = $vision_field_value;
         $this->about = $about_field_value;
         $this->save();
     }

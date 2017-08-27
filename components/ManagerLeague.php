@@ -33,6 +33,7 @@ class ManagerLeague extends ComponentBase
 
     public function onRun()
     {
+        $this->addCss('assets/css/league.css');
         $this->page['flashSuccess'] = Session::get('flashSuccess');
     }
 
@@ -51,13 +52,6 @@ class ManagerLeague extends ComponentBase
                 'validation' => [['validation_type' => 'required', 'validation_error' => 'Required.']],
                 'placeholder' => 'Aether League',
                 'default' => $this->league->name ?? ''
-            ],
-            [
-                'name' => 'vision',
-                'type' => 'textarea',
-                'label' => 'Vision',
-                'validation' => [['validation_type' => 'required', 'validation_error' => 'Required.']],
-                'default' => $this->league->vision ?? ''
             ],
             [
                 'name' => 'about',
