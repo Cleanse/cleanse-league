@@ -50,6 +50,7 @@ class League extends Model
     public function storeFormData($data)
     {
         $name_field_value = NULL;
+        $slug_field_value = NULL;
         $about_field_value = NULL;
 
         foreach ($data as $key => $value) {
@@ -62,12 +63,17 @@ class League extends Model
                 $name_field_value = e($value['value']);
             }
 
+            if (empty($slug_field_value) and $key == 'slug') {
+                $slug_field_value = e($value['value']);
+            }
+
             if (empty($about_field_value) and $key == 'about') {
                 $about_field_value = e($value['value']);
             }
         }
 
         $this->name = $name_field_value;
+        $this->slug = $slug_field_value;
         $this->about = $about_field_value;
         $this->save();
     }
