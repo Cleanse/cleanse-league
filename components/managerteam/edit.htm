@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-10">
+        {{ form_open() }}
+
+        <div class="form-group">
+            <label for="name">Team Name</label>
+            <input class="form-control" id="name" name="name" placeholder="Enter a name for the team."
+                   aria-describedby="teamNameHelp" value="{{ team.name }}" required>
+            <small id="teamNameHelp" class="form-text text-muted">Enter a name for the team.</small>
+        </div>
+
+        <div class="form-group">
+            <label for="initials">League Slug</label>
+            <input class="form-control" id="initials" name="initials" placeholder="Enter some initials for the team."
+                   aria-describedby="leagueSlugHelp" value="{{ team.slug }}" required>
+            <small id="leagueSlugHelp" class="form-text text-muted">Enter a slug for the league.</small>
+        </div>
+
+        <button data-attach-loading class="oc-loader btn btn-primary">Edit Team</button>
+
+        {{ form_close() }}
+    </div>
+
+    <div class="col-2">
+        {{ form_open() }}
+        <label for="file_data">Logo</label>
+        {% component 'cleanseImageUploader' %}
+        {{ form_close() }}
+    </div>
+</div>

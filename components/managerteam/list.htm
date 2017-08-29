@@ -1,0 +1,13 @@
+<div class="list-group">
+    {% for team in teams %}
+    <a href="javascript:;"
+       data-request="{{ __SELF__ }}::onUpdate"
+       data-request-data="mode: 'edit', team_id: '{{ team.id }}'"
+       data-request-update="'{{ __SELF__ ~ '::edit' }}': '#editor-area'"
+       class="list-group-item">{{ team.name }}</a>
+    {% endfor %}
+</div>
+
+<div class="cleanse-league">
+    {{ teams.render|raw }}
+</div>
