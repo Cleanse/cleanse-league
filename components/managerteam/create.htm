@@ -1,4 +1,4 @@
-{{ form_open() }}
+{{ form_open({ request: __SELF__~'::onCreateTeam', files: true }) }}
 
 <div class="form-group">
     <label for="name">Team Name</label>
@@ -8,19 +8,49 @@
 </div>
 
 <div class="form-group">
-    <label for="initials">League Slug</label>
+    <label for="initials">Team Initials</label>
     <input class="form-control" id="initials" name="initials" placeholder="Enter some initials for the team."
-           aria-describedby="leagueSlugHelp" required>
-    <small id="leagueSlugHelp" class="form-text text-muted">Enter a slug for the league.</small>
+           aria-describedby="leagueSlugHelp" value="{{ team.initials }}">
+    <small id="leagueSlugHelp" class="form-text text-muted">Enter initials for the team.</small>
 </div>
 
-<div class="mb-2">
-    <label class="custom-file" for="logo">Logo
-        <input type="file" id="logo" name="logo" class="custom-file-input">
-        <span class="custom-file-control"></span>
-    </label>
+<div class="input-group image-preview mb-2">
+    <input class="form-control image-preview-filename">
+    <span class="input-group-btn">
+        <button type="button" class="btn btn-primary image-preview-clear" style="display:none;">
+            <i class="fa fa-remove"></i> Clear
+        </button>
+    </span>
+    <span class="input-group-btn">
+        <div class="btn btn-primary image-preview-input">
+            <i class="fa fa-folder-open"></i>
+            <span class="image-preview-input-title">Choose File</span>
+            <input type="file" accept="image/png, image/jpeg, image/gif" name="logo"/>
+        </div>
+    </span>
 </div>
 
-<button data-attach-loading class="oc-loader btn btn-primary">Create Team</button>
+<button type="submit" data-attach-loading class="oc-loader btn btn-primary">Create Team</button>
 
 {{ form_close() }}
+
+<script>
+    $(function() {
+        $('.image-preview-clear').click(function(){
+            $('.image-preview').attr("data-content","").popover('hide');
+            $('.image-preview-filename').val("");
+            $('.image-preview-clear').hide();
+            $('.image-preview-input input:file').val("");
+            $(".image-preview-input-title").text("Browse");
+        });
+
+        // Create the preview image
+        $(".image-preview-input input:file").change(function (){
+            var file = this.files[0];
+
+            $(".image-preview-input-title").text("Change");
+            $(".image-preview-clear").show();
+            $(".image-preview-filename").val(file.name);
+        });
+    });
+</script>

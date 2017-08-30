@@ -9,6 +9,7 @@
 }
 
 body {
+    font-family: 'Lato', sans-serif;
     background-image: linear-gradient(
             to right,
             var(--green-dark),
@@ -24,28 +25,195 @@ a:hover, a:active, a:focus {
     color: var(--blue-light);
 }
 
+h1 {
+    color: #000;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 60px;
+    letter-spacing: 1px;
+}
+
+h2 {
+    color: #000;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 44px;
+    letter-spacing: 1px;
+}
+
+h3 {
+    color: #000;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 30px;
+    letter-spacing: 1px;
+}
+
+h4 {
+    color: #000;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: .5px;
+}
+
+p {
+    color: #000;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 26px;
+    letter-spacing: .25px;
+}
+
+.caption {
+    color: #777777;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 22px;
+    letter-spacing: .5px;
+}
+
+button, input, optgroup, select, textarea {
+    font-family: 'Lato', sans-serif;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: var(--blue-medium);
+    border-color: var(--blue-medium);
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: var(--green-dark);
+    border-color: var(--black-primary);
+}
+
+.custom-file-control:lang(en)::after {
+    content: "Choose Logo file...";
+}
+
+.cleanse-league .pagination {
+    padding: 10px;
+    border-radius: 0;
+    background-color: rgba(255, 255, 255, .9);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .04);
+}
+
+.cleanse-league .pagination li {
+    padding: 0 5px;
+}
+
+.cleanse-league .pagination li:first-child {
+    border-left: 5px solid rgb(59, 132, 196);
+}
+
+.cleanse-league .pagination li a {
+    color: rgb(59, 132, 196);
+}
+
+.cleanse-league .pagination li.active a {
+    border-bottom: 1px solid rgb(59, 132, 196);
+}
+
+.list-group-item {
+    background-color: var(--green-dark);
+}
+
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-image: linear-gradient(to bottom, var(--green-dark) 0%, var(--black-primary) 100%);
+    border-color: var(--green-dark);
+}
+
+.list-group-item.disabled, .list-group-item:disabled {
+    color: var(--neon-orange);
+    cursor: not-allowed;
+    background-color: var(--green-dark);
+}
+
+.list-group-item-action {
+    color: var(--blue-medium);
+}
+
+.list-group-item-action:focus, .list-group-item-action:hover {
+    color: var(--blue-light);
+    text-decoration: none;
+    background-color: var(--green-dark);
+}
+
 .league-admin-bg {
-    padding: 16px;
+    padding: 16px 0;
     background: rgba(236, 238, 239, 1);
+}
+
+.image-preview-input {
+    position: relative;
+    overflow: hidden;
+    margin: 0px;
+    color: var(--blue-medium);
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.image-preview-input input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.image-preview-input-title {
+    margin-left: 2px;
 }
 
 .manager-sections > div {
     margin: 0 0 10px;
 }
 
+.team-list, .team-edit {
+    flex-grow: 1;
+}
+
 .list-group a {
     cursor: pointer;
 }
 
-.list-group-item.active {
-    z-index: 2;
-    color: #fff;
-    background-image: linear-gradient(135deg, rgb(59, 132, 196) 0%, #0E5CAD 100%);
-    border-color: #0E5CAD;
-}
-
 .league-nav {
     margin-bottom: 20px;
+}
+
+.responsiv-uploader-fileupload.style-image-single .upload-button {
+    border: 2px dotted rgba(30, 44, 48, 0.75) !important;
+    transition: all 0.5s ease;
+}
+
+.responsiv-uploader-fileupload.style-image-single .upload-button:hover {
+    border: 2px dotted rgba(0, 206, 151, 1) !important;
+}
+
+.responsiv-uploader-fileupload.style-image-single .upload-button .upload-button-icon:before {
+    color: rgba(30, 44, 48, 0.75) !important;
+    transition: all 0.5s ease;
+}
+
+.responsiv-uploader-fileupload.style-image-single .upload-button:hover .upload-button-icon:before {
+    color: rgba(0, 206, 151, 1) !important;
 }
 
 .nav-pills .nav-item.show .nav-link, .nav-pills .nav-link.active {
@@ -104,6 +272,24 @@ a:hover, a:active, a:focus {
     font-size: .9rem;
 }
 
+/* Schedule */
+.btn-outline-info {
+    color: var(--neon-orange);
+    background-image: none;
+    background-color: transparent;
+    border-color: var(--neon-orange);
+}
+
+.btn-outline-info:hover {
+    color: #fff;
+    background-color: var(--neon-orange);
+    border-color: var(--neon-orange);
+}
+
+.league-schedule a.card:hover .card-block {
+    background: var(--white-azure);
+}
+
 /* Match */
 .league-wrapper {
     padding-bottom: 1rem;
@@ -138,7 +324,7 @@ a:hover, a:active, a:focus {
     text-align: center;
 }
 
-.tab-content>.tab-pane {
+.tab-content > .tab-pane {
     padding: 1.125rem;
     background: #fff;
 }
@@ -290,5 +476,16 @@ svg.match--player:not(:root) {
     .jumbotron-league-bg h1,
     .jumbotron-league-bg .jumbotron-sub-text {
         margin-right: 300px;
+    }
+}
+
+@media (max-width: 767px) {
+    .league-admin-bg {
+        padding: 16px 0;
+        background: rgba(236, 238, 239, 1);
+    }
+
+    .team-list {
+        width: 100%;
     }
 }

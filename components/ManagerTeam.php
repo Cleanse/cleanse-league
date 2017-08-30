@@ -3,9 +3,9 @@
 use Flash;
 use Input;
 use Redirect;
-use Request;
 use Session;
 use Cms\Classes\ComponentBase;
+use System\Models\File;
 use Cleanse\League\Models\Team;
 
 class ManagerTeam extends ComponentBase
@@ -52,7 +52,7 @@ class ManagerTeam extends ComponentBase
 
     public function onUpdate()
     {
-        $mode = post('mode', 'list');
+        $mode = post('mode');
 
         if (!$mode) {
             $this->page['mode'] = 'list';
@@ -64,6 +64,9 @@ class ManagerTeam extends ComponentBase
 
         if ($mode == 'edit') {
             $this->model = post('team_id');
+
+            $this->init();
+
             $this->page['team'] = Team::find($this->model);
         }
 
@@ -72,34 +75,84 @@ class ManagerTeam extends ComponentBase
         }
     }
 
-    public function getTeamsList()
+    protected function getTeamsList()
     {
-        return Team::paginate(20);
+        return Team::orderBy('name', 'asc')
+            ->paginate(20);
+    }
+
+    public function onCreateTeam()
+    {
+        $newTeam = new Team();
+        $newTeam->name = post('name');
+
+        if (post('initials') !== '') {
+            $newTeam->initials = post('initials');
+        }
+
+        $newTeam->save();
+
+        if (Input::hasFile('logo')) {
+            $uploadedFile = Input::file('logo');
+
+            $file = new File;
+            $file->data = $uploadedFile;
+            $file->is_public = true;
+            $file->save();
+
+            $newTeam->logo()->add($file);
+        }
+
+        Flash::success('Team was created.');
+
+        Session::flash('flashSuccess', true);
+
+        return Redirect::refresh();
+    }
+
+    public function onEditTeam()
+    {
+        $editTeam = Team::find(post('team_id'));
+
+        $editTeam->name = post('name');
+        $editTeam->initials = post('initials');
+
+        $editTeam->save();
+
+        Flash::success('Team ' . $editTeam->name . ' was edited.');
+
+        Session::flash('flashSuccess', true);
+
+        return Redirect::refresh();
     }
 
     /**
      * @return array
      */
-    public function getCreateFormAttributes()
+    public function getSearchFormAttributes()
     {
         $attributes = [];
 
         $attributes['method'] = 'POST';
-        $attributes['data-request'] = $this->alias . '::onCreateTeam';
-        $attributes['data-request-update'] = "'" . $this->alias . "::flash-message':'#cleanse-league-form-message','"
-            . $this->alias . "::success':'#cleanse-league-form'";
-        $attributes['data-request-confirm'] = 'Is the information correct?';
+        $attributes['data-request'] = $this->alias . '::onSearchForTeam';
+        $attributes['data-request-update'] = "'" . $this->alias . "::teams':'#team-list'";
+        $attributes['class'] = 'justify-content-end';
 
         return $attributes;
     }
 
-    public function onCreateTeam()
+    public function onSearchForTeam()
     {
-        //
-    }
+        $team = post('search');
 
-    public function onEditTeam()
-    {
-        //
+        if (!$team) {
+            throw new ValidationException(['name' => 'You must enter at least part of a team\'s name!']);
+        }
+
+        $list = Team::where('name', 'like', '%' . $team . '%')
+            ->orderBy('name', 'desc')
+            ->get();
+
+        $this->page['items'] = $list;
     }
 }

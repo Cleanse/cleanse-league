@@ -1,28 +1,27 @@
 <div id="cleanse-league-form-message">
-    {% partial __SELF__~'::flash' %}
+    {% partial __SELF__~'::team-flash' %}
 </div>
 
 <div class="league-admin-bg row">
-
-    <div class="nav col-auto">
+    <div class="col-md-4 mb-2 mb-xs-0">
         <div class="list-group">
-            <a href="/manager" class="list-group-item active">
-                Back to Manager Panel
+            <a href="/manager" class="list-group-item pr-5 active">
+                <i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;&nbsp;Back to Manager Panel
             </a>
+            <a href="javascript:;"
+               data-request="{{ __SELF__ }}::onUpdate"
+               data-request-data="mode: 'list'"
+               data-request-update="'{{ __SELF__ ~ '::list' }}': '#editor-area'"
+               class="list-group-item">Teams</a>
             <a href="javascript:;"
                data-request="{{ __SELF__ }}::onUpdate"
                data-request-data="mode: 'create'"
                data-request-update="'{{ __SELF__ ~ '::create' }}': '#editor-area'"
                class="list-group-item">Create Team</a>
-            <a href="javascript:;"
-               data-request="{{ __SELF__ }}::onUpdate"
-               data-request-data="mode: 'list'"
-               data-request-update="'{{ __SELF__ ~ '::list' }}': '#editor-area'"
-               class="list-group-item">Edit A Team</a>
         </div>
     </div>
 
-    <div id="editor-area" class="col">
+    <div id="editor-area" class="col-md-8">
         {% partial __SELF__~'::list' %}
     </div>
 </div>

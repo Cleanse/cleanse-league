@@ -1,6 +1,8 @@
-<div class="row">
-    <div class="col-10">
-        {{ form_open() }}
+<div class="d-flex flex-column-reverse justify-content-end flex-column flex-md-row">
+    <div class="team-edit mr-auto mb-2 mb-md-0">
+        {{ form_open({ request: __SELF__~'::onEditTeam' }) }}
+
+        <input type="hidden" name="team_id" value="{{ team.id }}">
 
         <div class="form-group">
             <label for="name">Team Name</label>
@@ -10,10 +12,10 @@
         </div>
 
         <div class="form-group">
-            <label for="initials">League Slug</label>
+            <label for="initials">Team Initials</label>
             <input class="form-control" id="initials" name="initials" placeholder="Enter some initials for the team."
-                   aria-describedby="leagueSlugHelp" value="{{ team.slug }}" required>
-            <small id="leagueSlugHelp" class="form-text text-muted">Enter a slug for the league.</small>
+                   aria-describedby="leagueSlugHelp" value="{{ team.initials }}" required>
+            <small id="leagueSlugHelp" class="form-text text-muted">Enter initials for the team.</small>
         </div>
 
         <button data-attach-loading class="oc-loader btn btn-primary">Edit Team</button>
@@ -21,7 +23,7 @@
         {{ form_close() }}
     </div>
 
-    <div class="col-2">
+    <div class="ml-md-4">
         {{ form_open() }}
         <label for="file_data">Logo</label>
         {% component 'cleanseImageUploader' %}
