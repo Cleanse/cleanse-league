@@ -29,6 +29,10 @@ class ManagerTeam extends ComponentBase
         if (!isset($this->model)) {
             $team = Team::first(['id']);
 
+            if (!$team) {
+                return;
+            }
+
             $this->model = $team->id;
         }
 
