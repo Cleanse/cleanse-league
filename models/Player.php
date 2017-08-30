@@ -47,6 +47,6 @@ class Player extends Model
      * @var array
      */
     public $attachOne = [
-        'logo' => ['System\Models\File']
+        'avatar' => ['System\Models\File']
     ];
 }

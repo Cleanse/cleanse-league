@@ -42,6 +42,8 @@ class Plugin extends PluginBase
             //manager
             'Cleanse\League\Components\ManagerPanel' => 'cleanseLeagueManager',
             'Cleanse\League\Components\ManagerLeague' => 'cleanseLeagueManagerLeague',
+            'Cleanse\League\Components\ManagerTeam' => 'cleanseLeagueManagerTeam',
+            'Cleanse\League\Components\ManagerPlayer' => 'cleanseLeagueManagerPlayer',
             'Cleanse\League\Components\ManagerChampionship' => 'cleanseLeagueManagerChampionship',
             'Cleanse\League\Components\ManagerSeason' => 'cleanseLeagueManagerSeason',
             'Cleanse\League\Components\ManagerSeasonSchedule' => 'cleanseLeagueManagerSeasonSchedule',
@@ -49,9 +51,6 @@ class Plugin extends PluginBase
             //test
             'Cleanse\League\Components\TestBracket' => 'leagueBracket',
             'Cleanse\League\Components\TestLogos' => 'leagueLogos',
-
-            //moving to new plugin
-            'Cleanse\League\Components\Highlight' => 'cleanseLeagueHighlight',
 
             //tbd
             'Cleanse\League\Components\SeasonStandings' => 'cleanseLeagueSeasonStandings',

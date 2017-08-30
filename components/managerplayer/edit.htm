@@ -1,0 +1,25 @@
+<div class="d-flex flex-column-reverse justify-content-end flex-column flex-md-row">
+    <div class="team-edit mr-auto mb-2 mb-md-0">
+        {{ form_open({ request: __SELF__~'::onEditPlayer' }) }}
+
+        <input type="hidden" name="player_id" value="{{ player.id }}">
+
+        <div class="form-group">
+            <label for="name">Player Name</label>
+            <input class="form-control" id="name" name="name" placeholder="Enter a name for the player."
+                   aria-describedby="playerNameHelp" value="{{ player.name }}" required>
+            <small id="playerNameHelp" class="form-text text-muted">Enter a name for the player.</small>
+        </div>
+
+        <button data-attach-loading class="oc-loader btn btn-primary">Edit Player</button>
+
+        {{ form_close() }}
+    </div>
+
+    <div class="ml-md-4">
+        {{ form_open() }}
+        <label for="file_data">Avatar</label>
+        {% component 'cleanseImageUploader' %}
+        {{ form_close() }}
+    </div>
+</div>
