@@ -1,0 +1,35 @@
+<div class="d-flex flex-row justify-content-end flex-column flex-md-row">
+    <div class="team-list mr-auto mb-2 mb-md-0">
+        <div id="team-list" class="list-group">
+            {% for season in seasons %}
+            <a href="javascript:;"
+               data-request="{{ __SELF__ }}::onUpdate"
+               data-request-data="mode: 'edit', season_id: '{{ season.id }}'"
+               data-request-update="'{{ __SELF__ ~ '::edit' }}': '#editor-area'"
+               class="list-group-item list-group-item-action justify-content-between">
+               <span><i class="fa fa-flag-checkered"></i> {{ season.name }}</span> <i class="fa fa-edit"></i>
+            </a>
+            {% endfor %}
+        </div>
+
+        <div class="cleanse-league">
+            {{ seasons.render|raw }}
+        </div>
+
+        <div class="explanation"><i class="fa fa-flag-checkered"></i> - Indicates a season is complete.</div>
+    </div>
+
+    <div class="team-search ml-md-2">
+        <div class="league-team-search">
+            {{ form_open() }}
+
+            <label class="sr-only" for="search">Search</label>
+            <input class="form-control mb-2" id="search" name="search" placeholder="Search for a season."
+                   required>
+
+            <button data-attach-loading class="oc-loader btn btn-primary">Search</button>
+
+            {{ form_close() }}
+        </div>
+    </div>
+</div>

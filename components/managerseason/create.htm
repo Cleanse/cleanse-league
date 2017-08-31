@@ -1,0 +1,21 @@
+{{ form_open({ request: __SELF__~'::onCreateSeason' }) }}
+
+<div class="form-group">
+    <label for="championship">Season Name</label>
+    <select class="form-control" id="championship" name="championship">
+        {% for c in championships %}
+        <option value="{{ c.id }}">{{ c.name }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="name">Season Name</label>
+    <input class="form-control" id="name" name="name" placeholder="Enter a name for the season."
+           aria-describedby="seasonNameHelp" required>
+    <small id="seasonNameHelp" class="form-text text-muted">Enter a name for the season.</small>
+</div>
+
+<button type="submit" data-attach-loading class="oc-loader btn btn-primary">Create Season</button>
+
+{{ form_close() }}

@@ -1,5 +1,6 @@
 <h1>Create Schedule for Season</h1>
 {{ form_open(__SELF__.getScheduleFormAttributes) }}
+
 <div class="form-group">
     <label for="season">Season</label>
     <select class="form-control" id="season" name="season">
@@ -11,9 +12,9 @@
 
 <div class="form-group">
     <label for="start">Start Date</label>
-    <input class="form-control" id="start" name="start"
-           aria-describedby="startDateHelp" placeholder="Enter season start date." required>
-    <small id="startDateHelp" class="form-text text-muted">Enter season start date.</small>
+    <input class="form-control" id="start" name="start" placeholder="Enter season start date."
+           aria-describedby="startDateHelp" type="week" required>
+    <small id="startDateHelp" class="form-text text-muted">Use form dropdown on the far right.</small>
 </div>
 
 <div class="form-group">
@@ -24,6 +25,7 @@
 </div>
 
 <button data-attach-loading class="oc-loader btn btn-primary">Create Seasonal Schedule</button>
+
 {{ form_close() }}
 <hr>
 <a href="javascript:;"

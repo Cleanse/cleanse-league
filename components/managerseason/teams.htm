@@ -1,0 +1,123 @@
+<div class="d-flex justify-content-between flex-column flex-md-row">
+    <div style="width: 55%;" class="team-pool">
+
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#add-game" role="tab">Add Team</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#create-game" role="tab">Create Team</a>
+            </li>
+        </ul>
+
+        <div class="tab-content mb-2">
+            <div class="tab-pane fade show active"
+                 id="add-game"
+                 role="tabpanel">
+                <h5 class="sr-only">Add a team.</h5>
+                <div class="league-team-search mb-2">
+                    {{ form_open(__SELF__.getSearchFormAttributes) }}
+
+                    <label class="sr-only" for="search">Search</label>
+                    <input class="form-control mr-1" id="search" name="search" placeholder="Search for a team."
+                           value="{{ search }}" required>
+                    <input type="hidden" name="season" value="{{ season }}">
+
+                    <button data-attach-loading class="oc-loader btn btn-primary">Search</button>
+                    <a href="javascript:;"
+                       data-request="{{ __SELF__ }}::onUpdate"
+                       data-request-data="mode: 'teams'"
+                       data-request-update="'{{ __SELF__ ~ '::teams' }}': '#editor-area'"
+                       class="btn btn-secondary ml-1">Clear</a>
+
+                    {{ form_close() }}
+                </div>
+
+                <div id="team-list" class="list-group">
+                    {% for team in teams %}
+                    <a href="javascript:;"
+                       data-request="{{ __SELF__ }}::onAddTeam"
+                       data-request-data="mode: 'add_team', team_id: '{{ team.id }}', season_id: {{ season }}"
+                       data-request-update="'{{ __SELF__ ~ '::teams' }}': '#editor-area'"
+                       class="list-group-item justify-content-between">{{ team.name }} &nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-right"></i></a>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="tab-pane fade"
+                 id="create-game"
+                 role="tabpanel">
+                <h5 class="sr-only">Create a team.</h5>
+                {{ form_open({ request: __SELF__~'::onCreateTeam', files: true }) }}
+
+                <div class="form-group">
+                    <label for="name">Team Name</label>
+                    <input class="form-control" id="name" name="name" placeholder="Enter a name for the team."
+                           aria-describedby="teamNameHelp" required>
+                    <small id="teamNameHelp" class="form-text text-muted">Enter a name for the team.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="initials">Team Initials</label>
+                    <input class="form-control" id="initials" name="initials" placeholder="Enter some initials for the team."
+                           aria-describedby="leagueSlugHelp" value="{{ team.initials }}">
+                    <small id="leagueSlugHelp" class="form-text text-muted">Enter initials for the team.</small>
+                </div>
+
+                <div class="input-group image-preview mb-2">
+                    <input class="form-control image-preview-filename">
+                    <span class="input-group-btn">
+        <button type="button" class="btn btn-primary image-preview-clear" style="display:none;">
+            <i class="fa fa-remove"></i> Clear
+        </button>
+    </span>
+                    <span class="input-group-btn">
+        <div class="btn btn-primary image-preview-input">
+            <i class="fa fa-folder-open"></i>
+            <span class="image-preview-input-title">Choose File</span>
+            <input type="file" accept="image/png, image/jpeg, image/gif" name="logo"/>
+        </div>
+    </span>
+                </div>
+
+                <button type="submit" data-attach-loading class="oc-loader btn btn-primary">Create Team</button>
+
+                {{ form_close() }}
+
+                <script>
+                    $(function() {
+                        $('.image-preview-clear').click(function(){
+                            $('.image-preview').attr("data-content","").popover('hide');
+                            $('.image-preview-filename').val("");
+                            $('.image-preview-clear').hide();
+                            $('.image-preview-input input:file').val("");
+                            $(".image-preview-input-title").text("Browse");
+                        });
+
+                        // Create the preview image
+                        $(".image-preview-input input:file").change(function (){
+                            var file = this.files[0];
+
+                            $(".image-preview-input-title").text("Change");
+                            $(".image-preview-clear").show();
+                            $(".image-preview-filename").val(file.name);
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div style="width: 40%;" class="teams-added">
+        <h5>Selected Teams ({{ eteams|length }})</h5>
+        <div id="final-team-list" class="list-group">
+            {% for t in eteams %}
+            <a href="javascript:;"
+               data-request="{{ __SELF__ }}::onRemoveTeam"
+               data-request-data="team_id: {{ t.id }}, season_id: {{ season }}"
+               data-request-update="'{{ __SELF__ ~ '::teams' }}': '#editor-area'"
+               class="list-group-item justify-content-between">{{ t.name }} &nbsp;&nbsp;&nbsp;<i class="fa fa-close"></i></a>
+            {% endfor %}
+        </div>
+    </div>
+</div>

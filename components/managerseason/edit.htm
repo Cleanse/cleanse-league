@@ -1,0 +1,14 @@
+{{ form_open({ request: __SELF__~'::onEditSeason' }) }}
+
+<input type="hidden" name="season_id" value="{{ season.id }}">
+
+<div class="form-group">
+    <label for="name">Season Name</label>
+    <input class="form-control" id="name" name="name" placeholder="Enter a name for the season."
+           aria-describedby="seasonNameHelp" value="{{ season.name }}" required>
+    <small id="seasonNameHelp" class="form-text text-muted">Enter a name for the season.</small>
+</div>
+
+<button data-attach-loading class="oc-loader btn btn-primary">Edit Season</button>
+
+{{ form_close() }}
