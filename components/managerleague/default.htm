@@ -1,4 +1,4 @@
-{% if user.findByRole('aether-admin') %}
+{% if user.findByRole('league-admin') %}
 <div id="cleanse-league-form-message">
     {% partial __SELF__~'::flash-message' %}
 </div>
@@ -8,32 +8,34 @@
     <span class="breadcrumb-item active">Edit {{ league.name }}</span>
 </nav>
 
-<div id="cleanse-league-form" class="container-fluid league-admin-bg">
-    {{ form_open(__SELF__.getLeagueFormAttributes) }}
-    <div class="form-group">
-        <label for="name">League Name</label>
-        <input class="form-control" id="name" name="name" placeholder="Enter a name for the league."
-               aria-describedby="leagueNameHelp" value="{{ league.name }}" required>
-        <small id="leagueNameHelp" class="form-text text-muted">Enter a name for the league.</small>
+<div id="cleanse-league-form" class="row league-admin-bg">
+    <div class="col-12">
+        {{ form_open({ request: __SELF__~'::onFormSend' }) }}
+        <div class="form-group">
+            <label for="name">League Name</label>
+            <input class="form-control" id="name" name="name" placeholder="Enter a name for the league."
+                   aria-describedby="leagueNameHelp" value="{{ league.name }}" required>
+            <small id="leagueNameHelp" class="form-text text-muted">Enter a name for the league.</small>
+        </div>
+
+        <div class="form-group">
+            <label for="slug">League Slug</label>
+            <input class="form-control" id="slug" name="slug" placeholder="Enter a slug for the league."
+                   aria-describedby="leagueSlugHelp" value="{{ league.slug }}" required>
+            <small id="leagueSlugHelp" class="form-text text-muted">Enter a slug for the league.</small>
+        </div>
+
+        <div class="form-group">
+            <label for="about">About</label>
+            <textarea class="form-control" id="about" name="about" rows="5">{{ league.about }}</textarea>
+            <p id="leagueAboutHelp" class="form-text small text-muted">
+                Optional. Fills data in for the '/leage/about' page.
+            </p>
+        </div>
+
+        <button data-attach-loading class="oc-loader btn btn-primary">Update League Details</button>
+
+        {{ form_close() }}
     </div>
-
-    <div class="form-group">
-        <label for="slug">League Slug</label>
-        <input class="form-control" id="slug" name="slug" placeholder="Enter a slug for the league."
-               aria-describedby="leagueSlugHelp" value="{{ league.slug }}" required>
-        <small id="leagueSlugHelp" class="form-text text-muted">Enter a slug for the league.</small>
-    </div>
-
-    <div class="form-group">
-        <label for="about">About</label>
-        <textarea class="form-control" id="about" name="about" rows="5">{{ league.about }}</textarea>
-        <p id="leagueAboutHelp" class="form-text small text-muted">
-            Optional. Fills data in for the '/leage/about' page.
-        </p>
-    </div>
-
-    <button data-attach-loading class="oc-loader btn btn-primary">Update League Details</button>
-
-    {{ form_close() }}
 </div>
 {% endif %}
