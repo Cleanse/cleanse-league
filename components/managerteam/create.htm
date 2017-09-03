@@ -14,6 +14,7 @@
     <small id="leagueSlugHelp" class="form-text text-muted">Enter initials for the team.</small>
 </div>
 
+<label for="image-file">Team Logo</label>
 <div class="input-group image-preview mb-2">
     <input class="form-control image-preview-filename">
     <span class="input-group-btn">
@@ -25,7 +26,7 @@
         <div class="btn btn-primary image-preview-input">
             <i class="fa fa-folder-open"></i>
             <span class="image-preview-input-title">Choose File</span>
-            <input type="file" accept="image/png, image/jpeg, image/gif" name="logo"/>
+            <input type="file" accept="image/png, image/jpeg, image/gif" id="image-file" name="logo"/>
         </div>
     </span>
 </div>
@@ -33,24 +34,3 @@
 <button type="submit" data-attach-loading class="oc-loader btn btn-primary">Create Team</button>
 
 {{ form_close() }}
-
-<script>
-    $(function() {
-        $('.image-preview-clear').click(function(){
-            $('.image-preview').attr("data-content","").popover('hide');
-            $('.image-preview-filename').val("");
-            $('.image-preview-clear').hide();
-            $('.image-preview-input input:file').val("");
-            $(".image-preview-input-title").text("Browse");
-        });
-
-        // Create the preview image
-        $(".image-preview-input input:file").change(function (){
-            var file = this.files[0];
-
-            $(".image-preview-input-title").text("Change");
-            $(".image-preview-clear").show();
-            $(".image-preview-filename").val(file.name);
-        });
-    });
-</script>

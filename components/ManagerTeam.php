@@ -50,6 +50,7 @@ class ManagerTeam extends ComponentBase
     public function onRun()
     {
         $this->addCss('assets/css/league.css');
+        $this->addJs('assets/js/image-input.js');
         $this->page['flashSuccess'] = Session::get('flashSuccess');
         $this->page['teams'] = $this->getTeamsList();
     }
@@ -59,12 +60,10 @@ class ManagerTeam extends ComponentBase
         $mode = post('mode');
 
         if (!$mode) {
-            $this->page['mode'] = 'list';
+            $mode = 'list';
         }
 
         $this->page['mode'] = $mode;
-
-        //if ($mode == 'create')
 
         if ($mode == 'edit') {
             $this->model = post('team_id');

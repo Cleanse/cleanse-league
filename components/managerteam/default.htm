@@ -2,22 +2,22 @@
     {% partial __SELF__~'::team-flash' %}
 </div>
 
-<div class="league-admin-bg row">
+<div class="row league-admin-bg">
     <div class="col-md-4 mb-2 mb-xs-0">
         <div class="list-group">
-            <a href="/manager" class="list-group-item pr-5 active">
+            <a href="/manager" class="list-group-item list-group-item-action pr-5 active">
                 <i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;&nbsp;Back to Manager Panel
             </a>
             <a href="javascript:;"
                data-request="{{ __SELF__ }}::onUpdate"
                data-request-data="mode: 'list'"
                data-request-update="'{{ __SELF__ ~ '::list' }}': '#editor-area'"
-               class="list-group-item">Teams</a>
+               class="list-group-item list-group-item-action">Teams</a>
             <a href="javascript:;"
                data-request="{{ __SELF__ }}::onUpdate"
                data-request-data="mode: 'create'"
                data-request-update="'{{ __SELF__ ~ '::create' }}': '#editor-area'"
-               class="list-group-item">Create Team</a>
+               class="list-group-item list-group-item-action">Create Team</a>
         </div>
     </div>
 
