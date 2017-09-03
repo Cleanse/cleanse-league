@@ -40,13 +40,14 @@ class Plugin extends PluginBase
             'Cleanse\League\Components\SeasonSchedule' => 'cleanseLeagueSeasonSchedule',
 
             //manager
-            'Cleanse\League\Components\ManagerPanel' => 'cleanseLeagueManager',
+            'Cleanse\League\Components\ManagerPanel' => 'cleanseLeagueManagerPanel',
             'Cleanse\League\Components\ManagerLeague' => 'cleanseLeagueManagerLeague',
-            'Cleanse\League\Components\ManagerTeam' => 'cleanseLeagueManagerTeam',
-            'Cleanse\League\Components\ManagerPlayer' => 'cleanseLeagueManagerPlayer',
             'Cleanse\League\Components\ManagerChampionship' => 'cleanseLeagueManagerChampionship',
             'Cleanse\League\Components\ManagerSeason' => 'cleanseLeagueManagerSeason',
-            'Cleanse\League\Components\ManagerSeasonSchedule' => 'cleanseLeagueManagerSeasonSchedule',
+            'Cleanse\League\Components\ManagerMatch' => 'cleanseLeagueManagerMatch',
+            'Cleanse\League\Components\ManagerMatchList' => 'cleanseLeagueManagerMatchList',
+            'Cleanse\League\Components\ManagerTeam' => 'cleanseLeagueManagerTeam',
+            'Cleanse\League\Components\ManagerPlayer' => 'cleanseLeagueManagerPlayer',
 
             //test
             'Cleanse\League\Components\TestBracket' => 'leagueBracket',
