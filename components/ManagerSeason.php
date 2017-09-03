@@ -7,22 +7,23 @@ use Input;
 use Redirect;
 use Session;
 use Cms\Classes\ComponentBase;
-use Cleanse\League\Models\Season;
-use Cleanse\League\Models\Championship;
-use Cleanse\League\Models\Team;
-use Cleanse\League\Models\EventTeam;
 use Cleanse\League\Classes\Scheduler\SeasonScheduler as Scheduler;
+use Cleanse\League\Models\Championship;
+use Cleanse\League\Models\EventTeam;
+use Cleanse\League\Models\Season;
+use Cleanse\League\Models\Team;
 
 class ManagerSeason extends ComponentBase
 {
     public $mode;
     public $model;
+    public $post;
 
     public function componentDetails()
     {
         return [
-            'name' => 'PvPaissa League Manager Log',
-            'description' => 'PvPaissa League Manager log of actions.'
+            'name' => 'League Manager: Season',
+            'description' => 'Manage the league\'s seasonal related actions.'
         ];
     }
 
@@ -130,17 +131,30 @@ class ManagerSeason extends ComponentBase
 
     protected function modeSchedule()
     {
+        $check = Season::whereNull('finished_at')
+            ->has('matches')
+            ->first();
+
+        if ($check) {
+            Flash::error('Season: "' . $check->name . '" has a schedule already.');
+
+            Session::flash('flashSuccess', true);
+
+            return Redirect::refresh();
+        }
+
         $this->page['season'] = Season::whereNull('finished_at')->get();
     }
 
     public function onCreateSeason()
     {
-        $c = post('championship');
+        $cId = post('championship');
+        $seasonName = post('name');
 
-        $championship = Championship::find($c);
+        $championship = Championship::find($cId);
 
         $season = $championship->seasons()->create([
-            'name' => post('name')
+            'name' => $seasonName
         ]);
 
         Flash::success('Season: "' . $season->name . '" was created.');
@@ -169,8 +183,6 @@ class ManagerSeason extends ComponentBase
     {
         $team_id = post('team_id');
         $season_id = post('season_id');
-
-        //Create if
 
         $season = Season::with('teams')->find($season_id);
         $season->teams()->create([
@@ -226,86 +238,18 @@ class ManagerSeason extends ComponentBase
         $this->page['eteams'] = $seasonTeams;
     }
 
-    public function getSearchFormAttributes()
-    {
-        $attributes = [];
-
-        $attributes['method'] = 'POST';
-        $attributes['data-request'] = $this->alias . '::onSearchForTeam';
-        $attributes['data-request-update'] = "'" . $this->alias . "::team-search':'#team-list'";
-        $attributes['class'] = 'form-inline';
-
-        return $attributes;
-    }
-
-    public function onSearchForTeam()
-    {
-        $searchData = post('search');
-        $season_id = post('season');
-
-        if (!$searchData) {
-            throw new ValidationException(['name' => 'You must enter at least part of a team\'s name!']);
-        }
-
-        $seasonTeams = DB::table('cleanse_league_event_teams')
-            ->join('cleanse_league_teams', 'cleanse_league_event_teams.team_id', '=', 'cleanse_league_teams.id')
-            ->select('cleanse_league_event_teams.id', 'cleanse_league_event_teams.team_id', 'cleanse_league_teams.name')
-            ->where('cleanse_league_event_teams.teamable_type', 'season')
-            ->where('cleanse_league_event_teams.teamable_id', $season_id)
-            ->orderBy('cleanse_league_teams.name', 'asc')
-            ->get();
-
-        $idVals = [];
-        foreach ($seasonTeams as $team) {
-            $idVals[] = $team->team_id;
-        }
-
-        $list = Team::where('name', 'like', '%' . $searchData . '%')
-            ->whereNotIn('id', $idVals)
-            ->orderBy('name', 'asc')->get();
-
-        $this->page['items'] = $list;
-        $this->page['season'] = $season_id;
-        $this->page['search'] = $searchData;
-    }
-
-    /**
-     * @return array
-     */
-    public function getScheduleFormAttributes()
-    {
-        $attributes = [];
-
-        $attributes['method'] = 'POST';
-        $attributes['data-request'] = $this->alias . '::onFormSendSchedule';
-        $attributes['data-request-update'] = "'" . $this->alias . "::cleanse-message':'#cleanse-league-form-message','"
-            . $this->alias . "::schedule':'#editor-area'";
-        $attributes['data-request-confirm'] = 'Is the information correct?';
-
-        return $attributes;
-    }
-
-    /**
-     * Schedule maker method
-     */
-    public function onFormSendSchedule()
+    public function onCreateSchedule()
     {
         $this->post = Input::all();
 
         $schedule = new Scheduler;
 
-        try {
-            $this->page['result'] = $schedule->createSchedule($this->post);
+        $schedule->createSchedule($this->post);
 
-            Flash::success('Schedule was created.');
-            Session::flash('flashSuccess', true);
+        Flash::success('Schedule was created.');
+        Session::flash('flashSuccess', true);
 
-            $this->post = [];
-        } catch (Exception $e) {
-            $this->page['result'] = 'Caught exception: ' . $e->getMessage();
-
-            Flash::error('Something went wrong creating schedule: ' . $e->getMessage());
-        }
+        return Redirect::to('/manager/match');
     }
 
     protected function getSeasonsList()
