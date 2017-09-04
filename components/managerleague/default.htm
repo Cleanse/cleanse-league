@@ -1,39 +1,44 @@
 {% if user.findByRole('league-admin') %}
-<div id="cleanse-league-form-message">
-    {% partial __SELF__~'::flash-message' %}
-</div>
+<div class="row league-admin-bg">
+    <div class="col-md-4 mb-2 mb-xs-0">
+        <div class="list-group">
+            <a href="/manager" class="list-group-item list-group-item-action pr-5 active">
+                <i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;&nbsp;Back to Manager Panel
+            </a>
+        </div>
+    </div>
 
-<nav class="breadcrumb">
-    <a class="breadcrumb-item" href="/manager">Back to Manager</a>
-    <span class="breadcrumb-item active">Edit {{ league.name }}</span>
-</nav>
-
-<div id="cleanse-league-form" class="row league-admin-bg">
-    <div class="col-12">
-        {{ form_open({ request: __SELF__~'::onFormSend' }) }}
-        <div class="form-group">
-            <label for="name">League Name</label>
-            <input class="form-control" id="name" name="name" placeholder="Enter a name for the league."
-                   aria-describedby="leagueNameHelp" value="{{ league.name }}" required>
-            <small id="leagueNameHelp" class="form-text text-muted">Enter a name for the league.</small>
+    <div id="editor-area" class="col-md-8">
+        <div id="cleanse-league-form-message">
+            {% partial __SELF__~'::flash-message' %}
         </div>
 
-        <div class="form-group">
-            <label for="slug">League Slug</label>
-            <input class="form-control" id="slug" name="slug" placeholder="Enter a slug for the league."
-                   aria-describedby="leagueSlugHelp" value="{{ league.slug }}" required>
-            <small id="leagueSlugHelp" class="form-text text-muted">Enter a slug for the league.</small>
-        </div>
+        {{ form_open({ request: __SELF__~'::onEditLeague' }) }}
+            <div class="form-group">
+                <label for="name">League Name</label>
+                <input class="form-control" id="name" name="name" placeholder="Enter a name for the league."
+                       aria-describedby="leagueNameHelp" value="{{ league.name }}" required>
+                <small id="leagueNameHelp" class="form-text text-muted">Enter a name for the league.</small>
+            </div>
 
-        <div class="form-group">
-            <label for="about">About</label>
-            <textarea class="form-control" id="about" name="about" rows="5">{{ league.about }}</textarea>
-            <p id="leagueAboutHelp" class="form-text small text-muted">
-                Optional. Fills data in for the '/leage/about' page.
-            </p>
-        </div>
+            <div class="form-group">
+                <label for="slug">League Slug</label>
+                <input class="form-control" id="slug" name="slug" placeholder="Enter a slug for the league."
+                       aria-describedby="leagueSlugHelp" value="{{ league.slug }}" required>
+                <small id="leagueSlugHelp" class="form-text text-muted">Enter a slug for the league.</small>
+            </div>
 
-        <button data-attach-loading class="oc-loader btn btn-primary">Update League Details</button>
+            <div class="form-group">
+                <label for="about">About</label>
+                <textarea class="form-control" id="about" name="about" rows="5">{{ league.about }}</textarea>
+                <p id="leagueAboutHelp" class="form-text small text-muted">
+                    Optional. Use <a href="https://help.github.com/articles/basic-writing-and-formatting-syntax/"
+                                     target="_blank">Markdown</a>.
+                    Fills data in for the <a href="/league/about" target="_blank">about page</a>.
+                </p>
+            </div>
+
+            <button data-attach-loading class="oc-loader btn btn-primary">Update League Details</button>
 
         {{ form_close() }}
     </div>

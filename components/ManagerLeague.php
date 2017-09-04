@@ -1,7 +1,6 @@
 <?php namespace Cleanse\League\Components;
 
 use Flash;
-use Input;
 use Redirect;
 use Session;
 use Cms\Classes\ComponentBase;
@@ -9,9 +8,6 @@ use Cleanse\League\Models\League;
 
 class ManagerLeague extends ComponentBase
 {
-    private $post = [];
-    private $postData = [];
-
     public function componentDetails()
     {
         return [
@@ -27,31 +23,26 @@ class ManagerLeague extends ComponentBase
         $this->page['league'] = League::find(1);
     }
 
-    /**
-     * Escape HTML entities in values.
-     */
-    private function setPostData()
+    public function onEditLeague()
     {
-        foreach (Input::all() as $key => $value) {
-            $this->postData[$key] = [
-                'value' => e(Input::get($key))
-            ];
+        $slug = post('slug');
+        $about = post('about');
+
+        $editLeague = League::find(1);
+
+        $editLeague->name = post('name');
+
+        if (!is_null($slug)) {
+            $editLeague->slug = post('slug');
         }
-    }
 
-    /**
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function onFormSend()
-    {
-        $this->post = Input::all();
-        $this->setPostData($this->post);
+        if (!is_null($about)) {
+            $editLeague->about = post('about');
+        }
 
-        $league = League::find(1);
+        $editLeague->save();
 
-        $league->storeFormData($this->postData);
-
-        Flash::success('Your league information was updated.');
+        Flash::success('League ' . $editLeague->name . ' was edited.');
 
         Session::flash('flashSuccess', true);
 
