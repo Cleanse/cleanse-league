@@ -43,38 +43,4 @@ class League extends Model
     {
         $this->about_html = Markdown::parse(trim($this->about));
     }
-
-    /**
-     * @param $data
-     */
-    public function storeFormData($data)
-    {
-        $name_field_value = NULL;
-        $slug_field_value = NULL;
-        $about_field_value = NULL;
-
-        foreach ($data as $key => $value) {
-            if (substr($key, 0, 1) == '_') {
-                continue;
-            }
-            $output[$key] = e($value['value']);
-
-            if (empty($name_field_value) and $key == 'name') {
-                $name_field_value = e($value['value']);
-            }
-
-            if (empty($slug_field_value) and $key == 'slug') {
-                $slug_field_value = e($value['value']);
-            }
-
-            if (empty($about_field_value) and $key == 'about') {
-                $about_field_value = e($value['value']);
-            }
-        }
-
-        $this->name = $name_field_value;
-        $this->slug = $slug_field_value;
-        $this->about = $about_field_value;
-        $this->save();
-    }
 }
