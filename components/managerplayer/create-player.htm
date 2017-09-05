@@ -1,0 +1,12 @@
+{{ form_open({ request: __SELF__~'::onCreatePlayer' }) }}
+
+<div class="form-group">
+    <label for="name">Player Name</label>
+    <input class="form-control" id="name" name="name" placeholder="Enter a name for the player."
+           aria-describedby="playerNameHelp" required>
+    <small id="playerNameHelp" class="form-text text-muted">Enter a name for the player.</small>
+</div>
+
+<button type="submit" data-attach-loading class="oc-loader btn btn-primary">Create Player</button>
+
+{{ form_close() }}

@@ -1,16 +1,13 @@
 <?php namespace Cleanse\League\Components;
 
 use Flash;
-use Input;
 use Redirect;
 use Session;
 use Cms\Classes\ComponentBase;
-use System\Models\File;
 use Cleanse\League\Models\Player;
 
 class ManagerPlayer extends ComponentBase
 {
-    public $mode;
     public $model;
 
     public function componentDetails()
@@ -19,32 +16,6 @@ class ManagerPlayer extends ComponentBase
             'name' => 'Manage League Players',
             'description' => 'Manage the league\'s players.'
         ];
-    }
-
-    /**
-     * Uploader inject
-     */
-    public function init()
-    {
-        if (!isset($this->model)) {
-            $player = Player::first(['id']);
-
-            if (!$player) {
-                return;
-            }
-
-            $this->model = $player->id;
-        }
-
-        $model = $this->model;
-
-        $component = $this->addComponent(
-            'Cleanse\Uploader\Components\ImageUploader',
-            'cleanseImageUploader',
-            ['deferredBinding' => false]
-        );
-
-        $component->bindModel('avatar', Player::find($model));
     }
 
     public function onRun()
@@ -59,15 +30,13 @@ class ManagerPlayer extends ComponentBase
         $mode = post('mode');
 
         if (!$mode) {
-            $this->page['mode'] = 'list';
+            $mode = 'list';
         }
 
         $this->page['mode'] = $mode;
 
         if ($mode == 'edit') {
             $this->model = post('player_id');
-
-            $this->init();
 
             $this->page['player'] = Player::find($this->model);
         }
@@ -80,7 +49,7 @@ class ManagerPlayer extends ComponentBase
     protected function getPlayersList()
     {
         return Player::orderBy('name', 'asc')
-            ->paginate(20);
+            ->paginate(50);
     }
 
     public function onCreatePlayer()
@@ -89,17 +58,6 @@ class ManagerPlayer extends ComponentBase
         $newPlayer->name = post('name');
 
         $newPlayer->save();
-
-        if (Input::hasFile('avatar')) {
-            $uploadedFile = Input::file('avatar');
-
-            $file = new File;
-            $file->data = $uploadedFile;
-            $file->is_public = true;
-            $file->save();
-
-            $newPlayer->avatar()->add($file);
-        }
 
         Flash::success('Player ' . $newPlayer->name . ' was created.');
 
@@ -132,7 +90,7 @@ class ManagerPlayer extends ComponentBase
 
         $attributes['method'] = 'POST';
         $attributes['data-request'] = $this->alias . '::onSearchForPlayer';
-        $attributes['data-request-update'] = "'" . $this->alias . "::players':'#team-list'";
+        $attributes['data-request-update'] = "'" . $this->alias . "::search-results':'#team-list'";
         $attributes['class'] = 'justify-content-end';
 
         return $attributes;
