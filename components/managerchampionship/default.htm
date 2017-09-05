@@ -1,0 +1,21 @@
+<div class="row league-admin-bg">
+    <div class="col-md-4 mb-2">
+        {% partial __SELF__~'::panel-navigation' %}
+    </div>
+
+    <div id="editor-area" class="col-md-8">
+        <div id="cleanse-league-form-message">
+            {% partial __SELF__~'::flash-message' %}
+        </div>
+
+        <small>Current Championship:</small>
+        <h4>{{ championship.name }}</h4>
+        <p>
+            <span class="small">Current Season:</span>
+            <a href="/manager/season">
+                {{ championship.currentSeason.name ?? 'Create Season' }}
+                <i class="fa fa-link"></i>
+            </a>
+        </p>
+    </div>
+</div>

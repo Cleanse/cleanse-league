@@ -1,0 +1,17 @@
+{{ form_open({ request: __SELF__~'::onModifyRules' }) }}
+
+<input type="hidden" name="id" value="{{ championship.id }}">
+
+<div class="form-group">
+    <label for="rules">Championship Series Rules</label>
+    <textarea class="form-control" id="rules" name="rules" rows="8">{{ championship.championship_rules }}</textarea>
+    <p id="championshipRulesHelp" class="form-text small text-muted">
+        Optional. Use <a href="https://help.github.com/articles/basic-writing-and-formatting-syntax/"
+                         target="_blank">Markdown</a>.
+        Fills data in for the <a href="/league/rules" target="_blank">rules page</a>.
+    </p>
+</div>
+
+<button type="submit" data-attach-loading class="oc-loader btn btn-primary">Add / Update Rules</button>
+
+{{ form_close() }}

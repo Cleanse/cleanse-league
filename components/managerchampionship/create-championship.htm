@@ -1,0 +1,28 @@
+{{ form_open({ request: __SELF__~'::onCreateChampionship' }) }}
+
+<div class="form-group">
+    <label for="league">League Name</label>
+    <select class="form-control" id="league" name="league_id">
+        {% for l in leagues %}
+        <option value="{{ l.id }}">{{ l.name }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="name">Championship Name</label>
+    <input class="form-control" id="name" name="name" placeholder="Enter a name for the championship."
+           aria-describedby="championshipNameHelp" required>
+    <small id="championshipNameHelp" class="form-text text-muted">Enter a name for the championship.</small>
+</div>
+
+<div class="form-group">
+    <label for="slug">Championship Slug</label>
+    <input class="form-control" id="slug" name="slug" placeholder="Enter a slug for the championship."
+           aria-describedby="championshipSlugHelp">
+    <small id="championshipSlugHelp" class="form-text text-muted">Enter a slug for the championship.</small>
+</div>
+
+<button type="submit" data-attach-loading class="oc-loader btn btn-primary">Create Championship</button>
+
+{{ form_close() }}

@@ -1,0 +1,36 @@
+<div class="list-group mb-2">
+    <a href="/manager" class="list-group-item list-group-item-action pr-5 active">
+        <i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;&nbsp;Back to Manager Panel
+    </a>
+    <a href="/manager/championship"
+       class="list-group-item list-group-item-action justify-content-between">
+        View Current Championship&nbsp;&nbsp;&nbsp;<i class="fa fa-home"></i>
+    </a>
+    <a href="javascript:;"
+       data-request="{{ __SELF__ }}::onUpdate"
+       data-request-data="mode: 'create'"
+       data-request-update="'{{ __SELF__ ~ '::create-championship' }}': '#editor-area'"
+       class="list-group-item list-group-item-action">Create Championship</a>
+    <a href="javascript:;"
+       data-request="{{ __SELF__ }}::onUpdate"
+       data-request-data="mode: 'edit', championship_id: {{ championship.id }}"
+       data-request-update="'{{ __SELF__ ~ '::edit-championship' }}': '#editor-area'"
+       class="list-group-item list-group-item-action">Edit Championship</a>
+    <a href="javascript:;"
+       data-request="{{ __SELF__ }}::onUpdate"
+       data-request-data="mode: 'rules'"
+       data-request-update="'{{ __SELF__ ~ '::create-rules' }}': '#editor-area'"
+       class="list-group-item list-group-item-action">Add / Update Rules</a>
+</div>
+
+<!--<div class="dropdown">-->
+    <!--<button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"-->
+            <!--data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+        <!--Select Championship Season-->
+    <!--</button>-->
+    <!--<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
+        <!--{% for championship in championships %}-->
+        <!--<a class="dropdown-item" href="#">{{ championship.name }}</a>-->
+        <!--{% endfor %}-->
+    <!--</div>-->
+<!--</div>-->

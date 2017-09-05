@@ -27,7 +27,7 @@ class Championship extends Model
      *
      * @var array
      */
-    protected $fillable = ['championship_rules'];
+    protected $fillable = ['name', 'slug', 'championship_rules'];
 
     /*
      * Validation
@@ -77,28 +77,8 @@ class Championship extends Model
         return $result;
     }
 
-    public function storeFormData($data)
+    public function currentSeason()
     {
-        $name_field_value = NULL;
-        $rules_field_value = NULL;
-
-        foreach ($data as $key => $value) {
-            if (substr($key, 0, 1) == '_') {
-                continue;
-            }
-            $output[$key] = e($value['value']);
-
-            if (empty($name_field_value) and $key == 'name') {
-                $name_field_value = e($value['value']);
-            }
-
-            if (empty($rules_field_value) and $key == 'rules') {
-                $rules_field_value = e($value['value']);
-            }
-        }
-
-        $this->name = $name_field_value;
-        $this->championship_rules = $rules_field_value;
-        $this->save();
+        return $this->seasons()->whereNull('finished_at')->first();
     }
 }
