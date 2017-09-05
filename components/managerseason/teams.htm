@@ -18,12 +18,16 @@
                 <div class="league-team-search mb-2">
                     {{ form_open(__SELF__.getSearchFormAttributes) }}
 
-                    <label class="sr-only" for="search">Search</label>
-                    <input class="form-control mr-1" id="search" name="search" placeholder="Search for a team."
-                           value="{{ search }}" required>
                     <input type="hidden" name="season" value="{{ season }}">
 
+                    <div class="form-group">
+                        <label class="sr-only" for="search">Search</label>
+                        <input class="form-control mr-1" id="search" name="search" placeholder="Search for a team."
+                               value="{{ search }}" required>
+                    </div>
+
                     <button data-attach-loading class="oc-loader btn btn-primary">Search</button>
+
                     <a href="javascript:;"
                        data-request="{{ __SELF__ }}::onUpdate"
                        data-request-data="mode: 'teams'"
@@ -48,7 +52,9 @@
                  id="create-game"
                  role="tabpanel">
                 <h5 class="sr-only">Create a team.</h5>
-                {{ form_open({ request: __SELF__~'::onCreateTeam', files: true }) }}
+                {{ form_open(__SELF__.getCreateTeamFormAttributes) }}
+
+                <input type="hidden" name="season_id" value="{{ season }}">
 
                 <div class="form-group">
                     <label for="name">Team Name</label>
@@ -62,22 +68,6 @@
                     <input class="form-control" id="initials" name="initials" placeholder="Enter some initials for the team."
                            aria-describedby="leagueSlugHelp" value="{{ team.initials }}">
                     <small id="leagueSlugHelp" class="form-text text-muted">Enter initials for the team.</small>
-                </div>
-
-                <div class="input-group image-preview mb-2">
-                    <input class="form-control image-preview-filename">
-                    <span class="input-group-btn">
-        <button type="button" class="btn btn-primary image-preview-clear" style="display:none;">
-            <i class="fa fa-remove"></i> Clear
-        </button>
-    </span>
-                    <span class="input-group-btn">
-        <div class="btn btn-primary image-preview-input">
-            <i class="fa fa-folder-open"></i>
-            <span class="image-preview-input-title">Choose File</span>
-            <input type="file" accept="image/png, image/jpeg, image/gif" name="logo"/>
-        </div>
-    </span>
                 </div>
 
                 <button type="submit" data-attach-loading class="oc-loader btn btn-primary">Create Team</button>

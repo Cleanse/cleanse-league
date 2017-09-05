@@ -1,13 +1,32 @@
-<h1>Generated Schedule</h1>
-<div id="test-schedule">
-    {% for key, r in result %}
-    <p><strong>Week {{ key + 1 }}</strong></p>
-        {% for m in r %}
-        <p>{{ m[0]|join(', ') }} vs {{ m[1]|join(', ') }}</p>
+<h1>Create Schedule for Season</h1>
+{{ form_open({ request: __SELF__~'::onCreateSchedule' }) }}
+
+<div class="form-group">
+    <label for="season">Season</label>
+    <select class="form-control" id="season" name="season">
+        {% for s in season %}
+        <option value="{{ s.id }}">{{ s.name }}</option>
         {% endfor %}
-    {% endfor %}
+    </select>
 </div>
 
+<div class="form-group">
+    <label for="start">Start Date</label>
+    <input class="form-control" id="start" name="start" placeholder="Enter season start date."
+           aria-describedby="startDateHelp" type="week" required>
+    <small id="startDateHelp" class="form-text text-muted">Use form dropdown on the far right.</small>
+</div>
+
+<div class="form-group">
+    <label for="weeks">Season Length</label>
+    <input class="form-control" id="weeks" name="weeks"
+           aria-describedby="weeksHelp" placeholder="Enter # of weeks." required>
+    <small id="weeksHelp" class="form-text text-muted">Enter # of weeks.</small>
+</div>
+
+<button data-attach-loading class="oc-loader btn btn-primary">Create Seasonal Schedule</button>
+
+{{ form_close() }}
 <hr>
 <a href="javascript:;"
    data-request="{{ __SELF__ }}::onUpdate"
