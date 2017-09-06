@@ -1,4 +1,4 @@
-<?php namespace Cleanse\League\Classes;
+<?php namespace Cleanse\League\Classes\Scheduler;
 
 class Scheduler
 {

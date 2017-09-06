@@ -59,6 +59,6 @@ class Match extends Model
     ];
 
     public $hasMany = [
-        'games' => 'Cleanse\League\Models\Game'
+        'games' => 'Cleanse\League\Models\MatchGame'
     ];
 }

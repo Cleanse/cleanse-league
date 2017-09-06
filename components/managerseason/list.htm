@@ -1,3 +1,4 @@
+<h5>Select a season below to edit.</h5>
 <div class="d-flex flex-row justify-content-end flex-column flex-md-row">
     <div class="team-list mr-auto mb-2 mb-md-0">
         <div id="team-list" class="list-group">
@@ -7,7 +8,11 @@
                data-request-data="mode: 'edit', season_id: '{{ season.id }}'"
                data-request-update="'{{ __SELF__ ~ '::edit' }}': '#editor-area'"
                class="list-group-item list-group-item-action justify-content-between">
-               <span><i class="fa fa-flag-checkered"></i> {{ season.name }}</span> <i class="fa fa-edit"></i>
+               <span>
+                   {% if season.winner_id %}
+                   <i class="fa fa-flag-checkered"></i>
+                   {% endif %}
+                   {{ season.name }}</span> <i class="fa fa-edit"></i>
             </a>
             {% endfor %}
         </div>

@@ -1,8 +1,15 @@
 <div class="jumbotron jumbotron-fluid jumbotron-league-bg">
     <div class="container">
-        <h1 class="display-3">{{ team.name }}</h1>
-        <p class="lead">Since {{ team.created_at|date('M d, Y') }}</p>
-        <hr>
+        <div class="row mb-1">
+            <div class="col-10">
+                <h1 class="display-3">{{ team.name }}</h1>
+                <p class="lead">Since {{ team.created_at|date('M d, Y') }}</p>
+            </div>
+            <div class="col-2">
+                <img class="img-fluid" src="{{ team.logo.getPath() }}">
+            </div>
+        </div>
+
         <h3>Seasonal Results</h3>
         <ul class="list-group">
             <li class="list-group-item">

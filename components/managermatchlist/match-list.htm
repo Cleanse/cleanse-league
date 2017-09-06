@@ -1,0 +1,35 @@
+<div class="d-flex flex-row justify-content-end flex-column flex-md-row">
+    <div class="team-list mr-auto mb-2 mb-md-0">
+        <div id="match-list" class="list-group">
+            {% for match in matches %}
+            <a href="/manager/match/{{ match.id }}"
+               class="list-group-item list-group-item-action justify-content-between">
+                <span>{{ match.takes_place_at|date('M d, Y') }}:
+                      {{ match.one.team.name }} vs {{ match.two.team.name }}</span> <i class="fa fa-edit"></i>
+            </a>
+            {% else %}
+            <a href="#"
+               class="list-group-item">No matches need updating.</a>
+            {% endfor %}
+        </div>
+
+        <div class="cleanse-league">
+            {{ seasons.render|raw }}
+        </div>
+    </div>
+
+    <div class="team-search ml-md-2">
+        <div class="league-team-search">
+            {{ form_open(__SELF__.getSearchFormAttributes) }}
+
+            <label class="sr-only" for="search">Search</label>
+            <input class="form-control mb-2" id="search" name="search" placeholder="Search for a match."
+                   required>
+
+            <button data-attach-loading class="oc-loader btn btn-primary">Search</button>
+
+            {{ form_close() }}
+        </div>
+        <p>Enter a team name to search for past matches.</p>
+    </div>
+</div>

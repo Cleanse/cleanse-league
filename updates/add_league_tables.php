@@ -24,8 +24,6 @@ class AddLeagueTables extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('slug')->unique();
-            $table->text('vision')->nullable();
-            $table->text('vision_html')->nullable();
             $table->text('about')->nullable();
             $table->text('about_html')->nullable();
             $table->timestamps();
@@ -36,11 +34,11 @@ class AddLeagueTables extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('league_id')->unsigned()->index();
-            $table->integer('winner_id')->unsigned()->nullable();
             $table->string('name');
             $table->string('slug')->unique();
             $table->text('championship_rules')->nullable();
             $table->text('rules_html')->nullable();
+            $table->integer('winner_id')->unsigned()->nullable();
             $table->timestamp('finished_at')->nullable();
             $table->timestamps();
             $table->foreign('league_id')->references('id')->on('cleanse_league_leagues');

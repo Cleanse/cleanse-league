@@ -1,4 +1,4 @@
-<?php namespace Cleanse\League\Classes\Tournament;
+<?php namespace Cleanse\League\Classes\Scheduler;
 
 use Log;
 use Cleanse\League\Classes\Scheduler;

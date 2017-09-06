@@ -1,0 +1,7 @@
+{% for m in items %}
+<a href="/manager/match/{{ m.id }}"
+   class="list-group-item list-group-item-action justify-content-between">
+    <span>{{ m.takes_place_at|date('M d, Y') }}: {{ m.one.team.name }} vs {{ m.two.team.name }}</span>
+    <i class="fa fa-edit"></i>
+</a>
+{% endfor %}

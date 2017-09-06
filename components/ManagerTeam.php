@@ -11,40 +11,13 @@ use Cleanse\League\Models\Team;
 class ManagerTeam extends ComponentBase
 {
     public $mode;
-    public $model;
 
     public function componentDetails()
     {
         return [
-            'name' => 'Manage League Teams',
-            'description' => 'Manage the league\'s teams.'
+            'name' => 'Lists League Teams to Manage',
+            'description' => 'View a list of the league\'s teams.'
         ];
-    }
-
-    /**
-     * Uploader inject
-     */
-    public function init()
-    {
-        if (!isset($this->model)) {
-            $team = Team::first(['id']);
-
-            if (!$team) {
-                return;
-            }
-
-            $this->model = $team->id;
-        }
-
-        $model = $this->model;
-
-        $component = $this->addComponent(
-            'Cleanse\Uploader\Components\ImageUploader',
-            'cleanseImageUploader',
-            ['deferredBinding' => false]
-        );
-
-        $component->bindModel('logo', Team::find($model));
     }
 
     public function onRun()
@@ -65,14 +38,6 @@ class ManagerTeam extends ComponentBase
 
         $this->page['mode'] = $mode;
 
-        if ($mode == 'edit') {
-            $this->model = post('team_id');
-
-            $this->init();
-
-            $this->page['team'] = Team::find($this->model);
-        }
-
         if ($mode == 'list') {
             $this->page['teams'] = $this->getTeamsList();
         }
@@ -86,7 +51,7 @@ class ManagerTeam extends ComponentBase
 
     public function onCreateTeam()
     {
-        $newTeam = new Team();
+        $newTeam = new Team;
         $newTeam->name = post('name');
 
         if (post('initials') !== '') {
@@ -113,32 +78,13 @@ class ManagerTeam extends ComponentBase
         return Redirect::refresh();
     }
 
-    public function onEditTeam()
-    {
-        $editTeam = Team::find(post('team_id'));
-
-        $editTeam->name = post('name');
-        $editTeam->initials = post('initials');
-
-        $editTeam->save();
-
-        Flash::success('Team ' . $editTeam->name . ' was edited.');
-
-        Session::flash('flashSuccess', true);
-
-        return Redirect::refresh();
-    }
-
-    /**
-     * @return array
-     */
     public function getSearchFormAttributes()
     {
         $attributes = [];
 
         $attributes['method'] = 'POST';
         $attributes['data-request'] = $this->alias . '::onSearchForTeam';
-        $attributes['data-request-update'] = "'" . $this->alias . "::teams':'#team-list'";
+        $attributes['data-request-update'] = "'" . $this->alias . "::search-results':'#team-list'";
         $attributes['class'] = 'justify-content-end';
 
         return $attributes;

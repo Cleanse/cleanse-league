@@ -9,22 +9,22 @@ use Cleanse\League\Models\Tournament;
 use Cleanse\League\Models\Match;
 use Cleanse\League\Models\Team;
 use Cleanse\League\Models\EventTeam;
-use Cleanse\League\Classes\Season\SeasonScheduler as Scheduler;
+use Cleanse\League\Classes\Scheduler\SeasonScheduler as Scheduler;
 
 class SeedCoreTables extends Seeder
 {
     public function run()
     {
-        $tryhard = Event::firstOrCreate([
-            'name' => 'Team Tryhard Monthly'
-        ]);
-
-        /**
-         * Create test tournaments.
-         */
-        $tryhard->tourneys()->firstOrCreate([
-            'name' => 'Team Tryhard Monthly Tourney'
-        ]);
+//        $tryhard = Event::firstOrCreate([
+//            'name' => 'Team Tryhard Monthly'
+//        ]);
+//
+//        /**
+//         * Create test tournaments.
+//         */
+//        $tryhard->tourneys()->firstOrCreate([
+//            'name' => 'Team Tryhard Monthly Tourney'
+//        ]);
 
         $aether = League::firstOrCreate([
             'name' => 'Aether League',
@@ -32,47 +32,46 @@ class SeedCoreTables extends Seeder
                         future give PVP more support.'
         ]);
 
-        $championship = $aether->championships()->firstOrCreate([
-            'name' => '2017 Aether League Championship Series',
-            'championship_rules' => '**No ACT!**'
-        ]);
-
-        $season = $championship->seasons()->firstOrCreate([
-            'name' => 'Inaugural Season'
-        ]);
+//        $championship = $aether->championships()->firstOrCreate([
+//            'name' => '2017 Aether League Championship Series',
+//            'championship_rules' => '**No ACT!**'
+//        ]);
+//
+//        $season = $championship->seasons()->firstOrCreate([
+//            'name' => 'Inaugural Season'
+//        ]);
 
         /**
          * Add some teams.
          */
-        $teams = [
-            'Aether' => 'AET',
-            'Chaos' => 'CHS',
-            'Elemental' => 'ELE',
-            'Gaia' => 'GAI',
-            'Mana' => 'MNA',
-            'Primal' => 'PRM'
-        ];
-
-        foreach ($teams as $team => $ini) {
-            $t_{$team} = Team::firstOrCreate([
-                'name' => $team,
-                'initials' => $ini
-            ]);
-
-            $season->teams()->firstOrCreate([
-                'team_id' => $t_{$team}->id
-            ]);
-        }
+//        $teams = [
+//            'Aether',
+//            'Chaos',
+//            'Elemental',
+//            'Gaia',
+//            'Mana',
+//            'Primal'
+//        ];
+//
+//        foreach ($teams as $team) {
+//            $t_{$team} = Team::firstOrCreate([
+//                'name' => $team
+//            ]);
+//
+//            $season->teams()->firstOrCreate([
+//                'team_id' => $t_{$team}->id
+//            ]);
+//        }
 
         /**
          * Create Seasonal Schedule
          */
-        $schedReqs = [
-            'season' => $season->id,
-            'weeks' => 12,
-            'start' => '2017-8-13'
-        ];
-        $schedule = new Scheduler;
-        $schedule->createSchedule($schedReqs);
+//        $schedReqs = [
+//            'season' => $season->id,
+//            'weeks' => 12,
+//            'start' => '2017-8-13'
+//        ];
+//        $schedule = new Scheduler;
+//        $schedule->createSchedule($schedReqs);
     }
 }

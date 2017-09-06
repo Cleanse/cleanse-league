@@ -1,0 +1,15 @@
+{{ form_open({ request: __SELF__~'::onUpdateMatch' }) }}
+
+<input type="hidden" name="match_id" value="{{ match.id }}">
+<input type="hidden" name="mode" value="update">
+
+<div class="form-group">
+    <label for="name">Match Name</label>
+    <input class="form-control" id="name" name="name" placeholder="Enter a name for the match."
+           aria-describedby="matchNameHelp" value="{{ match.id }}" required>
+    <small id="matchNameHelp" class="form-text text-muted">Enter a name for the match.</small>
+</div>
+
+<button data-attach-loading class="oc-loader btn btn-primary">Update Match</button>
+
+{{ form_close() }}

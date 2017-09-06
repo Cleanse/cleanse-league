@@ -8,10 +8,18 @@ use Model;
  * @property integer $team_one
  * @property integer $team_two
  * @property integer $winner_id
+ * @property string  $vod
  */
 class MatchGame extends Model
 {
     public $table = 'cleanse_league_match_games';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['match_id', 'team_one', 'team_two', 'winner_id', 'vod'];
 
     /***
      * Screenshot
@@ -19,5 +27,23 @@ class MatchGame extends Model
      */
     public $attachOne = [
         'screenshot' => ['System\Models\File']
+    ];
+
+    public $hasOne = [
+        'one' => [
+            'Cleanse\League\Models\EventTeam',
+            'key' => 'id',
+            'otherKey' => 'team_one'
+        ],
+        'two' => [
+            'Cleanse\League\Models\EventTeam',
+            'key' => 'id',
+            'otherKey' => 'team_two'
+        ],
+        'winner' => [
+            'Cleanse\League\Models\EventTeam',
+            'key' => 'id',
+            'otherKey' => 'winner_id'
+        ]
     ];
 }

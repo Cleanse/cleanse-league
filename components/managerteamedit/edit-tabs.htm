@@ -1,0 +1,108 @@
+<div class="team-pool">
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#edit" role="tab">Edit Team Details</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#roster" role="tab">Manage Roster</a>
+        </li>
+    </ul>
+
+    <div class="tab-content mb-2">
+        <div class="tab-pane fade"
+             id="edit"
+             role="tabpanel">
+            <div class="d-flex justify-content-between flex-column flex-md-row">
+                <div class="flex-grow-two">
+                    {{ form_open({ request: __SELF__~'::onEditTeam' }) }}
+
+                    <input type="hidden" name="team_id" value="{{ team.id }}">
+
+                    <div class="form-group">
+                        <label for="name">Team Name</label>
+                        <input class="form-control" id="name" name="name" placeholder="Enter a name for the team."
+                               aria-describedby="teamNameHelp" value="{{ team.name }}" required>
+                        <small id="teamNameHelp" class="form-text text-muted">Enter a name for the team.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="initials">Team Initials</label>
+                        <input class="form-control" id="initials" name="initials"
+                               placeholder="Enter some initials for the team."
+                               aria-describedby="leagueSlugHelp" value="{{ team.initials }}" required>
+                        <small id="leagueSlugHelp" class="form-text text-muted">Enter initials for the team.</small>
+                    </div>
+
+                    <button data-attach-loading class="oc-loader btn btn-primary">Edit Team</button>
+
+                    {{ form_close() }}
+                </div>
+                <div class="ml-md-3 mt-2 mt-xs-0">
+                    {{ form_open() }}
+                    <label for="file_data">Logo</label>
+                    {% component 'cleanseImageUploader' %}
+                    {{ form_close() }}
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade show active"
+             id="roster"
+             role="tabpanel">
+            <div class="d-flex justify-content-between flex-column flex-md-row">
+                <div class="team-roster flex-grow-one">
+                    <h5>Team Roster ({{ roster|length }})</h5>
+                    <div class="list-group">
+                        {% for r in roster %}
+                        <a href="javascript:;"
+                           data-request="{{ __SELF__ }}::onReleasePlayer"
+                           data-request-data="player_id: '{{ r.id }}'"
+                           data-request-update="'{{ __SELF__ ~ '::edit-tabs' }}': '#editor-area'"
+                           class="list-group-item justify-content-between">{{ r.name }}&nbsp;&nbsp;&nbsp;<i
+                                class="fa fa-close"></i></a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="ml-md-3 mt-2 mt-xs-0 flex-grow-two">
+                    <h5>Free Agents</h5>
+                    <div class="league-team-search mb-2">
+                        {{ form_open(__SELF__.getSearchFormAttributes) }}
+
+                        <input type="hidden" name="season" value="{{ season }}">
+
+                        <div class="form-group">
+                            <label class="sr-only" for="search">Search</label>
+                            <input class="form-control mr-1" id="search" name="search"
+                                   placeholder="Search for a free agent."
+                                   value="{{ search }}" required>
+                        </div>
+
+                        <button data-attach-loading class="oc-loader btn btn-primary">Search</button>
+
+                        <a href="javascript:;"
+                           data-request="{{ __SELF__ }}::onUpdate"
+                           data-request-data="mode: 'players'"
+                           data-request-update="'{{ __SELF__ ~ '::edit-tabs' }}': '#editor-area'"
+                           class="btn btn-secondary ml-1">Clear</a>
+
+                        {{ form_close() }}
+                    </div>
+
+                    <hr>
+
+                    <div id="player-list" class="list-group">
+                        {% for player in players %}
+                        <a href="javascript:;"
+                           data-request="{{ __SELF__ }}::onAddPlayer"
+                           data-request-data="mode: 'add_player', player_id: '{{ player.id }}', team_id: '{{ team.id }}'"
+                           data-request-update="'{{ __SELF__ ~ '::edit-tabs' }}': '#editor-area'"
+                           class="list-group-item justify-content-between">{{ player.name }} &nbsp;&nbsp;&nbsp;<i
+                                class="fa fa-plus"></i></a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

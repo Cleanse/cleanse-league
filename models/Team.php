@@ -1,14 +1,16 @@
 <?php namespace Cleanse\League\Models;
 
 use Model;
+use Storage;
+use LasseRafn\Initials\Initials;
+use LasseRafn\InitialAvatarGenerator\InitialAvatar;
 
 /**
  * @property string $id
  * @property string $name
  * @property string $slug
- *
- * Each tournament has many teams, and each team can be part of many tournaments (n:n).
- * Each team has many matches, and each match has two teams (n:n).
+ * @property string $initials
+ * @property string $logo
  */
 class Team extends Model
 {
@@ -35,7 +37,7 @@ class Team extends Model
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'initials'];
 
     /*
      * Validation
@@ -56,6 +58,41 @@ class Team extends Model
      * Relationships
      */
     public $hasMany = [
-        'event_teams' => 'Cleanse\League\Models\EventTeam'
+        'event_teams' => 'Cleanse\League\Models\EventTeam',
+        'players' => 'Cleanse\League\Models\Player'
     ];
+
+    public function createDefaultInitials()
+    {
+        $initials = new Initials;
+
+        return $initials->name($this->name)->length(3)->generate();
+    }
+
+    public function createDefaultLogo()
+    {
+        $teamLogoFileName = '/media/logo-team-' . $this->slug . '.png';
+
+        $logo = $this->makeLogo();
+
+        Storage::put($teamLogoFileName, $logo);
+        $logoUrl = '/storage/app' . $teamLogoFileName;
+
+        return $logoUrl;
+    }
+
+    public function makeLogo()
+    {
+        $logo = new InitialAvatar();
+
+        return $logo->name($this->name)
+            ->length(3)
+            ->fontSize(0.5)
+            ->size(400)
+            ->background('#00CE97')
+            ->color('#fff')
+            ->cache()
+            ->generate()
+            ->stream('png');
+    }
 }

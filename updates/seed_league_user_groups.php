@@ -7,16 +7,20 @@ class SeedLeagueUserGroups extends Seeder
 {
     public function run()
     {
-        UserGroup::firstOrCreate([
-            'name' => 'League Admin',
-            'code' => 'league-admin',
-            'description' => 'Administrator for the League.'
-        ]);
+        if (!UserGroup::whereCode('league-admin')->count() > 0) {
+            UserGroup::firstOrCreate([
+                'name' => 'League Admin',
+                'code' => 'league-admin',
+                'description' => 'Administrator for the League.'
+            ]);
+        }
 
-        UserGroup::firstOrCreate([
-            'name' => 'League Staff',
-            'code' => 'league-staff',
-            'description' => 'Staff for the League.'
-        ]);
+        if (!UserGroup::whereCode('league-staff')->count() > 0) {
+            UserGroup::firstOrCreate([
+                'name' => 'League Staff',
+                'code' => 'league-staff',
+                'description' => 'Staff for the League.'
+            ]);
+        }
     }
 }

@@ -18,6 +18,13 @@ class Season extends Model
 
     public $table = 'cleanse_league_seasons';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['name'];
+
     /*
      * Validation
      */
@@ -29,6 +36,10 @@ class Season extends Model
      * @var array Generate a slug for this attribute.
      */
     protected $slugs = ['slug' => 'name'];
+
+    public $belongsTo = [
+        'championship' => 'Cleanse\League\Models\Championship'
+    ];
 
     /**
      * Get all of the tourneys, matches.

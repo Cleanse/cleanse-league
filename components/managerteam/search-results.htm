@@ -1,0 +1,4 @@
+{% for t in items %}
+<a href="/manager/team/{{ t.id }}"
+   class="list-group-item justify-content-between">{{ t.name }} &nbsp;&nbsp;&nbsp;<i class="fa fa-edit"></i></a>
+{% endfor %}

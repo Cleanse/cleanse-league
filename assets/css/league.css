@@ -1,28 +1,30 @@
 /* General */
 :root {
     --black-primary: #010001;
-    --white-azure: #CFEBF8;
-    --blue-medium: #00CE97;
-    --blue-light: #B0D9DD;
-    --green-dark: #1E2C30;
-    --neon-orange: #ff3800;
+    --white-primary: #ECEEEF;
+    --color-one-primary: #00CE97;
+    --color-one-secondary: #80DED9;
+    --color-two-primary: #1E2C30;
+    --color-two-secondary: #84BC9C;
+    --color-three-primary: #ff3800;
+    --color-three-secondary: #FF715B;
 }
 
 body {
     font-family: 'Lato', sans-serif;
     background-image: linear-gradient(
             to right,
-            var(--green-dark),
+            var(--color-two-primary),
             var(--black-primary)
     );
 }
 
 a {
-    color: var(--blue-medium);
+    color: var(--color-one-primary);
 }
 
 a:hover, a:active, a:focus {
-    color: var(--blue-light);
+    color: var(--color-one-secondary);
 }
 
 h1 {
@@ -79,6 +81,10 @@ p {
     letter-spacing: .5px;
 }
 
+.form-control:focus {
+    border-color: var(--color-one-secondary);
+}
+
 button, input, optgroup, select, textarea {
     font-family: 'Lato', sans-serif;
     font-size: 100%;
@@ -87,15 +93,27 @@ button, input, optgroup, select, textarea {
 }
 
 .btn-primary {
-    color: #fff;
-    background-color: var(--blue-medium);
-    border-color: var(--blue-medium);
+    color: var(--white-primary);
+    background-color: var(--color-one-primary);
+    border-color: var(--color-one-primary);
 }
 
 .btn-primary:hover {
-    color: #fff;
-    background-color: var(--green-dark);
+    color: var(--white-primary);
+    background-color: var(--color-two-primary);
     border-color: var(--black-primary);
+}
+
+.btn-secondary {
+    color: var(--white-primary);
+    background-color: var(--color-three-primary);
+    border-color: var(--color-three-primary);
+}
+
+.btn-secondary:hover {
+    color: var(--white-primary);
+    background-color: var(--color-three-secondary);
+    border-color: var(--color-three-secondary);
 }
 
 .custom-file-control:lang(en)::after {
@@ -126,43 +144,43 @@ button, input, optgroup, select, textarea {
 }
 
 .list-group-item {
-    background-color: var(--green-dark);
+    background-color: var(--color-two-primary);
 }
 
 .list-group-item.active {
     z-index: 2;
-    color: #fff;
-    background-image: linear-gradient(to bottom, var(--green-dark) 0%, var(--black-primary) 100%);
-    border-color: var(--green-dark);
+    color: var(--white-primary);
+    background-image: linear-gradient(to bottom, var(--color-two-primary) 0%, var(--black-primary) 100%);
+    border-color: var(--color-two-primary);
 }
 
 .list-group-item.disabled, .list-group-item:disabled {
-    color: var(--neon-orange);
+    color: var(--color-three-primary);
     cursor: not-allowed;
-    background-color: var(--green-dark);
+    background-color: var(--color-two-primary);
 }
 
 .list-group-item-action {
-    color: var(--blue-medium);
+    color: var(--color-one-primary);
 }
 
 .list-group-item-action:focus, .list-group-item-action:hover {
-    color: var(--blue-light);
+    color: var(--color-one-secondary);
     text-decoration: none;
-    background-color: var(--green-dark);
+    background-color: var(--color-two-primary);
 }
 
 .league-admin-bg {
     padding: 16px 0;
-    background: rgba(236, 238, 239, 1);
+    background: var(--white-primary);
 }
 
 .image-preview-input {
     position: relative;
     overflow: hidden;
     margin: 0px;
-    color: var(--blue-medium);
-    background-color: #fff;
+    color: var(--color-one-primary);
+    background-color: var(--white-primary);
     border-color: #ccc;
 }
 
@@ -186,8 +204,16 @@ button, input, optgroup, select, textarea {
     margin: 0 0 10px;
 }
 
-.team-list, .team-edit {
-    flex-grow: 1;
+.schedule-team-btns {
+    width: 100%;
+}
+
+.team-list, .team-edit, .schedule-team-btn {
+    flex-grow: 1 !important;
+}
+
+.schedule-team-score {
+    font-weight: 400;
 }
 
 .list-group a {
@@ -217,36 +243,36 @@ button, input, optgroup, select, textarea {
 }
 
 .nav-pills .nav-item.show .nav-link, .nav-pills .nav-link.active {
-    color: #fff;
+    color: var(--white-primary);
     cursor: default;
     background-image: linear-gradient(135deg, rgb(59, 132, 196) 0%, #0E5CAD 100%);
 }
 
 .nav-bg-pvpaissa {
-    background-color: var(--green-dark);
+    background-color: var(--color-two-primary);
     border-bottom: 1px solid rgba(66, 66, 66, .66);
 }
 
 .navbar-inverse .navbar-nav .nav-link, .footer-links a {
-    color: var(--blue-medium);
+    color: var(--color-one-primary);
     text-decoration: none;
 }
 
 .navbar-inverse .navbar-nav .nav-link:focus, .navbar-inverse .navbar-nav .nav-link:hover {
-    color: var(--blue-light);
+    color: var(--color-one-secondary);
 }
 
 .jumbotron-league-bg {
     padding: 1.25rem;
-    background: url("/themes/pvpaissa/assets/images/xiv-jobs.png") bottom center var(--green-dark);
+    background: url("/themes/pvpaissa/assets/images/xiv-jobs.png") bottom center var(--color-two-primary);
     background-size: cover;
-    border-left: 1px solid var(--neon-orange);
+    border-left: 1px solid var(--color-three-primary);
 }
 
 .jumbotron-league-bg h1,
 .jumbotron-league-bg h3,
 .jumbotron-league-bg p {
-    color: #fff;
+    color: var(--white-primary);
 }
 
 .jumbotron-sub-text p {
@@ -255,7 +281,7 @@ button, input, optgroup, select, textarea {
 }
 
 .jumbotron-league-bg .list-group-item {
-    color: var(--green-dark);
+    color: var(--color-two-primary);
 }
 
 .league-rules table {
@@ -274,26 +300,26 @@ button, input, optgroup, select, textarea {
 
 /* Schedule */
 .btn-outline-info {
-    color: var(--neon-orange);
+    color: var(--color-three-primary);
     background-image: none;
     background-color: transparent;
-    border-color: var(--neon-orange);
+    border-color: var(--color-three-primary);
 }
 
 .btn-outline-info:hover {
-    color: #fff;
-    background-color: var(--neon-orange);
-    border-color: var(--neon-orange);
+    color: var(--white-primary);
+    background-color: var(--color-three-primary);
+    border-color: var(--color-three-primary);
 }
 
 .league-schedule a.card:hover .card-block {
-    background: var(--white-azure);
+    background: var(--white-primary);
 }
 
 /* Match */
 .league-wrapper {
     padding-bottom: 1rem;
-    background: #fff;
+    background: var(--white-primary);
 }
 
 .league-wrapper h1 {
@@ -311,8 +337,8 @@ button, input, optgroup, select, textarea {
 }
 
 .match-up {
-    background: var(--green-dark);
-    color: var(--blue-medium);
+    background: var(--color-two-primary);
+    color: var(--color-one-primary);
 }
 
 .match-up h2 {
@@ -327,6 +353,23 @@ button, input, optgroup, select, textarea {
 .tab-content > .tab-pane {
     padding: 1.125rem;
     background: #fff;
+}
+
+/* team-edit-roster-free-agents */
+.flex-grow-one {
+    flex-grow: 1;
+}
+
+.flex-grow-two {
+    flex-grow: 2;
+}
+
+.team-edit-roster-free-agents {
+    flex-grow: 2;
+}
+
+.team-edit-roster-players {
+    flex-grow: 1;
 }
 
 /* Round Title Bar */
@@ -348,7 +391,7 @@ button, input, optgroup, select, textarea {
 }
 
 .round-label rect {
-    fill: var(--blue-medium);
+    fill: var(--color-one-primary);
 }
 
 .round-label text {
@@ -385,7 +428,7 @@ svg:not(:root) {
 
 .bracket-line {
     fill: none;
-    stroke: var(--blue-medium);
+    stroke: var(--color-one-primary);
     stroke-width: 2px;
 }
 
@@ -415,12 +458,12 @@ svg.match--player:not(:root) {
 }
 
 .match-number {
-    fill: var(--blue-medium);
+    fill: var(--color-one-primary);
     font-size: 10px;
 }
 
 .match-wrapper-background {
-    fill: var(--blue-light);
+    fill: var(--color-one-secondary);
     fill-opacity: .1;
     shape-rendering: auto;
 }
@@ -431,7 +474,7 @@ svg.match--player:not(:root) {
 }
 
 .match-base-background {
-    fill: var(--blue-medium);
+    fill: var(--color-one-primary);
 }
 
 .match-player {
@@ -439,11 +482,11 @@ svg.match--player:not(:root) {
 }
 
 .match-player-background {
-    fill: var(--green-dark);
+    fill: var(--color-two-primary);
 }
 
 .match-player-name {
-    fill: var(--blue-light);
+    fill: var(--color-one-secondary);
     font-size: 12px;
     font-weight: bold;
     text-shadow: 1px 1px 1px #222;
@@ -455,21 +498,27 @@ svg.match--player:not(:root) {
 }
 
 .match-seed {
-    fill: var(--blue-light);
+    fill: var(--color-one-secondary);
     font-size: 10px;
     letter-spacing: -0.5px;
     text-shadow: none;
 }
 
 .match-player-score-background {
-    fill: var(--white-azure);
+    fill: var(--white-primary);
 }
 
 .match-player-score {
-    fill: var(--green-dark);
+    fill: var(--color-two-primary);
     font-size: 10px;
     letter-spacing: -0.5px;
     text-shadow: none;
+}
+
+.cleanse-league-team-player:not(:last-child) {
+    margin: 1rem 0;
+    border: solid var(--color-two-secondary);
+    border-width: 0 0 .2rem;
 }
 
 @media (min-width: 992px) {
@@ -479,13 +528,24 @@ svg.match--player:not(:root) {
     }
 }
 
+@media (min-width: 768px) {
+    .match-game-list {
+        width: 25%;
+    }
+}
+
 @media (max-width: 767px) {
     .league-admin-bg {
         padding: 16px 0;
-        background: rgba(236, 238, 239, 1);
+        background: var(--white-primary);
     }
 
     .team-list {
         width: 100%;
+    }
+
+    .team-roster {
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--color-one-secondary);
     }
 }

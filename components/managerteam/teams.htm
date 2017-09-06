@@ -1,7 +1,0 @@
-{% for t in items %}
-<a href="javascript:;"
-   data-request="{{ __SELF__ }}::onUpdate"
-   data-request-data="mode: 'edit', team_id: '{{ t.id }}'"
-   data-request-update="'{{ __SELF__ ~ '::edit' }}': '#editor-area'"
-   class="list-group-item justify-content-between">{{ t.name }} &nbsp;&nbsp;&nbsp;<i class="fa fa-edit"></i></a>
-{% endfor %}

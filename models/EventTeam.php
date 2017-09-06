@@ -13,6 +13,13 @@ class EventTeam extends Model
     public $table = 'cleanse_league_event_teams';
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['team_id'];
+
+    /**
      * Relationships
      */
     public $morphTo = [

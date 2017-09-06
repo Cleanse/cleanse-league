@@ -1,7 +1,6 @@
 <?php namespace Cleanse\League\Components;
 
 use DB;
-use Exception;
 use Flash;
 use Input;
 use Redirect;
@@ -15,7 +14,6 @@ use Cleanse\League\Models\Team;
 
 class ManagerSeason extends ComponentBase
 {
-    public $mode;
     public $model;
     public $post;
 
@@ -80,6 +78,10 @@ class ManagerSeason extends ComponentBase
         $championships = Championship::orderBy('id', 'desc')->get();
 
         if (!$championships->count() > 0) {
+            Flash::error('Before creating a season, create a championship.');
+
+            Session::flash('flashSuccess', true);
+
             return Redirect::to('/manager/championship');
         }
 
@@ -141,6 +143,14 @@ class ManagerSeason extends ComponentBase
         }
 
         $season = Season::with('teams.team')->whereNull('winner_id')->first();
+
+        if (!$season) {
+            Flash::error('There is no season, create a season. You also may need to create a championship still.');
+
+            Session::flash('flashSuccess', true);
+
+            return Redirect::refresh();
+        }
 
         $seasonTeams = DB::table('cleanse_league_event_teams')
             ->join('cleanse_league_teams', 'cleanse_league_event_teams.team_id', '=', 'cleanse_league_teams.id')
@@ -330,7 +340,17 @@ class ManagerSeason extends ComponentBase
             return Redirect::refresh();
         }
 
-        $this->page['season'] = Season::whereNull('finished_at')->get();
+        $season = Season::whereNull('finished_at')->get();
+
+        if (!$season->count() > 0) {
+            Flash::error('There is currently no season.');
+
+            Session::flash('flashSuccess', true);
+
+            return Redirect::refresh();
+        }
+
+        $this->page['season'] = $season;
     }
 
     public function onCreateSchedule()

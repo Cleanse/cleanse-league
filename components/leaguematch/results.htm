@@ -6,6 +6,7 @@
     </div>
     <div class="row match-up">
         <div class="col m-2 team-one">
+            <img src="{{ match.one.team.logo.getPath() }}" title="Team {{ match.one.team.name }}'s logo.">
             {% if match.winner_id == match.team_one %}
             <p>Winner</p>
             {% else %}
@@ -16,6 +17,7 @@
             <p>{{ match.team_one_score ?? 0 }}</p>
         </div>
         <div class="col m-2 team-two">
+            <img src="{{ match.two.team.logo.getPath() }}" title="Team {{ match.two.team.name }}'s logo.">
             {% if match.winner_id == match.team_two %}
             <p>Winner</p>
             {% else %}
@@ -27,15 +29,24 @@
         </div>
     </div>
 
-    <!-- Games will be tabbed. VODs will be in the tabs, if any, as well as ss's of the results.
-    <div class="match-games">
-        <h3>Games:</h3>
-        <ol>
-            <li>Game 1</li>
-            <li>Game 2</li>
-            <li>Game 3</li>
-            <li>Game 4</li>
-            <li>Game 5</li>
-        </ol>
-    </div> -->
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        {% for g in match.games %}
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#game1" role="tab">Game 1</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content mb-2">
+        {% for gd in match.games %}
+        <div class="tab-pane fade show active"
+             id="game-{{ gd.id }}"
+             role="tabpanel">
+            {{ gd.id }}
+            <img src="{{ gd.screenshot.getPath() }}">
+        </div>
+        {% endfor %}
+    </div>
 </div>

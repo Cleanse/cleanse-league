@@ -8,6 +8,13 @@
     </div>
     <div class="col-md-8">
         <h1>{{ league.name }}</h1>
-        <p>Current Championship: {{ league.championships[0].name }}</p>
+        <p>
+            Current Championship:
+            {% if league.championships[0].name %}
+            {{ league.championships[0].name }}
+            {% else %}
+            <a href="/manager/championship">Create a Championship</a>
+            {% endif %}
+        </p>
     </div>
 </div>

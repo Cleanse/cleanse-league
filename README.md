@@ -1,24 +1,33 @@
 # League Plugin
-Not functional - yet.
+**Not functional - yet, but close.** If you have an idea on features to add, send me an email: plovato@gmail.com
+To-do:
+- Add Event dispatching for logging of admin / staff actions.  
 
 ## Components
-/l - home  
-/l/vision - league vision  
-/l/about - league about  
+**cleanseLeagueHome** (/league) - League home page containing upcoming matches and top team/player stats.  
+**cleanseLeagueAbout** (/league/about) - An about page for the league. (optional)  
 
-/l/rules & /c/rules - rules for the current championship series  
-/c/:champ-slug/teams - team list ordered by cs points  
+/league/rules & /league/championship/rules - Rules for the current Championship Series.  
+/league/championship/:champ-slug/teams - Team list ordered by Championship Series points. 
+**cleanseLeagueRules** (/league/rules) - Setup a rules page for your current championship. (optional)   
 
-/s/:season-slug/teams - team list ordered by win loss
+/league/season/:season-slug/teams - team list ordered by win loss
 
 /l/schedule - schedule for current week  
 /l/schedule/:season/:week - schedule for specific week
 
-/l/match/:id
+/league/match/:id
 
-/l/team/:id  
-/l/team/:id/schedule  
+/league/team/:id  
+/league/team/:id/schedule  
 
+/manage/league - Manage the league name, slug (option to force slug rename), and about page (can be null).  
+
+/manage/championship - Manage the championship name and slug (option to force slug rename).  
+/manage/championship/rules - Manage the rules for the championship series.  
+/manage/championship/points - Manage the point system for the championship series.
+
+/manage/season   
 
 # League
  * $id
@@ -41,45 +50,14 @@ Not functional - yet.
  * $slug
 
 ### Members
-
 ## Playoffs
 ### Bracket > Round
-
 ## Divisions
-
-Bracket.php
-Champion.php
-Division.php
-Match.php
-Member.php
-Season.php
-Series.php
-Team.php
 
 ===Stats  
 ===Schedule  
 ===Standings  
 ===Rules  
 ==== League Fans  
-Way to generate prizes.
-
+Way to generate prizes.  
 Log tourney admins
-
-Components:
-/league-admin/
-/league-admin/logs
-/league-admin/league/create-edit-delete(hide)
-/league-admin/season/add-edit-delete(hide)
-/league-admin/division/add-edit-delete(hide)
-/league-admin/team/add-edit-delete(hide)
-/league-admin/member/add-edit-delete(hide)
-
-
-/league/aethercup/schedule/
-/league/aether/season/1
-
-/league/signup
-
-/league/player/id
-
-/league/team/team-name

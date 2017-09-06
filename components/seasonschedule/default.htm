@@ -1,15 +1,19 @@
 <div class="jumbotron-league-bg">
-    <div class="container-fluid">
+    <div class="container-fluid league-schedule">
         <h1>Schedule</h1>
-        <div class="btn-group btn-group-sm justify-content-between mb-2" role="group" aria-label="Team Page Links">
+        <div class="btn-group btn-group-sm justify-content-between mb-2 schedule-team-btns" role="group"
+             aria-label="Team Page Links">
             {% for team in teams %}
-            <a class="btn btn-outline-info" href="/league/team/{{ team.team.slug }}">{{ team.team.name }}</a>
+            <a class="btn btn-outline-info schedule-team-btn" href="/league/team/{{ team.team.slug }}">
+                <span class="hidden-md-down">{{ team.team.name }}</span>
+                <span class="hidden-lg-up">{{ team.team.initials }}</span>
+            </a>
             {% endfor %}
         </div>
 
         {% set weekNum = 1 %}
         {% for key, week in matches %}
-        <ol class="breadcrumb">
+        <ol class="breadcrumb mb-1">
             <li class="breadcrumb-item active">Week {{ weekNum }}</li>
             <li class="breadcrumb-item active">{{ key|date('M d, Y') }}</li>
         </ol>
@@ -17,9 +21,38 @@
             {% for match in week %}
             <a class="card" href="/league/match/{{ match.id }}">
                 <div class="card-block">
-                    <h4>{{ match.one.team.name }}</h4>
-                    vs
-                    <h4>{{ match.two.team.name }}</h4>
+                    <div class="team_one">
+                        <div class="img-container">
+                            <img class="focus-image imageLoaded" src="{{ match.one.team.logo.getPath() }}">
+                        </div>
+                        <div class="sb-meta">
+                            <h2>
+                                <span class="team-name">{{ match.one.team.name }}</span>
+                                <span class="team-initials">{{ match.one.team.initials }}</span>
+                            </h2>
+                            <div class="record-container">
+                                <p class="record overall">
+                                    {{ match.team_one.match_wins ?? 0 }} - {{ match.team_one.match_losses ?? 0 }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team_two">
+                        <div class="img-container">
+                            <img class="focus-image imageLoaded" src="{{ match.two.team.logo.getPath() }}">
+                        </div>
+                        <div class="sb-meta">
+                            <h2>
+                                <span class="team-name">{{ match.two.team.name }}</span>
+                                <span class="team-initials">{{ match.two.team.initials }}</span>
+                            </h2>
+                            <div class="record-container">
+                                <p class="record overall">
+                                    {{ match.team_two.match_wins ?? 0 }} - {{ match.team_two.match_losses ?? 0 }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </a>
             {% endfor %}

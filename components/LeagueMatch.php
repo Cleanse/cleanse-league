@@ -51,7 +51,8 @@ class LeagueMatch extends ComponentBase
                 $q->with('team');
             }, 'two' => function ($q) {
                 $q->with('team');
-            }])->first();
+            }, 'games'])
+                ->first();
         }
 
         if (isset($match)) {

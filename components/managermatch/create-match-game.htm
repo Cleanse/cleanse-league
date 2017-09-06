@@ -1,0 +1,77 @@
+<div class="cleanse-league-match-game">
+    {{ form_open({ request: __SELF__~'::onCreateGame', files: true }) }}
+
+    <input type="hidden" name="match_id" value="{{ match.id }}">
+    <input type="hidden" name="team_one" value="{{ match.team_one }}">
+    <input type="hidden" name="team_two" value="{{ match.team_two }}">
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#required" role="tab">Required</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#stats" role="tab">Stats (optional)</a>
+        </li>
+    </ul>
+
+    <div class="tab-content mb-2">
+        <div class="tab-pane fade show active"
+             id="required"
+             role="tabpanel">
+
+            <div class="winner-id mb-3">
+                <p class="mb-0">Winner</p>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label" for="team_one">
+                        <input class="form-check-input" type="radio" name="winner_id" id="team_one"
+                               value="{{ match.team_one }}" checked>
+                        {{ match.one.team.name }}
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label" for="team_two">
+                        <input class="form-check-input" type="radio" name="winner_id" id="team_two"
+                               value="{{ match.team_two }}">
+                        {{ match.two.team.name }}
+                    </label>
+                </div>
+            </div>
+
+            <label for="image-file"><h5>Scoreboard Screenshot</h5></label>
+            <div class="input-group image-preview mb-2">
+                <input class="form-control image-preview-filename">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary image-preview-clear" style="display:none;">
+                        <i class="fa fa-remove"></i> Clear
+                    </button>
+                </span>
+                <span class="input-group-btn">
+                    <div class="btn btn-primary image-preview-input">
+                        <i class="fa fa-folder-open"></i>
+                        <span class="image-preview-input-title">Choose File</span>
+                        <input type="file" accept="image/png, image/jpeg, image/gif" id="image-file" name="screenshot"/>
+                    </div>
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label for="vod">Link to VOD (optional)</label>
+                <input class="form-control" id="vod" name="vod" placeholder="Enter a url for the vod."
+                       aria-describedby="gameVodHelp">
+                <small id="gameVodHelp" class="form-text text-muted">Enter a url for the vod.</small>
+            </div>
+        </div>
+
+        <div class="tab-pane fade"
+             id="stats"
+             role="tabpanel">
+
+            {% partial __SELF__~'::team-player' %}
+
+        </div>
+    </div>
+
+    <button type="submit" data-attach-loading class="oc-loader btn btn-primary">Add Game</button>
+
+    {{ form_close() }}
+</div>

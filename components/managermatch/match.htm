@@ -1,0 +1,33 @@
+<div class="d-flex flex-row justify-content-end flex-column flex-md-row">
+    <div class="team-list mr-auto mb-2 mb-md-0">
+        <p class="small mb-0">{{ match.takes_place_at|date('M d, Y') }}</p>
+        <h3>{{ match.team_one_score ?? '0' }} {{ match.one.team.name }} vs
+            {{ match.two.team.name }} {{ match.team_two_score ?? '0' }}</h3>
+        <hr>
+        <h5>Add Game to Match</h5>
+        {% partial __SELF__~'::create-match-game' %}
+    </div>
+
+    <div class="match-game-list ml-md-2">
+        <h3>Game List</h3>
+        {% if match.games|length > 0 %}
+        <div id="match-list" class="list-group mb-2">
+            {% set gameNum = 1 %}
+            {% for game in match.games %}
+            <a href="/manager/game/{{ game.id }}"
+               class="list-group-item list-group-item-action justify-content-between">
+                <span>Game {{ gameNum }}:
+                      {{ game.one.team.initials }} vs {{ game.two.team.initials }}</span> <i class="fa fa-edit"></i>
+            </a>
+            {% set gameNum = gameNum + 1 %}
+            {% endfor %}
+        </div>
+        {{ form_open({ request: __SELF__~'::onFinalizeMatch' }) }}
+            <input type="hidden" name="match_id" value="{{ match.id }}">
+            <button type="submit" data-attach-loading class="oc-loader btn btn-primary">Complete Match Series</button>
+        {{ form_close() }}
+        {% else %}
+        <p>No games added to match yet.</p>
+        {% endif %}
+    </div>
+</div>

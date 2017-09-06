@@ -39,14 +39,26 @@ class SeasonSchedule extends ComponentBase
     {
         $this->addCss('/plugins/cleanse/league/assets/css/league.css');
 
-        $this->getSeason();
-        $this->getMatches();
-        $this->getTeams();
+        $this->getSchedule();
+    }
+
+    public function getSchedule()
+    {
+        $getSeason = $this->getSeason();
+
+        if (!isset($getSeason)) {
+            return;
+        }
+
+        $this->season = $this->page['season'] = $getSeason;
+
+        $this->page['matches'] = $this->getMatches();
+        $this->page['teams'] = $this->season->teams;
     }
 
     public function getSeason()
     {
-        $seasonMatches = Season::whereHas('matches', function ($query) {
+        return Season::whereHas('matches', function ($query) {
             if (!$slug = $this->property('season')) {
                 $query->whereNull('winner_id');
             } else {
@@ -66,25 +78,16 @@ class SeasonSchedule extends ComponentBase
                     $query->with('team');
                 }
             ])->first();
-
-        if (isset($seasonMatches)) {
-            $this->season = $this->page['season'] = $seasonMatches;
-        }
     }
 
     public function getMatches()
     {
-        $this->matches = $this->season->matches->groupBy('takes_place_at');
+        $matches = $this->season->matches->groupBy('takes_place_at');
 
         if ($week = $this->property('week')) {
-            $this->matches = $this->matches->slice($week - 1, 1);
+            $matches = $matches->slice($week - 1, 1);
         }
 
-        $this->page['matches'] = $this->matches;
-    }
-
-    public function getTeams()
-    {
-        $this->teams = $this->page['teams'] = $this->season->teams;
+        return $matches;
     }
 }

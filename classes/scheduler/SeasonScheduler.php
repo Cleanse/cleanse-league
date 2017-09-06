@@ -1,7 +1,7 @@
-<?php namespace Cleanse\League\Classes\Season;
+<?php namespace Cleanse\League\Classes\Scheduler;
 
 use Log;
-use Cleanse\League\Classes\Scheduler;
+use Cleanse\League\Classes\Scheduler\Scheduler;
 use Cleanse\League\Models\Season;
 
 class SeasonScheduler extends Scheduler

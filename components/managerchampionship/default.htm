@@ -8,6 +8,7 @@
             {% partial __SELF__~'::flash-message' %}
         </div>
 
+        {% if championship %}
         <small>Current Championship:</small>
         <h4>{{ championship.name }}</h4>
         <p>
@@ -17,5 +18,10 @@
                 <i class="fa fa-link"></i>
             </a>
         </p>
+        {% else %}
+        <h3>Create a championship from the menu.</h3>
+        {% endif %}
+
+
     </div>
 </div>

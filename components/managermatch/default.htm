@@ -1,0 +1,21 @@
+<div class="row league-admin-bg">
+    <div class="col-md-3 mb-2 mb-xs-0">
+        <div class="list-group">
+            <a href="/manager" class="list-group-item list-group-item-action pr-5 active">
+                <i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;&nbsp;Back to Manager Panel
+            </a>
+            <a href="/manager/match" class="list-group-item list-group-item-action justify-content-between">
+                View Incomplete Matches&nbsp;&nbsp;&nbsp;<i class="fa fa-home"></i>
+            </a>
+        </div>
+    </div>
+
+    <div id="editor-area" class="col-md-9">
+        <div id="cleanse-league-form-message">
+            {% partial __SELF__~'::flash-message' %}
+        </div>
+
+        {% partial __SELF__~'::match' %}
+
+    </div>
+</div>
