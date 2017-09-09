@@ -46,6 +46,7 @@ class Plugin extends PluginBase
             'Cleanse\League\Components\ManagerSeason' => 'cleanseLeagueManagerSeason',
             'Cleanse\League\Components\ManagerMatch' => 'cleanseLeagueManagerMatch',
             'Cleanse\League\Components\ManagerMatchList' => 'cleanseLeagueManagerMatchList',
+            'Cleanse\League\Components\ManagerGame' => 'cleanseLeagueManagerGame',
             'Cleanse\League\Components\ManagerTeam' => 'cleanseLeagueManagerTeam',
             'Cleanse\League\Components\ManagerTeamEdit' => 'cleanseLeagueManagerTeamEdit',
             'Cleanse\League\Components\ManagerEventTeam' => 'cleanseLeagueManagerEventTeam',

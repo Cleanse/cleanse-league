@@ -56,6 +56,10 @@ class Season extends Model
         'teams' => [
             'Cleanse\League\Models\EventTeam',
             'name' => 'teamable'
+        ],
+        'players' => [
+            'Cleanse\League\Models\EventPlayer',
+            'name' => 'playerable'
         ]
     ];
 

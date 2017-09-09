@@ -1,0 +1,430 @@
+<div class="cleanse-league-match-game">
+
+    {{ form_open({ request: __SELF__~'::onEditGame' }) }}
+
+    <input type="hidden" name="season_id" value="{{ game.one.teamable_id }}">
+    <input type="hidden" name="match_id" value="{{ game.match_id }}">
+    <input type="hidden" name="game_id" value="{{ game.id }}">
+    <input type="hidden" name="team_one" value="{{ game.team_one }}">
+    <input type="hidden" name="team_two" value="{{ game.team_two }}">
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#required" role="tab">Required</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#one" role="tab">Team One</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#two" role="tab">Team Two</a>
+        </li>
+    </ul>
+
+    <div class="tab-content mb-2">
+        <div class="tab-pane fade show active"
+             id="required"
+             role="tabpanel">
+
+            <div class="winner-id mb-3">
+                <p class="mb-0">Winner</p>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label" for="team_one">
+                        <input class="form-check-input" type="radio" name="winner_id" id="team_one"
+                               value="{{ game.team_one }}" {{ game.winner_id == game.team_one ? 'checked' : '' }}>
+                        {{ game.one.team.name }}
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label" for="team_two">
+                        <input class="form-check-input" type="radio" name="winner_id" id="team_two"
+                               value="{{ game.team_two }}" {{ game.winner_id == game.team_two ? 'checked' : '' }}>
+                        {{ game.two.team.name }}
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="vod">Link to VOD (optional)</label>
+                <input class="form-control" id="vod" name="vod" placeholder="Enter a url for the vod."
+                       aria-describedby="gameVodHelp" value="{{ game.vod }}">
+                <small id="gameVodHelp" class="form-text text-muted">Enter a url for the vod.</small>
+            </div>
+
+        </div>
+
+        <div class="tab-pane fade"
+             id="one"
+             role="tabpanel">
+
+            <div>
+                <h3>Team One</h3>
+                {% set team_a_count = 1 %}
+                {% for player_a in players %}
+                {% if player_a.team_id == game.team_one %}
+                <div class="cleanse-league-team-player">
+
+                    <input type="hidden" name="team_one_roster[{{ team_a_count }}][game_player_id]"
+                           value="{{ player_a.id }}">
+
+                    <h5>Player {{ team_a_count }}</h5>
+                    <div class="d-flex flex-md-row flex-column mb-md-2">
+                        <div class="mb-2 mr-md-1">
+                            <label class="sr-only" for="team_one_roster[{{ team_a_count }}][player]">
+                                Team One: Player {{ team_a_count }}
+                            </label>
+                            <select class="form-control" id="team_one_roster[{{ team_a_count }}][player]"
+                                    name="team_one_roster[{{ team_a_count }}][player]">
+                                <option value="0">Delete Player</option>
+                                {% for m in game.one.team.players %}
+                                <option value="{{ m.id }}"
+                                        {{ m.id == player_a.player.player_id ? 'selected' : '' }}>{{ m.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="sr-only" for="team_one_roster[{{ team_a_count }}][job]">Job</label>
+                            <select class="form-control" id="team_one_roster[{{ team_a_count }}][job]"
+                                    name="team_one_roster[{{ team_a_count }}][job]">
+                                <option>Select a job</option>
+                                {% for h in jobs %}
+                                <option value="{{ h.abbr }}"
+                                        {{ h.abbr == player_a.player_job ? 'selected' : '' }}>{{ h.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-md-row flex-column mb-md-2">
+                        <div class="input-group mb-2">
+                            <label class="sr-only" for="team_one_roster[{{ team_a_count }}][kills]">Kills</label>
+                            <div class="input-group-addon">K</div>
+                            <input type="text" class="form-control" id="team_one_roster[{{ team_a_count }}][kills]"
+                                   name="team_one_roster[{{ team_a_count }}][kills]" placeholder="Kills"
+                                   value="{{ player_a.kills }}">
+                        </div>
+
+                        <div class="input-group mb-2 mx-md-1">
+                            <label class="sr-only" for="team_one_roster[{{ team_a_count }}][deaths]">Deaths</label>
+                            <div class="input-group-addon">D</div>
+                            <input type="text" class="form-control" id="team_one_roster[{{ team_a_count }}][deaths]"
+                                   name="team_one_roster[{{ team_a_count }}][deaths]" placeholder="Deaths"
+                                   value="{{ player_a.deaths }}">
+                        </div>
+
+                        <div class="input-group mb-2">
+                            <label class="sr-only" for="team_one_roster[{{ team_a_count }}][assists]">Assists</label>
+                            <div class="input-group-addon">A</div>
+                            <input type="text" class="form-control" id="team_one_roster[{{ team_a_count }}][assists]"
+                                   name="team_one_roster[{{ team_a_count }}][assists]" placeholder="Assists"
+                                   value="{{ player_a.assists }}">
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-md-row flex-column">
+                        <div class="input-group mb-2">
+                            <label class="sr-only" for="team_one_roster[{{ team_a_count }}][medals]">Medals</label>
+                            <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
+                            <input type="text" class="form-control" id="team_one_roster[{{ team_a_count }}][medals]"
+                                   name="team_one_roster[{{ team_a_count }}][medals]" placeholder="Medals"
+                                   value="{{ player_a.medals }}">
+                        </div>
+
+                        <div class="input-group mb-2 mx-md-1">
+                            <label class="sr-only" for="team_one_roster[{{ team_a_count }}][damage]">Damage</label>
+                            <div class="input-group-addon"><i class="fa fa-exclamation"></i></div>
+                            <input type="text" class="form-control" id="team_one_roster[{{ team_a_count }}][damage]"
+                                   name="team_one_roster[{{ team_a_count }}][damage]" placeholder="Damage"
+                                   value="{{ player_a.damage }}">
+                        </div>
+
+                        <div class="input-group mb-2">
+                            <label class="sr-only" for="team_one_roster[{{ team_a_count }}][healing]">Healing</label>
+                            <div class="input-group-addon"><i class="fa fa-child"></i></div>
+                            <input type="text" class="form-control" id="team_one_roster[{{ team_a_count }}][healing]"
+                                   name="team_one_roster[{{ team_a_count }}][healing]" placeholder="Healing"
+                                   value="{{ player_a.healing }}">
+                        </div>
+                    </div>
+                </div>
+                {% set team_a_count = team_a_count + 1 %}
+                {% endif %}
+                {% endfor %}
+
+                {% if team_a_count < 4 %}
+                {% for o in team_a_count..4 %}
+                <div class="cleanse-league-team-player">
+                    <h5>Player {{ o }}</h5>
+                    <div class="d-flex flex-md-row flex-column mb-md-2">
+                        <div class="mb-2 mr-md-1">
+                            <label class="sr-only" for="team_one_roster[{{ o }}][player]">
+                                Team One: Player {{ o }}
+                            </label>
+                            <select class="form-control" id="team_one_roster[{{ o }}][player]"
+                                    name="team_one_roster[{{ o }}][player]">
+                                <option value="0">Select a player</option>
+                                {% for p in game.one.team.players %}
+                                <option value="{{ p.id }}"
+                                        {{ game.winner_id == game.team_one ? 'selected' : '' }}>{{ p.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="sr-only" for="team_one_roster[{{ o }}][job]">Job</label>
+                            <select class="form-control" id="team_one_roster[{{ o }}][job]"
+                                    name="team_one_roster[{{ o }}][job]">
+                                <option>Select a job</option>
+                                {% for j in jobs %}
+                                <option value="{{ j.abbr }}">{{ j.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-md-row flex-column mb-md-2">
+                        <div class="input-group mb-2">
+                            <label class="sr-only" for="team_one_roster[{{ o }}][kills]">Kills</label>
+                            <div class="input-group-addon">K</div>
+                            <input type="text" class="form-control" id="team_one_roster[{{ o }}][kills]"
+                                   name="team_one_roster[{{ o }}][kills]" placeholder="Kills">
+                        </div>
+
+                        <div class="input-group mb-2 mx-md-1">
+                            <label class="sr-only" for="team_one_roster[{{ o }}][deaths]">Deaths</label>
+                            <div class="input-group-addon">D</div>
+                            <input type="text" class="form-control" id="team_one_roster[{{ o }}][deaths]"
+                                   name="team_one_roster[{{ o }}][deaths]" placeholder="Deaths">
+                        </div>
+
+                        <div class="input-group mb-2">
+                            <label class="sr-only" for="team_one_roster[{{ o }}][assists]">Assists</label>
+                            <div class="input-group-addon">A</div>
+                            <input type="text" class="form-control" id="team_one_roster[{{ o }}][assists]"
+                                   name="team_one_roster[{{ o }}][assists]" placeholder="Assists">
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-md-row flex-column">
+                        <div class="input-group mb-2">
+                            <label class="sr-only" for="team_one_roster[{{ o }}][medals]">Medals</label>
+                            <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
+                            <input type="text" class="form-control" id="team_one_roster[{{ o }}][medals]"
+                                   name="team_one_roster[{{ o }}][medals]" placeholder="Medals">
+                        </div>
+
+                        <div class="input-group mb-2 mx-md-1">
+                            <label class="sr-only" for="team_one_roster[{{ o }}][damage]">Damage</label>
+                            <div class="input-group-addon"><i class="fa fa-exclamation"></i></div>
+                            <input type="text" class="form-control" id="team_one_roster[{{ o }}][damage]"
+                                   name="team_one_roster[{{ o }}][damage]" placeholder="Damage">
+                        </div>
+
+                        <div class="input-group mb-2">
+                            <label class="sr-only" for="team_one_roster[{{ o }}][healing]">Healing</label>
+                            <div class="input-group-addon"><i class="fa fa-child"></i></div>
+                            <input type="text" class="form-control" id="team_one_roster[{{ o }}][healing]"
+                                   name="team_one_roster[{{ o }}][healing]" placeholder="Healing">
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+
+        </div>
+
+        <div class="tab-pane fade"
+             id="two"
+             role="tabpanel">
+
+           <div>
+                <h3>Team Two</h3>
+                {% set team_b_count = 1 %}
+                {% for player_b in players %}
+                {% if player_b.team_id == game.team_two %}
+                <div class="cleanse-league-team-player">
+
+                    <input type="hidden" name="team_two_roster[{{ team_b_count }}][game_player_id]"
+                           value="{{ player_b.id }}">
+
+                    <h5>Player {{ team_b_count }}</h5>
+                    <div class="d-flex flex-md-row flex-column mb-md-2">
+                        <div class="mb-2 mr-md-1">
+                            <label class="sr-only" for="team_two_roster[{{ team_b_count }}][player]">
+                                Team One: Player {{ team_b_count }}
+                            </label>
+                            <select class="form-control" id="team_two_roster[{{ team_b_count }}][player]"
+                                    name="team_two_roster[{{ team_b_count }}][player]">
+                                <option value="0">Delete Player</option>
+                                {% for n in game.two.team.players %}
+                                <option value="{{ n.id }}"
+                                        {{ n.id == player_b.player.player_id ? 'selected' : '' }}>{{ n.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="sr-only" for="team_two_roster[{{ team_b_count }}][job]">Job</label>
+                            <select class="form-control" id="team_two_roster[{{ team_b_count }}][job]"
+                                    name="team_two_roster[{{ team_b_count }}][job]">
+                                <option>Select a job</option>
+                                {% for i in jobs %}
+                                <option value="{{ i.abbr }}"
+                                        {{ i.abbr == player_b.player_job ? 'selected' : '' }}>{{ i.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-md-row flex-column mb-md-2">
+                        <div class="input-group mb-2">
+                            <label class="sr-only" for="team_two_roster[{{ team_b_count }}][kills]">Kills</label>
+                            <div class="input-group-addon">K</div>
+                            <input type="text" class="form-control" id="team_two_roster[{{ team_b_count }}][kills]"
+                                   name="team_two_roster[{{ team_b_count }}][kills]" placeholder="Kills"
+                                   value="{{ player_b.kills }}">
+                        </div>
+
+                        <div class="input-group mb-2 mx-md-1">
+                            <label class="sr-only" for="team_two_roster[{{ team_b_count }}][deaths]">Deaths</label>
+                            <div class="input-group-addon">D</div>
+                            <input type="text" class="form-control" id="team_two_roster[{{ team_b_count }}][deaths]"
+                                   name="team_two_roster[{{ team_b_count }}][deaths]" placeholder="Deaths"
+                                   value="{{ player_b.deaths }}">
+                        </div>
+
+                        <div class="input-group mb-2">
+                            <label class="sr-only" for="team_two_roster[{{ team_b_count }}][assists]">Assists</label>
+                            <div class="input-group-addon">A</div>
+                            <input type="text" class="form-control" id="team_two_roster[{{ team_b_count }}][assists]"
+                                   name="team_two_roster[{{ team_b_count }}][assists]" placeholder="Assists"
+                                   value="{{ player_b.assists }}">
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-md-row flex-column">
+                        <div class="input-group mb-2">
+                            <label class="sr-only" for="team_two_roster[{{ team_b_count }}][medals]">Medals</label>
+                            <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
+                            <input type="text" class="form-control" id="team_two_roster[{{ team_b_count }}][medals]"
+                                   name="team_two_roster[{{ team_b_count }}][medals]" placeholder="Medals"
+                                   value="{{ player_b.medals }}">
+                        </div>
+
+                        <div class="input-group mb-2 mx-md-1">
+                            <label class="sr-only" for="team_two_roster[{{ team_b_count }}][damage]">Damage</label>
+                            <div class="input-group-addon"><i class="fa fa-exclamation"></i></div>
+                            <input type="text" class="form-control" id="team_two_roster[{{ team_b_count }}][damage]"
+                                   name="team_two_roster[{{ team_b_count }}][damage]" placeholder="Damage"
+                                   value="{{ player_b.damage }}">
+                        </div>
+
+                        <div class="input-group mb-2">
+                            <label class="sr-only" for="team_two_roster[{{ team_b_count }}][healing]">Healing</label>
+                            <div class="input-group-addon"><i class="fa fa-child"></i></div>
+                            <input type="text" class="form-control" id="team_two_roster[{{ team_b_count }}][healing]"
+                                   name="team_two_roster[{{ team_b_count }}][healing]" placeholder="Healing"
+                                   value="{{ player_b.healing }}">
+                        </div>
+                    </div>
+                </div>
+                {% set team_b_count = team_b_count + 1 %}
+                {% endif %}
+                {% endfor %}
+
+                {% if team_b_count < 4 %}
+                {% for t in team_b_count..4 %}
+                <div class="cleanse-league-team-player">
+                    <h5>Player {{ t }}</h5>
+                    <div class="d-flex flex-md-row flex-column mb-md-2">
+                        <div class="mb-2 mr-md-1">
+                            <label class="sr-only" for="team_two_roster[{{ t }}][player]">
+                                Team Two: Player {{ t }}
+                            </label>
+                            <select class="form-control" id="team_two_roster[{{ t }}][player]"
+                                    name="team_two_roster[{{ t }}][player]">
+                                <option value="0">Select a player</option>
+                                {% for q in game.two.team.players %}
+                                <option value="{{ q.id }}">{{ q.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="sr-only" for="team_two_roster[{{ t }}][job]">Job</label>
+                            <select class="form-control" id="team_two_roster[{{ t }}][job]"
+                                    name="team_two_roster[{{ t }}][job]">
+                                <option>Select a job</option>
+                                {% for k in jobs %}
+                                <option value="{{ k.abbr }}">{{ k.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-md-row flex-column mb-md-2">
+                        <div class="input-group mb-2">
+                            <label class="sr-only" for="team_two_roster[{{ t }}][kills]">Kills</label>
+                            <div class="input-group-addon">K</div>
+                            <input type="text" class="form-control" id="team_two_roster[{{ t }}][kills]"
+                                   name="team_two_roster[{{ t }}][kills]" placeholder="Kills">
+                        </div>
+
+                        <div class="input-group mb-2 mx-md-1">
+                            <label class="sr-only" for="team_two_roster[{{ t }}][deaths]">Deaths</label>
+                            <div class="input-group-addon">D</div>
+                            <input type="text" class="form-control" id="team_two_roster[{{ t }}][deaths]"
+                                   name="team_two_roster[{{ t }}][deaths]" placeholder="Deaths">
+                        </div>
+
+                        <div class="input-group mb-2">
+                            <label class="sr-only" for="team_two_roster[{{ t }}][assists]">Assists</label>
+                            <div class="input-group-addon">A</div>
+                            <input type="text" class="form-control" id="team_two_roster[{{ t }}][assists]"
+                                   name="team_two_roster[{{ t }}][assists]" placeholder="Assists">
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-md-row flex-column">
+                        <div class="input-group mb-2">
+                            <label class="sr-only" for="team_two_roster[{{ t }}][medals]">Medals</label>
+                            <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
+                            <input type="text" class="form-control" id="team_two_roster[{{ t }}][medals]"
+                                   name="team_two_roster[{{ t }}][medals]" placeholder="Medals">
+                        </div>
+
+                        <div class="input-group mb-2 mx-md-1">
+                            <label class="sr-only" for="team_two_roster[{{ t }}][damage]">Damage</label>
+                            <div class="input-group-addon"><i class="fa fa-exclamation"></i></div>
+                            <input type="text" class="form-control" id="team_two_roster[{{ t }}][damage]"
+                                   name="team_two_roster[{{ t }}][damage]" placeholder="Damage">
+                        </div>
+
+                        <div class="input-group mb-2">
+                            <label class="sr-only" for="team_two_roster[{{ t }}][healing]">Healing</label>
+                            <div class="input-group-addon"><i class="fa fa-child"></i></div>
+                            <input type="text" class="form-control" id="team_two_roster[{{ t }}][healing]"
+                                   name="team_two_roster[{{ t }}][healing]" placeholder="Healing">
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+
+    <button type="submit" data-attach-loading class="oc-loader btn btn-primary">Edit Game</button>
+
+    {{ form_close() }}
+
+    <hr>
+
+    {{ form_open({ request: __SELF__~'::onDeleteGame' }) }}
+    <input type="hidden" name="match_id" value="{{ game.match_id }}">
+    <input type="hidden" name="game_id" value="{{ game.id }}">
+    <button type="submit" data-attach-loading class="btn btn-danger">Delete Game</button>
+    {{ form_close() }}
+</div>

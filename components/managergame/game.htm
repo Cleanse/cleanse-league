@@ -1,0 +1,16 @@
+<div class="d-flex flex-row justify-content-end flex-column flex-md-row">
+    <div class="flex-grow-one mr-auto mb-2 mb-md-0">
+        <p class="small mb-0">{{ game.created_at|date('M d, Y') }}</p>
+        <h3>{{ game.one.team.name }} vs {{ game.two.team.name }}</h3>
+
+        {% partial __SELF__~'::edit-game' %}
+    </div>
+
+    <div class="game-screenshot ml-md-2">
+        <h3>Game Screenshot</h3>
+        {{ form_open() }}
+        <label class="sr-only" for="file_data">Screenshot</label>
+        {% component 'cleanseImageUploader' %}
+        {{ form_close() }}
+    </div>
+</div>

@@ -299,21 +299,37 @@ button, input, optgroup, select, textarea {
 }
 
 /* Schedule */
+.league-schedule h1 {
+    color: var(--white-primary);
+}
+
 .btn-outline-info {
-    color: var(--color-three-primary);
+    color: var(--color-one-primary);
     background-image: none;
     background-color: transparent;
-    border-color: var(--color-three-primary);
+    border-color: var(--color-one-primary);
 }
 
 .btn-outline-info:hover {
     color: var(--white-primary);
-    background-color: var(--color-three-primary);
-    border-color: var(--color-three-primary);
+    background-color: var(--color-one-primary);
+    border-color: var(--color-one-primary);
 }
 
 .league-schedule a.card:hover .card-block {
     background: var(--white-primary);
+}
+
+.league-schedule a.card:hover,
+.league-schedule a.card:active,
+.league-schedule a.card:focus {
+    text-decoration: none;
+}
+
+.league-schedule a.card:hover h5,
+.league-schedule a.card:active h5,
+.league-schedule a.card:focus h5 {
+    color: var(--black-primary);
 }
 
 /* Match */
@@ -322,13 +338,20 @@ button, input, optgroup, select, textarea {
     background: var(--white-primary);
 }
 
-.league-wrapper h1 {
+.league-match-wrapper {
+    padding-bottom: 1rem;
+    background: var(--white-primary);
+}
+
+.league-match-wrapper h1 {
+    line-height: 0;
     text-indent: -9999px;
 }
 
 .match-date-type {
     padding: 0 1.1rem;
-    border-bottom: 1px solid #ddd;
+    margin-bottom: .25rem;
+    border-bottom: 1px solid var(--color-one-primary);
 }
 
 .match-date-type p {
@@ -337,8 +360,13 @@ button, input, optgroup, select, textarea {
 }
 
 .match-up {
-    background: var(--color-two-primary);
+    margin-bottom: 1rem;
     color: var(--color-one-primary);
+}
+
+.team-one-logo img,
+.team-two-logo img {
+    width: 128px;
 }
 
 .match-up h2 {
@@ -353,6 +381,11 @@ button, input, optgroup, select, textarea {
 .tab-content > .tab-pane {
     padding: 1.125rem;
     background: #fff;
+}
+
+.team_one .img-container .focus-image,
+.team_two .img-container .focus-image {
+    width: 48px;
 }
 
 /* team-edit-roster-free-agents */
@@ -370,6 +403,16 @@ button, input, optgroup, select, textarea {
 
 .team-edit-roster-players {
     flex-grow: 1;
+}
+
+/* Team */
+.league-team {
+    padding: 2rem 1rem;
+    background-color: var(--white-primary);
+}
+
+.seasonal-results {
+    color: var(--color-one-secondary);
 }
 
 /* Round Title Bar */
@@ -518,7 +561,19 @@ svg.match--player:not(:root) {
 .cleanse-league-team-player:not(:last-child) {
     margin: 1rem 0;
     border: solid var(--color-two-secondary);
+    border-width: 0 0 1px;
+}
+
+.cleanse-league-team-player:last-child {
+    padding: 0 0 1rem;
+    margin: 0 0 3rem;
+    border: solid var(--color-two-secondary);
+    border-radius: .75rem;
     border-width: 0 0 .2rem;
+}
+
+.upload-button {
+    width: 100% !important;
 }
 
 @media (min-width: 992px) {
@@ -547,5 +602,20 @@ svg.match--player:not(:root) {
     .team-roster {
         padding-bottom: 1rem;
         border-bottom: 1px solid var(--color-one-secondary);
+    }
+}
+
+@media (max-width: 575px) {
+    .match-up .display-4,
+    .league-team .team-name .display-3 {
+        font-size: 1.5rem;
+    }
+
+    .league-team .team-name .lead {
+        font-size: .85rem;
+    }
+
+    .league-team .team-logo img {
+        width: 96px;
     }
 }

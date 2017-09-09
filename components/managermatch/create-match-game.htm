@@ -1,6 +1,7 @@
 <div class="cleanse-league-match-game">
     {{ form_open({ request: __SELF__~'::onCreateGame', files: true }) }}
 
+    <input type="hidden" name="season_id" value="{{ match.one.teamable_id }}">
     <input type="hidden" name="match_id" value="{{ match.id }}">
     <input type="hidden" name="team_one" value="{{ match.team_one }}">
     <input type="hidden" name="team_two" value="{{ match.team_two }}">

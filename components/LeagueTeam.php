@@ -47,6 +47,8 @@ class LeagueTeam extends ComponentBase
             return $this->controller->run('404');
         }
 
+        dd($team->toArray());
+
         return $team;
     }
 }

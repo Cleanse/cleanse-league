@@ -46,9 +46,9 @@ class AddTeamPlayerTables extends Migration
         {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('player_id')->index();
-            $table->string('event_team_id')->index();
-            $table->string('medals')->nullable();
+            $table->string('player_id')->unsigned()->index();
+            $table->string('event_team_id')->unsigned()->index();
+            $table->integer('medals')->unsigned()->nullable();
             $table->integer('kills')->unsigned()->nullable();
             $table->integer('deaths')->unsigned()->nullable();
             $table->integer('assists')->unsigned()->nullable();
@@ -68,10 +68,11 @@ class AddTeamPlayerTables extends Migration
         {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('game_id')->index();
-            $table->string('player_id')->index();
+            $table->integer('game_id')->unsigned()->index();
+            $table->integer('team_id')->unsigned()->index();
+            $table->integer('player_id')->unsigned()->index();
             $table->string('player_job')->nullable();
-            $table->integer('medals')->nullable();
+            $table->integer('medals')->unsigned()->nullable();
             $table->integer('kills')->unsigned()->nullable();
             $table->integer('deaths')->unsigned()->nullable();
             $table->integer('assists')->unsigned()->nullable();

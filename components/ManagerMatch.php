@@ -6,9 +6,8 @@ use Redirect;
 use Session;
 use Cms\Classes\ComponentBase;
 use System\Models\File;
-use Cleanse\League\Classes\MatchUpdater;
+use Cleanse\League\Classes\Updaters\UpdaterMatchGame;
 use Cleanse\League\Models\Match;
-use Cleanse\League\Models\MatchGame;
 
 class ManagerMatch extends ComponentBase
 {
@@ -37,27 +36,22 @@ class ManagerMatch extends ComponentBase
         $this->addCss('assets/css/league.css');
         $this->addJs('assets/js/image-input.js');
         $this->page['flashSuccess'] = Session::get('flashSuccess');
-        $this->page['match'] = $this->getMatch();
+        $this->initMatch();
     }
 
-    public function getMatch()
+    public function initMatch()
     {
-        $match = $this->property('match');
-
+        $this->page['match'] = $this->getMatch();
         $this->page['jobs'] = $this->getXivJobs();
-
-        return Match::with(['one.team', 'two.team', 'games' => function ($q) {
-            $q->orderBy('created_at', 'asc');
-        }])->find($match);
     }
 
     public function onCreateGame()
     {
         $post = Input::all();
 
-        $createGame = new MatchUpdater;
+        $match = new UpdaterMatchGame;
 
-        $game = $createGame->updateMatch($post);
+        $matchGame = $match->update($post);
 
         if (Input::hasFile('screenshot')) {
             $uploadedFile = Input::file('screenshot');
@@ -67,7 +61,7 @@ class ManagerMatch extends ComponentBase
             $file->is_public = true;
             $file->save();
 
-            $game->screenshot()->add($file);
+            $matchGame->screenshot()->add($file);
         }
 
         Flash::success('Game was added.');
@@ -75,6 +69,45 @@ class ManagerMatch extends ComponentBase
         Session::flash('flashSuccess', true);
 
         return Redirect::refresh();
+    }
+
+    public function onFinalizeMatch()
+    {
+        $post = Input::all();
+
+        $match = new UpdaterMatchGame;
+
+        $winner = $match->finalize($post);
+
+        Flash::success('Match was finalized, ' . $winner . ' was victorious.');
+
+        Session::flash('flashSuccess', true);
+
+        return Redirect::refresh();
+    }
+
+    public function onUnlockMatch()
+    {
+        $post = Input::all();
+
+        $match = new UpdaterMatchGame;
+
+        $match->unlock($post);
+
+        Flash::success('Match was unlocked. You can add / remove games again.');
+
+        Session::flash('flashSuccess', true);
+
+        return Redirect::refresh();
+    }
+
+    protected function getMatch()
+    {
+        $match = $this->property('match');
+
+        return Match::with(['one.team.players', 'two.team.players', 'games' => function ($q) {
+            $q->orderBy('created_at', 'asc');
+        }])->find($match);
     }
 
     protected function getXivJobs()

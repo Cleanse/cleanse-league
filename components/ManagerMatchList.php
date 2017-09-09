@@ -21,6 +21,7 @@ class ManagerMatchList extends ComponentBase
         $this->addCss('assets/css/league.css');
         $this->page['flashSuccess'] = Session::get('flashSuccess');
         $this->page['matches'] = $this->getIncompleteMatchesList();
+        $this->page['completed'] = $this->getCompleteMatchesList();
     }
 
     public function onUpdate()
@@ -35,12 +36,22 @@ class ManagerMatchList extends ComponentBase
 
         if ($mode == 'list') {
             $this->page['matches'] = $this->getIncompleteMatchesList();
+            $this->page['completed'] = $this->getCompleteMatchesList();
         }
     }
 
     public function getIncompleteMatchesList()
     {
         return Match::with(['one.team', 'two.team'])
+            ->whereNull('winner_id')
+            ->orderBy('takes_place_at', 'asc')
+            ->paginate(20);
+    }
+
+    public function getCompleteMatchesList()
+    {
+        return Match::with(['one.team', 'two.team'])
+            ->whereNotNull('winner_id')
             ->orderBy('takes_place_at', 'asc')
             ->paginate(20);
     }

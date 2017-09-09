@@ -6,7 +6,8 @@ use Model;
  * Class MatchGamePlayer
  * @package Cleanse\League\Models
  * @property integer $game_id
- * @property string $player_id
+ * @property integer $team_id
+ * @property integer $player_id
  * @property string $player_job
  * @property integer $medals
  * @property integer $kills
@@ -27,6 +28,7 @@ class MatchGamePlayer extends Model
     protected $fillable = [
         'game_id',
         'player_id',
+        'team_id',
         'player_job',
         'medals',
         'kills',

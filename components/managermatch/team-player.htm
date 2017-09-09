@@ -1,73 +1,151 @@
-<h3>Team One</h3>
-{% for o in 1..4 %}
-<div class="cleanse-league-team-player">
-    <h5>Player {{ o }}</h5>
-    <div class="d-flex flex-md-row flex-column mb-md-2">
-        <div class="mb-2 mr-md-1">
-            <label class="sr-only" for="team_one_roster[{{ o }}][player]">Team One: Player {{ o }}</label>
-            <select class="form-control" id="team_one_roster[{{ o }}][player]" name="team_one_roster[{{ o }}][player]">
-                <option value="0">Select a player</option>
-                {% for p in match.one.team.players %}
-                <option value="{{ p.id }}">{{ p.name }}</option>
-                {% endfor %}
-            </select>
+<div>
+    <h3>Team One</h3>
+    {% for o in 1..4 %}
+    <div class="cleanse-league-team-player">
+        <h5>Player {{ o }}</h5>
+        <div class="d-flex flex-md-row flex-column mb-md-2">
+            <div class="mb-2 mr-md-1">
+                <label class="sr-only" for="team_one_roster[{{ o }}][player]">Team One: Player {{ o }}</label>
+                <select class="form-control" id="team_one_roster[{{ o }}][player]" name="team_one_roster[{{ o }}][player]">
+                    <option value="0">Select a player</option>
+                    {% for p in match.one.team.players %}
+                    <option value="{{ p.id }}">{{ p.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-2">
+                <label class="sr-only" for="team_one_roster[{{ o }}][job]">Job</label>
+                <select class="form-control" id="team_one_roster[{{ o }}][job]" name="team_one_roster[{{ o }}][job]">
+                    <option>Select a job</option>
+                    {% for j in jobs %}
+                    <option value="{{ j.abbr }}">{{ j.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
         </div>
 
-        <div class="mb-2">
-            <label class="sr-only" for="team_one_roster[{{ o }}][job]">Job</label>
-            <select class="form-control" id="team_one_roster[{{ o }}][job]" name="team_one_roster[{{ o }}][job]">
-                <option>Select a job</option>
-                {% for j in jobs %}
-                <option value="{{ j.abbr }}">{{ j.name }}</option>
-                {% endfor %}
-            </select>
+        <div class="d-flex flex-md-row flex-column mb-md-2">
+            <div class="input-group mb-2">
+                <label class="sr-only" for="team_one_roster[{{ o }}][kills]">Kills</label>
+                <div class="input-group-addon">K</div>
+                <input type="text" class="form-control" id="team_one_roster[{{ o }}][kills]"
+                       name="team_one_roster[{{ o }}][kills]" placeholder="Kills">
+            </div>
+
+            <div class="input-group mb-2 mx-md-1">
+                <label class="sr-only" for="team_one_roster[{{ o }}][deaths]">Deaths</label>
+                <div class="input-group-addon">D</div>
+                <input type="text" class="form-control" id="team_one_roster[{{ o }}][deaths]"
+                       name="team_one_roster[{{ o }}][deaths]" placeholder="Deaths">
+            </div>
+
+            <div class="input-group mb-2">
+                <label class="sr-only" for="team_one_roster[{{ o }}][assists]">Assists</label>
+                <div class="input-group-addon">A</div>
+                <input type="text" class="form-control" id="team_one_roster[{{ o }}][assists]"
+                       name="team_one_roster[{{ o }}][assists]" placeholder="Assists">
+            </div>
+        </div>
+
+        <div class="d-flex flex-md-row flex-column">
+            <div class="input-group mb-2">
+                <label class="sr-only" for="team_one_roster[{{ o }}][medals]">Medals</label>
+                <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
+                <input type="text" class="form-control" id="team_one_roster[{{ o }}][medals]"
+                       name="team_one_roster[{{ o }}][medals]" placeholder="Medals">
+            </div>
+
+            <div class="input-group mb-2 mx-md-1">
+                <label class="sr-only" for="team_one_roster[{{ o }}][damage]">Damage</label>
+                <div class="input-group-addon"><i class="fa fa-exclamation"></i></div>
+                <input type="text" class="form-control" id="team_one_roster[{{ o }}][damage]"
+                       name="team_one_roster[{{ o }}][damage]" placeholder="Damage">
+            </div>
+
+            <div class="input-group mb-2">
+                <label class="sr-only" for="team_one_roster[{{ o }}][healing]">Healing</label>
+                <div class="input-group-addon"><i class="fa fa-child"></i></div>
+                <input type="text" class="form-control" id="team_one_roster[{{ o }}][healing]"
+                       name="team_one_roster[{{ o }}][healing]" placeholder="Healing">
+            </div>
         </div>
     </div>
-
-    <div class="d-flex flex-md-row flex-column mb-md-2">
-        <div class="input-group mb-2">
-            <label class="sr-only" for="team_one_roster[{{ o }}][kills]">Kills</label>
-            <div class="input-group-addon">K</div>
-            <input type="text" class="form-control" id="team_one_roster[{{ o }}][kills]"
-                   name="team_one_roster[{{ o }}][kills]" placeholder="Kills">
-        </div>
-
-        <div class="input-group mb-2 mx-md-1">
-            <label class="sr-only" for="team_one_roster[{{ o }}][deaths]">Deaths</label>
-            <div class="input-group-addon">D</div>
-            <input type="text" class="form-control" id="team_one_roster[{{ o }}][deaths]"
-                   name="team_one_roster[{{ o }}][deaths]" placeholder="Deaths">
-        </div>
-
-        <div class="input-group mb-2">
-            <label class="sr-only" for="team_one_roster[{{ o }}][assists]">Assists</label>
-            <div class="input-group-addon">A</div>
-            <input type="text" class="form-control" id="team_one_roster[{{ o }}][assists]"
-                   name="team_one_roster[{{ o }}][assists]" placeholder="Assists">
-        </div>
-    </div>
-
-    <div class="d-flex flex-md-row flex-column">
-        <div class="input-group mb-2">
-            <label class="sr-only" for="team_one_roster[{{ o }}][medals]">Medals</label>
-            <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
-            <input type="text" class="form-control" id="team_one_roster[{{ o }}][medals]"
-                   name="team_one_roster[{{ o }}][medals]" placeholder="Medals">
-        </div>
-
-        <div class="input-group mb-2 mx-md-1">
-            <label class="sr-only" for="team_one_roster[{{ o }}][damage]">Damage</label>
-            <div class="input-group-addon"><i class="fa fa-exclamation"></i></div>
-            <input type="text" class="form-control" id="team_one_roster[{{ o }}][damage]"
-                   name="team_one_roster[{{ o }}][damage]" placeholder="Damage">
-        </div>
-
-        <div class="input-group mb-2">
-            <label class="sr-only" for="team_one_roster[{{ o }}][healing]">Healing</label>
-            <div class="input-group-addon"><i class="fa fa-child"></i></div>
-            <input type="text" class="form-control" id="team_one_roster[{{ o }}][healing]"
-                   name="team_one_roster[{{ o }}][healing]" placeholder="Healing">
-        </div>
-    </div>
+    {% endfor %}
 </div>
-{% endfor %}
+
+<div>
+    <h3>Team Two</h3>
+    {% for t in 1..4 %}
+    <div class="cleanse-league-team-player">
+        <h5>Player {{ t }}</h5>
+        <div class="d-flex flex-md-row flex-column mb-md-2">
+            <div class="mb-2 mr-md-1">
+                <label class="sr-only" for="team_two_roster[{{ t }}][player]">Team Two: Player {{ t }}</label>
+                <select class="form-control" id="team_two_roster[{{ t }}][player]" name="team_two_roster[{{ t }}][player]">
+                    <option value="0">Select a player</option>
+                    {% for q in match.two.team.players %}
+                    <option value="{{ q.id }}">{{ q.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-2">
+                <label class="sr-only" for="team_two_roster[{{ t }}][job]">Job</label>
+                <select class="form-control" id="team_two_roster[{{ t }}][job]" name="team_two_roster[{{ t }}][job]">
+                    <option>Select a job</option>
+                    {% for k in jobs %}
+                    <option value="{{ k.abbr }}">{{ k.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="d-flex flex-md-row flex-column mb-md-2">
+            <div class="input-group mb-2">
+                <label class="sr-only" for="team_two_roster[{{ t }}][kills]">Kills</label>
+                <div class="input-group-addon">K</div>
+                <input type="text" class="form-control" id="team_two_roster[{{ t }}][kills]"
+                       name="team_two_roster[{{ t }}][kills]" placeholder="Kills">
+            </div>
+
+            <div class="input-group mb-2 mx-md-1">
+                <label class="sr-only" for="team_two_roster[{{ t }}][deaths]">Deaths</label>
+                <div class="input-group-addon">D</div>
+                <input type="text" class="form-control" id="team_two_roster[{{ t }}][deaths]"
+                       name="team_two_roster[{{ t }}][deaths]" placeholder="Deaths">
+            </div>
+
+            <div class="input-group mb-2">
+                <label class="sr-only" for="team_two_roster[{{ t }}][assists]">Assists</label>
+                <div class="input-group-addon">A</div>
+                <input type="text" class="form-control" id="team_two_roster[{{ t }}][assists]"
+                       name="team_two_roster[{{ t }}][assists]" placeholder="Assists">
+            </div>
+        </div>
+
+        <div class="d-flex flex-md-row flex-column">
+            <div class="input-group mb-2">
+                <label class="sr-only" for="team_two_roster[{{ t }}][medals]">Medals</label>
+                <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
+                <input type="text" class="form-control" id="team_two_roster[{{ t }}][medals]"
+                       name="team_two_roster[{{ t }}][medals]" placeholder="Medals">
+            </div>
+
+            <div class="input-group mb-2 mx-md-1">
+                <label class="sr-only" for="team_two_roster[{{ t }}][damage]">Damage</label>
+                <div class="input-group-addon"><i class="fa fa-exclamation"></i></div>
+                <input type="text" class="form-control" id="team_two_roster[{{ t }}][damage]"
+                       name="team_two_roster[{{ t }}][damage]" placeholder="Damage">
+            </div>
+
+            <div class="input-group mb-2">
+                <label class="sr-only" for="team_two_roster[{{ t }}][healing]">Healing</label>
+                <div class="input-group-addon"><i class="fa fa-child"></i></div>
+                <input type="text" class="form-control" id="team_two_roster[{{ t }}][healing]"
+                       name="team_two_roster[{{ t }}][healing]" placeholder="Healing">
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
