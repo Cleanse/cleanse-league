@@ -24,4 +24,8 @@ class EventPlayer extends Model
     public $morphTo = [
         'playerable' => []
     ];
+
+    public $belongsTo = [
+        'player' => 'Cleanse\League\Models\Player'
+    ];
 }

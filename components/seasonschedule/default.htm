@@ -24,14 +24,14 @@
                     <div class="img-container mr-2">
                         <img class="focus-image imageLoaded" src="{{ match.one.team.logo.getPath() }}">
                     </div>
-                    <div class="sb-meta">
+                    <div class="schedule-team-name-initials">
                         <h5>
                             <span class="team-name hidden-sm-down">{{ match.one.team.name }}</span>
                             <span class="team-initials hidden-md-up">{{ match.one.team.initials }}</span>
                         </h5>
                         <div class="record-container">
                             <p class="record overall">
-                                {{ match.team_one.match_wins ?? 0 }} - {{ match.team_one.match_losses ?? 0 }}
+                                ({{ match.team_one.match_wins ?? 0 }} - {{ match.team_one.match_losses ?? 0 }})
                             </p>
                         </div>
                     </div>
@@ -40,14 +40,14 @@
                     <div class="img-container mr-2">
                         <img class="focus-image imageLoaded" src="{{ match.two.team.logo.getPath() }}">
                     </div>
-                    <div class="sb-meta">
+                    <div class="schedule-team-name-initials">
                         <h5>
                             <span class="team-name hidden-sm-down">{{ match.two.team.name }}</span>
                             <span class="team-initials hidden-md-up">{{ match.two.team.initials }}</span>
                         </h5>
                         <div class="record-container">
                             <p class="record overall">
-                                {{ match.team_two.match_wins ?? 0 }} - {{ match.team_two.match_losses ?? 0 }}
+                                ({{ match.team_two.match_wins ?? 0 }} - {{ match.team_two.match_losses ?? 0 }})
                             </p>
                         </div>
                     </div>

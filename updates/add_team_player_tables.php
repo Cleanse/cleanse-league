@@ -46,8 +46,8 @@ class AddTeamPlayerTables extends Migration
         {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('player_id')->unsigned()->index();
-            $table->string('event_team_id')->unsigned()->index();
+            $table->string('player_id')->index();
+            $table->integer('event_team_id')->unsigned()->index();
             $table->integer('medals')->unsigned()->nullable();
             $table->integer('kills')->unsigned()->nullable();
             $table->integer('deaths')->unsigned()->nullable();

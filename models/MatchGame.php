@@ -46,4 +46,12 @@ class MatchGame extends Model
             'otherKey' => 'winner_id'
         ]
     ];
+
+    public $hasMany = [
+        'mgp' => [
+            'Cleanse\League\Models\MatchGamePlayer',
+            'key' => 'game_id',
+            'otherKey' => 'id'
+        ]
+    ];
 }

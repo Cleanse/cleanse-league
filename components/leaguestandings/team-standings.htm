@@ -1,0 +1,26 @@
+<ul class="list-group standings-list">
+    <li class="list-group-item active">
+        <span class="rank">Rank</span>
+        <span class="team">Team</span>
+        <span class="wins">Wins</span>
+        <span class="losses">Losses</span>
+    </li>
+    {% set w = teams|length - 1 %}
+    {% set l = 0 %}
+    {% for team in teams %}
+    <li class="list-group-item">
+        <span class="rank">1</span>
+        <div class="team">
+            <img src="{{ team.team.logo.getThumb(20, 20) }}">
+            <a href="/league/team/{{ team.team.slug }}">
+                <span class="hidden-sm-down">{{ team.team.name }}</span>
+                <span class="hidden-md-up">{{ team.team.initials }}</span>
+            </a>
+        </div>
+        <span class="wins">{{ w }}</span>
+        <span class="losses">{{ l }}</span>
+    </li>
+    {% set w = w - 1 %}
+    {% set l = l + 1 %}
+    {% endfor %}
+</ul>

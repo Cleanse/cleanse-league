@@ -11,24 +11,33 @@
             </div>
 
             <div class="team-one-name flex-grow-one">
-                {% if match.winner_id == match.team_one %}
-                <p>Winner</p>
-                {% endif %}
-                <h2 class="hidden-sm-down">{{ match.one.team.name }}</h2>
-                <h2 class="hidden-md-up">{{ match.one.team.initials }}</h2>
+
+                <h2 class="hidden-sm-down">
+                    {{ match.one.team.name }}
+                </h2>
+                <h2 class="hidden-md-up">
+                    {{ match.one.team.initials }}
+                </h2>
                 <p class="display-4">{{ match.team_one_score ?? 0 }}</p>
             </div>
         </div>
         <div class="match-vs">
+            {% if match.winner_id == match.team_one %}
+            <i class="fa fa-arrow-left"></i>
+            {% endif %}
             <p>vs</p>
+            {% if match.winner_id == match.team_two %}
+            <i class="fa fa-arrow-right"></i>
+            {% endif %}
         </div>
         <div class="flex-grow-one team-two d-flex flex-row">
             <div class="team-two-name flex-grow-one">
-                {% if match.winner_id == match.team_two %}
-                <p>Winner</p>
-                {% endif %}
-                <h2 class="hidden-sm-down">{{ match.two.team.name }}</h2>
-                <h2 class="hidden-md-up">{{ match.two.team.initials }}</h2>
+                <h2 class="hidden-sm-down">
+                    {{ match.two.team.name }}
+                </h2>
+                <h2 class="hidden-md-up">
+                    {{ match.two.team.initials }}
+                </h2>
                 <p class="display-4">{{ match.team_two_score ?? 0 }}</p>
             </div>
             <div class="team-two-logo">
@@ -56,7 +65,33 @@
         <div class="tab-pane fade {{ d == 1 ? 'show active' : '' }}"
              id="game-{{ gd.id }}"
              role="tabpanel">
-            STATS
+            <h5>Player Stats</h5>
+            <ul class="list-group standings-list mb-3">
+                <li class="list-group-item active">
+                    <span class="p-stats-col-name">Player</span>
+                    <span class="p-stats-col-stat">K/D/A</span>
+                    <span class="p-stats-col-stat">Medals</span>
+                    <span class="p-stats-col-stat">Damage</span>
+                    <span class="p-stats-col-stat">Healing</span>
+                </li>
+                {% for pd in gd.mgp %}
+                <li class="list-group-item">
+                    <span class="p-stats-col-name">{{ pd.player.player.name }}</span>
+                    <div class="p-stats-col-stat">
+                        {{ pd.kills }} / {{ pd.deaths }} / {{ pd.assists }}
+                    </div>
+                    <span class="p-stats-col-stat">{{ pd.medals }}</span>
+                    <span class="p-stats-col-stat">{{ pd.damage }}</span>
+                    <span class="p-stats-col-stat">{{ pd.healing }}</span>
+                </li>
+                {% else %}
+                <li class="list-group-item">
+                    No player stats recorded for this game.
+                </li>
+                {% endfor %}
+            </ul>
+
+            <h5>Screenshot</h5>
             <img class="img-fluid" src="{{ gd.screenshot.getPath() }}">
         </div>
         {% set d = d + 1 %}

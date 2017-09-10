@@ -30,11 +30,12 @@ class Plugin extends PluginBase
     {
         return [
             //frontend "done"
-            'Cleanse\League\Components\LeagueAbout' => 'cleanseLeagueAbout',
             'Cleanse\League\Components\LeagueHome' => 'cleanseLeagueHome',
+            'Cleanse\League\Components\LeagueAbout' => 'cleanseLeagueAbout',
             'Cleanse\League\Components\LeagueRules' => 'cleanseLeagueRules',
+            'Cleanse\League\Components\LeagueStandings' => 'cleanseLeagueStandings',
+            'Cleanse\League\Components\LeagueStats' => 'cleanseLeagueStats',
             'Cleanse\League\Components\LeagueTeam' => 'cleanseLeagueTeam',
-            'Cleanse\League\Components\LeagueVision' => 'cleanseLeagueVision',
             'Cleanse\League\Components\LeagueMatch' => 'cleanseLeagueMatch',
 
             'Cleanse\League\Components\SeasonSchedule' => 'cleanseLeagueSeasonSchedule',

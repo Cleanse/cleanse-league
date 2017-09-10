@@ -284,8 +284,20 @@ button, input, optgroup, select, textarea {
     color: var(--color-two-primary);
 }
 
+.league-rules {
+    background-color: var(--white-primary);
+}
+
+.league-rules .list-group-item {
+    background-color: var(--white-primary);
+}
+
 .league-rules table {
     margin: .75rem 0;
+}
+
+.league-stats {
+    background-color: var(--white-primary);
 }
 
 .vision-excerpt p {
@@ -332,7 +344,34 @@ button, input, optgroup, select, textarea {
     color: var(--black-primary);
 }
 
-/* Match */
+.schedule-team-name-initials h5 {
+    margin: 0;
+}
+
+.standings-list {
+    color: var(--color-one-primary);
+}
+
+.standings-list .rank,
+.standings-list .wins,
+.standings-list .losses {
+    width: 15%;
+    text-align: center;
+}
+
+.standings-list .team {
+    width: 40%;
+}
+
+.p-stats-col-name {
+    width: 40%;
+}
+
+.p-stats-col-stat {
+    width: 15%;
+}
+
+    /* Match */
 .league-wrapper {
     padding-bottom: 1rem;
     background: var(--white-primary);

@@ -1,0 +1,8 @@
+<div class="league-schedule">
+    <h1>Standings</h1>
+    {% if teams|length > 0 %}
+    {% partial '@team-standings' %}
+    {% else %}
+    {% partial '@no-teams' %}
+    {%endif %}
+</div>

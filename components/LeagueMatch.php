@@ -37,26 +37,24 @@ class LeagueMatch extends ComponentBase
     {
         $this->addCss('/plugins/cleanse/league/assets/css/league.css');
 
-        $this->getMatch();
+        $this->initLeagueMatch();
+    }
 
-        if ($spoiler = $this->property('spoiler')) {
-            $this->page['spoiler'] = true;
-        }
+    public function initLeagueMatch()
+    {
+        $this->match = $this->page['match'] = $this->getMatch();
     }
 
     public function getMatch()
     {
-        if ($matchId = $this->property('match')) {
-            $match = Match::whereId($matchId)->with(['one' => function ($q) {
-                $q->with('team');
-            }, 'two' => function ($q) {
-                $q->with('team');
-            }, 'games'])
-                ->first();
-        }
+        $matchId = $this->property('match');
 
-        if (isset($match)) {
-            $this->match = $this->page['match'] = $match;
-        }
+        return Match::whereId($matchId)->with([
+            'one.team',
+            'two.team',
+            'games' => function ($q) {
+                $q->with(['one', 'two', 'mgp.player.player']);
+            }])
+            ->first();
     }
 }
