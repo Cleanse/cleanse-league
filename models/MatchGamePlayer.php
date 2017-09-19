@@ -7,6 +7,7 @@ use Model;
  * @package Cleanse\League\Models
  * @property integer $game_id
  * @property integer $team_id
+ * @property integer $game_winner_id
  * @property integer $player_id
  * @property string $player_job
  * @property integer $medals

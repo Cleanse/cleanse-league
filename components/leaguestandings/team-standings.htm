@@ -1,26 +1,28 @@
-<ul class="list-group standings-list">
-    <li class="list-group-item active">
-        <span class="rank">Rank</span>
-        <span class="team">Team</span>
-        <span class="wins">Wins</span>
-        <span class="losses">Losses</span>
-    </li>
-    {% set w = teams|length - 1 %}
-    {% set l = 0 %}
+<table class="table table-league">
+    <thead>
+    <tr>
+        <th class="text-center">#</th>
+        <th>Team</th>
+        <th class="text-center">Wins</th>
+        <th class="text-center">Losses</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% set rank = 1 %}
     {% for team in teams %}
-    <li class="list-group-item">
-        <span class="rank">1</span>
-        <div class="team">
-            <img src="{{ team.team.logo.getThumb(20, 20) }}">
+    <tr class="row-league">
+        <th scope="row" class="text-center">{{ rank }}</th>
+        <td>
             <a href="/league/team/{{ team.team.slug }}">
-                <span class="hidden-sm-down">{{ team.team.name }}</span>
-                <span class="hidden-md-up">{{ team.team.initials }}</span>
+                <img class="team-logo" src="{{ team.team.logo.getThumb(36, 36) }}">
+                <span class="d-none d-md-inline">{{ team.team.name }}</span>
+                <span class="d-md-none">{{ team.team.initials }}</span>
             </a>
-        </div>
-        <span class="wins">{{ w }}</span>
-        <span class="losses">{{ l }}</span>
-    </li>
-    {% set w = w - 1 %}
-    {% set l = l + 1 %}
+        </td>
+        <td class="text-center">{{ team.match_wins ?? 0 }}</td>
+        <td class="text-center">{{ team.match_losses ?? 0 }}</td>
+    </tr>
+    {% set rank = rank + 1 %}
     {% endfor %}
-</ul>
+    </tbody>
+</table>

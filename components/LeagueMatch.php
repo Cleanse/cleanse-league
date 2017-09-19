@@ -53,7 +53,7 @@ class LeagueMatch extends ComponentBase
             'one.team',
             'two.team',
             'games' => function ($q) {
-                $q->with(['one', 'two', 'mgp.player.player']);
+                $q->with(['one', 'two', 'players.player.player']);
             }])
             ->first();
     }

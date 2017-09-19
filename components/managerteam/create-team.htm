@@ -18,7 +18,7 @@
 <div class="input-group image-preview mb-2">
     <input class="form-control image-preview-filename">
     <span class="input-group-btn">
-        <button type="button" class="btn btn-primary image-preview-clear" style="display:none;">
+        <button type="button" class="btn btn-outline-primary image-preview-clear" style="display:none;">
             <i class="fa fa-remove"></i> Clear
         </button>
     </span>
@@ -26,11 +26,11 @@
         <div class="btn btn-primary image-preview-input">
             <i class="fa fa-folder-open"></i>
             <span class="image-preview-input-title">Choose File</span>
-            <input type="file" accept="image/png, image/jpeg, image/gif" id="image-file" name="logo"/>
+            <input type="file" accept="image/png, image/jpeg, image/gif" id="image-file" name="logo">
         </div>
     </span>
 </div>
 
-<button type="submit" data-attach-loading class="oc-loader btn btn-primary">Create Team</button>
+<button type="submit" data-attach-loading class="oc-loader btn btn-outline-primary">Create Team</button>
 
 {{ form_close() }}

@@ -416,7 +416,7 @@
         </div>
     </div>
 
-    <button type="submit" data-attach-loading class="oc-loader btn btn-primary">Edit Game</button>
+    <button type="submit" data-attach-loading class="oc-loader btn btn-outline-primary">Edit Game</button>
 
     {{ form_close() }}
 
@@ -425,6 +425,6 @@
     {{ form_open({ request: __SELF__~'::onDeleteGame' }) }}
     <input type="hidden" name="match_id" value="{{ game.match_id }}">
     <input type="hidden" name="game_id" value="{{ game.id }}">
-    <button type="submit" data-attach-loading class="btn btn-danger">Delete Game</button>
+    <button type="submit" data-attach-loading class="btn btn-outline-danger">Delete Game</button>
     {{ form_close() }}
 </div>

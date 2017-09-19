@@ -24,7 +24,9 @@ class LeagueStandings extends ComponentBase
 
     public function getTeams()
     {
+        //Needs to get current season team, not all.
         $teams = EventTeam::with('team')
+            ->orderBy('match_wins', 'desc')
             ->get();
 
         return $teams;

@@ -16,7 +16,7 @@ class UpdaterMatchGamePlayer
 
         $this->updateMatchGame();
 
-        $this->updateMatchGameTeams();
+        $this->updateMatchGameRosters();
     }
 
     public function delete($post)
@@ -41,14 +41,14 @@ class UpdaterMatchGamePlayer
 
     protected function deleteMatchGame($id)
     {
-        $matchGamePlayer = MatchGamePlayer::where('game_id', '=', $id)->delete();
+        MatchGamePlayer::where('game_id', '=', $id)->delete();
 
         $matchGame = MatchGame::find($id);
 
         $matchGame->delete();
     }
 
-    protected function updateMatchGameTeams()
+    protected function updateMatchGameRosters()
     {
         foreach ($this->post['team_one_roster'] as $player_a) {
 
@@ -97,12 +97,17 @@ class UpdaterMatchGamePlayer
 
         $newMatchGamePlayer->game_id = $this->gameId;
         $newMatchGamePlayer->team_id = $teamId;
+        $newMatchGamePlayer->game_winner_id = $this->post['winner_id'];
         $newMatchGamePlayer->player_id = $eventPlayer->id;
         $newMatchGamePlayer->player_job = $player['job'];
         $newMatchGamePlayer->medals = $player['medals'];
         $newMatchGamePlayer->kills = $player['kills'];
         $newMatchGamePlayer->deaths = $player['deaths'];
-        $newMatchGamePlayer->assists = $player['assists'];
+        if (!empty($player['assists'])) {
+            $newMatchGamePlayer->assists = $player['assists'];
+        } else {
+            $newMatchGamePlayer->assists = 0;
+        }
         $newMatchGamePlayer->damage = $player['damage'];
         $newMatchGamePlayer->healing = $player['healing'];
 
@@ -117,6 +122,7 @@ class UpdaterMatchGamePlayer
 
         $editMatchGamePlayer->game_id = $this->gameId;
         $editMatchGamePlayer->team_id = $teamId;
+        $editMatchGamePlayer->game_winner_id = $this->post['winner_id'];
         $editMatchGamePlayer->player_id = $eventPlayer->id;
         $editMatchGamePlayer->player_job = $player['job'];
         $editMatchGamePlayer->medals = $player['medals'];

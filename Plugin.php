@@ -35,10 +35,10 @@ class Plugin extends PluginBase
             'Cleanse\League\Components\LeagueRules' => 'cleanseLeagueRules',
             'Cleanse\League\Components\LeagueStandings' => 'cleanseLeagueStandings',
             'Cleanse\League\Components\LeagueStats' => 'cleanseLeagueStats',
-            'Cleanse\League\Components\LeagueTeam' => 'cleanseLeagueTeam',
+            'Cleanse\League\Components\LeagueSchedule' => 'cleanseLeagueSchedule',
             'Cleanse\League\Components\LeagueMatch' => 'cleanseLeagueMatch',
-
-            'Cleanse\League\Components\SeasonSchedule' => 'cleanseLeagueSeasonSchedule',
+            'Cleanse\League\Components\LeagueTeam' => 'cleanseLeagueTeam',
+            'Cleanse\League\Components\LeaguePlayer' => 'cleanseLeaguePlayer',
 
             //manager
             'Cleanse\League\Components\ManagerPanel' => 'cleanseLeagueManagerPanel',

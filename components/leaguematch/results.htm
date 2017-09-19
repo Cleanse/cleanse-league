@@ -1,50 +1,60 @@
-<div class="container-fluid league-match-wrapper">
-    <h1>Match between {{ match.one.team.name }} and {{ match.two.team.name }}</h1>
-    <div class="match-date-type d-flex justify-content-between">
-        <p>{{ match.takes_place_at|date('l, M d, Y') }}</p>
-        <p class="small">{{ match.matchable_type|capitalize }} Match</p>
-    </div>
-    <div class="match-up d-flex flex-row align-items-center">
-        <div class="flex-grow-one team-one d-flex flex-row">
-            <div class="team-one-logo">
-                <img src="{{ match.one.team.logo.getPath() }}" title="Team {{ match.one.team.name }}'s logo.">
-            </div>
+<div class="league-match">
+    <h1 class="sr-only">Match between {{ match.one.team.name }} and {{ match.two.team.name }}</h1>
 
-            <div class="team-one-name flex-grow-one">
-
-                <h2 class="hidden-sm-down">
-                    {{ match.one.team.name }}
-                </h2>
-                <h2 class="hidden-md-up">
-                    {{ match.one.team.initials }}
-                </h2>
+    <table class="table table-league match-date-type">
+        <thead>
+        <tr>
+            <th colspan="2">
+                <p>
+                    {{ match.takes_place_at|date('l, M d, Y') }}
+                </p>
+            </th>
+            <th class="col-score">
+                <span class="small d-none d-md-block">Score</span>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="row-league">
+            <th scope="row" class="col-logo">
+                <img src="{{ match.one.team.logo.getThumb(96, 96) }}" title="Team {{ match.one.team.name }}'s logo.">
+            </th>
+            <td>
+                <a href="/league/team/{{ match.one.team.slug }}">
+                    <h2 class="d-none d-md-block">
+                        {{ match.one.team.name }}
+                    </h2>
+                    <h2 class="d-md-none">
+                        {{ match.one.team.initials }}
+                    </h2>
+                </a>
+                <p class="team-record">{{ match.one.match_wins ?? '0' }}W - {{ match.one.match_losses ?? '0' }}L</p>
+            </td>
+            <td class="text-center col-score">
                 <p class="display-4">{{ match.team_one_score ?? 0 }}</p>
-            </div>
-        </div>
-        <div class="match-vs">
-            {% if match.winner_id == match.team_one %}
-            <i class="fa fa-arrow-left"></i>
-            {% endif %}
-            <p>vs</p>
-            {% if match.winner_id == match.team_two %}
-            <i class="fa fa-arrow-right"></i>
-            {% endif %}
-        </div>
-        <div class="flex-grow-one team-two d-flex flex-row">
-            <div class="team-two-name flex-grow-one">
-                <h2 class="hidden-sm-down">
-                    {{ match.two.team.name }}
-                </h2>
-                <h2 class="hidden-md-up">
-                    {{ match.two.team.initials }}
-                </h2>
+            </td>
+        </tr>
+        <tr class="row-league">
+            <th scope="row">
+                <img src="{{ match.two.team.logo.getThumb(96, 96) }}" title="Team {{ match.two.team.name }}'s logo.">
+            </th>
+            <td>
+                <a href="/league/team/{{ match.two.team.slug }}">
+                    <h2 class="d-none d-md-block">
+                        {{ match.two.team.name }}
+                    </h2>
+                    <h2 class="d-md-none">
+                        {{ match.two.team.initials }}
+                    </h2>
+                </a>
+                <p class="team-record">{{ match.two.match_wins ?? '0' }}W - {{ match.two.match_losses ?? '0' }}L</p>
+            </td>
+            <td class="text-center">
                 <p class="display-4">{{ match.team_two_score ?? 0 }}</p>
-            </div>
-            <div class="team-two-logo">
-                <img src="{{ match.two.team.logo.getPath() }}" title="Team {{ match.two.team.name }}'s logo.">
-            </div>
-        </div>
-    </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
@@ -52,7 +62,7 @@
         {% for g in match.games %}
         <li class="nav-item">
             <a class="nav-link {{ c == 1 ? 'active' : '' }}" data-toggle="tab"
-               href="#game-{{ g.id }}" role="tab">Game {{ c }}</a>
+               href="#game-{{ g.id }}" role="tab"><span class="game-text">Game</span> {{ c }}</a>
         </li>
         {% set c = c + 1 %}
         {% endfor %}
@@ -65,34 +75,54 @@
         <div class="tab-pane fade {{ d == 1 ? 'show active' : '' }}"
              id="game-{{ gd.id }}"
              role="tabpanel">
-            <h5>Player Stats</h5>
-            <ul class="list-group standings-list mb-3">
-                <li class="list-group-item active">
-                    <span class="p-stats-col-name">Player</span>
-                    <span class="p-stats-col-stat">K/D/A</span>
-                    <span class="p-stats-col-stat">Medals</span>
-                    <span class="p-stats-col-stat">Damage</span>
-                    <span class="p-stats-col-stat">Healing</span>
-                </li>
-                {% for pd in gd.mgp %}
-                <li class="list-group-item">
-                    <span class="p-stats-col-name">{{ pd.player.player.name }}</span>
-                    <div class="p-stats-col-stat">
-                        {{ pd.kills }} / {{ pd.deaths }} / {{ pd.assists }}
-                    </div>
-                    <span class="p-stats-col-stat">{{ pd.medals }}</span>
-                    <span class="p-stats-col-stat">{{ pd.damage }}</span>
-                    <span class="p-stats-col-stat">{{ pd.healing }}</span>
-                </li>
-                {% else %}
-                <li class="list-group-item">
-                    No player stats recorded for this game.
-                </li>
-                {% endfor %}
-            </ul>
+            <h3 class="m-1 mb-2 text-primary">{{ gd.winner.team.name }} were victorious in game {{ d }}!</h3>
 
-            <h5>Screenshot</h5>
-            <img class="img-fluid" src="{{ gd.screenshot.getPath() }}">
+            <h5 class="stat-table-head">Player Statistics</h5>
+            <table class="table table-league">
+                <thead>
+                <tr>
+                    <th>Player</th>
+                    <th class="text-center">K/D/A</th>
+                    <th class="text-center d-none d-md-table-cell">Medals</th>
+                    <th class="text-center d-none d-md-table-cell">Damage</th>
+                    <th class="text-center d-none d-md-table-cell">Healing</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for pd in gd.players %}
+                <tr class="row-league">
+                    <td scope="row">
+                        <a href="/league/player/{{ pd.player.player.slug }}">
+                            {{ pd.player.player.name }}
+                        </a>
+                    </td>
+                    <td class="text-center">
+                        {{ pd.kills }} / {{ pd.deaths }} / {{ pd.assists }}
+                    </td>
+                    <td class="text-center d-none d-md-table-cell">{{ pd.medals }}</td>
+                    <td class="text-center d-none d-md-table-cell">{{ pd.damage }}</td>
+                    <td class="text-center d-none d-md-table-cell">{{ pd.healing }}</td>
+                </tr>
+                {% else %}
+                <tr class="row-league">
+                    <td colspan="5">
+                        No stats, yet.
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            {% if gd.vod %}
+            <h5 class="mx-1">Video</h5>
+            <iframe src="{{ gd.vod }}" frameborder="0"
+                    allowfullscreen="true" scrolling="no" height="378" width="620"></iframe>
+            {% endif %}
+
+            {% if gd.screenshot %}
+            <h5 class="mx-1">Screenshot</h5>
+            <img class="mx-1 img-fluid" src="{{ gd.screenshot.getPath() }}">
+            {% endif %}
         </div>
         {% set d = d + 1 %}
         {% endfor %}

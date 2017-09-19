@@ -5,6 +5,8 @@ If you have an idea on features to add, send me an email: plovato@gmail.com
 To-do:
 - Add Event dispatching for logging of admin / staff actions.  
 - Event Team's Season+Season tourney stats can be combined as a third entity if needed.
+- Clean up Manager search ajax. (Match)
+- Add team & player of the week to homepage.
 
 ## Components
 **cleanseLeagueHome** (/league) - League home page containing upcoming matches and top team/player stats.  

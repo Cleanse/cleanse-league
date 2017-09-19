@@ -1,52 +1,65 @@
 <?php namespace Cleanse\League\Classes\Updaters;
-/**
- * Created by PhpStorm.
- * User: paullovato
- * Date: 9/8/17
- * Time: 7:58 PM
- */
+
+use Cleanse\League\Models\Match;
+use Cleanse\League\Models\EventTeam;
+
 class UpdaterEventTeam
 {
     public $id;
-    public $team;
+    public $matches;
 
-    public function buildStats($id)
+    public function calculateStats($teamId)
     {
-        $this->id = $id;
+        $team = EventTeam::find($teamId);
 
-        $this->team = Match::where('team_one', '=', $this->id)
-            ->orWhere('team_two', '=', $this->id)
+        $this->id = $team->id;
+        $this->matches = Match::where(function ($query) use ($team) {
+            $query->where('team_one', '=', $team->id)
+                ->where('matchable_id', '=', $team->teamable_id)
+                ->where('matchable_type', '=', $team->teamable_type)
+                ->whereNotNull('winner_id');
+        })
+            ->orWhere(function ($query) use ($team) {
+                $query->where('team_two', '=', $team->id)
+                    ->where('matchable_id', '=', $team->teamable_id)
+                    ->where('matchable_type', '=', $team->teamable_type)
+                    ->whereNotNull('winner_id');
+            })
             ->get();
 
-        return [
-            'matches' => $this->totalMatches(),
-            'wins' => $this->matchWins(),
-            'losses' => $this->matchLosses(),
-            'games' => $this->totalGames(),
-            'game_wins' => $this->gameWins(),
-            'game_losses' => $this->gameLosses()
-        ];
+        $team->match_total = $this->matchTotal();
+        $team->match_wins = $this->matchWins();
+        $team->match_losses = $this->matchLosses();
+        $team->game_total = $this->gameTotal();
+        $team->game_wins = $this->gameWins();
+        $team->game_losses = $this->gameLosses();
+        $team->game_ties = 0;
+
+        $team->save();
+
     }
 
-    protected function totalMatches()
+    protected function matchTotal()
     {
-        return $this->team->whereNotNull('winner_id')->count();
+        return $this->matches->count();
     }
 
     protected function matchWins()
     {
-        return $this->team->where('winner_id', '=', $this->id)->count();
+        return $this->matches
+            ->where('winner_id', $this->id)
+            ->count();
     }
 
     protected function matchLosses()
     {
-        return $this->totalMatches() - $this->matchWins();
+        return $this->matchTotal() - $this->matchWins();
     }
 
-    protected function totalGames()
+    protected function gameTotal()
     {
-        $ta_wins = $this->team->sum('team_one_score');
-        $tb_wins = $this->team->sum('team_two_score');
+        $ta_wins = $this->matches->sum('team_one_score');
+        $tb_wins = $this->matches->sum('team_two_score');
 
         return $ta_wins + $tb_wins;
     }
@@ -54,14 +67,14 @@ class UpdaterEventTeam
     protected function gameWins()
     {
         $ta_wins = 0;
-        foreach ($this->team as $ta) {
+        foreach ($this->matches as $ta) {
             if ($ta->team_one == $this->id) {
                 $ta_wins = $ta_wins + $ta->team_one_score;
             }
         }
 
         $tb_wins = 0;
-        foreach ($this->team as $tb) {
+        foreach ($this->matches as $tb) {
             if ($tb->team_two == $this->id) {
                 $tb_wins = $tb_wins + $tb->team_two_score;
             }
@@ -74,11 +87,6 @@ class UpdaterEventTeam
 
     protected function gameLosses()
     {
-        //
-    }
-
-    protected function gameTies()
-    {
-        //scrap ties?
+        return $this->gameTotal() - $this->gameWins();
     }
 }

@@ -3,7 +3,7 @@
 use Cms\Classes\ComponentBase;
 use Cleanse\League\Models\Season;
 
-class SeasonSchedule extends ComponentBase
+class LeagueSchedule extends ComponentBase
 {
     public $season;
     public $matches;
@@ -68,16 +68,9 @@ class SeasonSchedule extends ComponentBase
             ->with([
                 'matches' => function ($query) {
                     $query->orderBy('takes_place_at', 'asc');
-                    $query->with(['one' => function ($q) {
-                        $q->with('team');
-                    }, 'two' => function ($q) {
-                        $q->with('team');
-                    }]);
+                    $query->with(['one.team', 'two.team']);
                 },
-                'teams' => function ($query) {
-                    $query->with('team');
-                }
-            ])->first();
+                'teams.team'])->first();
     }
 
     public function getMatches()

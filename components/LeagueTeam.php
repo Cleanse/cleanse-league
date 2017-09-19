@@ -39,13 +39,8 @@ class LeagueTeam extends ComponentBase
         $teamId = $this->property('slug');
 
         $team = TeamModel::whereSlug($teamId)
-            ->with('event_teams.teamable')
+            ->with(['event_teams.teamable', 'players'])
             ->first();
-
-        if (!$team || !$team->exists) {
-            $this->setStatusCode(404);
-            return $this->controller->run('404');
-        }
 
         return $team;
     }

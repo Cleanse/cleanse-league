@@ -5,6 +5,7 @@ use Cleanse\League\Models\Season;
 use Cleanse\League\Models\Match;
 use Cleanse\League\Models\MatchGame;
 use Cleanse\League\Models\MatchGamePlayer;
+use Cleanse\League\Classes\Updaters\UpdaterMatchStats;
 
 class UpdaterMatchGame
 {
@@ -16,6 +17,7 @@ class UpdaterMatchGame
     {
         $this->post = $post;
 
+        //Return this object so the File class can attach the screenshot.
         $game = $this->createMatchGame();
 
         $this->createMatchGamePlayers();
@@ -27,23 +29,21 @@ class UpdaterMatchGame
 
     public function finalize($post)
     {
-        $match = Match::find($post['match_id']);
+        $match = Match::with(['games.players'])->find($post['match_id']);
 
         if ($match->team_one_score > $match->team_two_score) {
             $match->winner_id = $match->team_one;
             $match->save();
-
-            return $match->winner->team->name;
         }
 
         if ($match->team_two_score > $match->team_one_score) {
             $match->winner_id = $match->team_two;
             $match->save();
-
-            return $match->winner->team->name;
         }
 
-        //add an error if there's a tie.
+        $this->updateMatchStats($match);
+
+        return $match->winner->team->name;
     }
 
     public function unlock($post)
@@ -54,7 +54,6 @@ class UpdaterMatchGame
         $match->save();
     }
 
-    //Return this object so the File class can attach the screenshot.
     protected function createMatchGame()
     {
         $newGame = new MatchGame;
@@ -88,14 +87,15 @@ class UpdaterMatchGame
 
             $newMatchGamePlayer->game_id = $this->gameId;
             $newMatchGamePlayer->team_id = $this->post['team_one'];
+            $newMatchGamePlayer->game_winner_id = $this->post['winner_id'];
             $newMatchGamePlayer->player_id = $eventPlayerOne->id;
             $newMatchGamePlayer->player_job = $oplayer['job'];
-            $newMatchGamePlayer->medals = $oplayer['medals'];
-            $newMatchGamePlayer->kills = $oplayer['kills'];
-            $newMatchGamePlayer->deaths = $oplayer['deaths'];
-            $newMatchGamePlayer->assists = $oplayer['assists'];
-            $newMatchGamePlayer->damage = $oplayer['damage'];
-            $newMatchGamePlayer->healing = $oplayer['healing'];
+            $newMatchGamePlayer->medals = $this->checkPostInt($oplayer['medals']);
+            $newMatchGamePlayer->kills = $this->checkPostInt($oplayer['kills']);
+            $newMatchGamePlayer->deaths = $this->checkPostInt($oplayer['deaths']);
+            $newMatchGamePlayer->assists = $this->checkPostInt($oplayer['assists']);
+            $newMatchGamePlayer->damage = $this->checkPostInt($oplayer['damage']);
+            $newMatchGamePlayer->healing = $this->checkPostInt($oplayer['healing']);
 
             $newMatchGamePlayer->save();
         }
@@ -112,14 +112,15 @@ class UpdaterMatchGame
 
             $newMatchGamePlayer->game_id = $this->gameId;
             $newMatchGamePlayer->team_id = $this->post['team_two'];
+            $newMatchGamePlayer->game_winner_id = $this->post['winner_id'];
             $newMatchGamePlayer->player_id = $eventPlayerTwo->id;
             $newMatchGamePlayer->player_job = $tplayer['job'];
-            $newMatchGamePlayer->medals = $tplayer['medals'];
-            $newMatchGamePlayer->kills = $tplayer['kills'];
-            $newMatchGamePlayer->deaths = $tplayer['deaths'];
-            $newMatchGamePlayer->assists = $tplayer['assists'];
-            $newMatchGamePlayer->damage = $tplayer['damage'];
-            $newMatchGamePlayer->healing = $tplayer['healing'];
+            $newMatchGamePlayer->medals = $this->checkPostInt($tplayer['medals']);
+            $newMatchGamePlayer->kills = $this->checkPostInt($tplayer['kills']);
+            $newMatchGamePlayer->deaths = $this->checkPostInt($tplayer['deaths']);
+            $newMatchGamePlayer->assists = $this->checkPostInt($tplayer['assists']);
+            $newMatchGamePlayer->damage = $this->checkPostInt($tplayer['damage']);
+            $newMatchGamePlayer->healing = $this->checkPostInt($tplayer['healing']);
 
             $newMatchGamePlayer->save();
         }
@@ -158,13 +159,18 @@ class UpdaterMatchGame
         $match->save();
     }
 
-    protected function updateTeamStats()
+    protected function updateMatchStats($match)
     {
-        //
+        $stats = new UpdaterMatchStats();
+        $stats->update($match);
     }
 
-    protected function updatePlayerStats()
+    protected function checkPostInt($data)
     {
-        //
+        if (!empty($data)) {
+            return $data;
+        }
+
+        return 0;
     }
 }

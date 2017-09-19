@@ -1,0 +1,50 @@
+{% for article in articles %}
+<div class="cleanse-article card">
+    <div class="article-intro">
+        {% if article.featured_images.count %}
+        <div class="featured-images text-center">
+            {% for image in article.featured_images %}
+            <img
+                    data-src="{{ image.filename }}"
+                    src="{{ image.path }}"
+                    alt="{{ image.description }}"/>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <h2>
+            <a href="/article/{{ article.slug }}">{{ article.title }}</a>
+        </h2>
+        <p class="lead">by {{ article.user.full_name }} on
+            <time datetime="{{ article.published_at }}">{{ article.published_at|date('M d, Y') }}</time>
+        </p>
+    </div>
+
+    <article id="article" class="content">
+        {{ article.content_html|raw }}
+    </article>
+
+    <p class="info">
+        Posted
+        {% if article.categories.count %} in
+        {% for category in article.categories %}
+        <a href="{{ category.url }}">{{ category.name }}</a>{% if not loop.last %}, {% endif %}
+        {% endfor %}
+        {% endif %}
+    </p>
+</div>
+{% else %}
+<div class="cleanse-article">
+    <div class="article-intro">
+        <div>
+            <h2>Fake News</h2>
+            <p class="lead">by Marshal Renew on
+                <time datetime="2017-09-10 03:33:33">{{ '2017-09-10 03:33:33'|date('M d, Y') }}</time>
+            </p>
+        </div>
+    </div>
+
+    <article id="fake-article" class="content">
+        Here's some fake news.
+    </article>
+</div>
+{% endfor %}

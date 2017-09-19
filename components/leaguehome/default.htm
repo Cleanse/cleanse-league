@@ -1,9 +1,25 @@
-{% if championship %}
-    {% partial '@championship' %}
-{% elseif seasonal %}
-    {% partial '@seasonal' %}
-{% elseif season %}
-    {% partial '@season' %}
-{% else %}
-<h1 style="color: #fff;">None.</h1>
-{% endif %}
+<div class="row">
+    <div class="col-md-8">
+        {% if championship %}
+        {% partial '@championship' %}
+        {% elseif seasonal %}
+        {% partial '@seasonal' %}
+        {% elseif season %}
+        {% partial '@league-news' %}
+        {% else %}
+        <h1 style="color: #fff;">None.</h1>
+        {% endif %}
+    </div>
+
+    <div class="col-md-4">
+        {% if championship %}
+        {% partial '@league-news' %}
+        {% elseif seasonal %}
+        {% partial '@league-news' %}
+        {% elseif season %}
+        {% partial '@season' %}
+        {% else %}
+        <h1 style="color: #fff;">None.</h1>
+        {% endif %}
+    </div>
+</div>

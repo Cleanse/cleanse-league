@@ -1,0 +1,36 @@
+<h3 class="stat-table-head">
+    Least Deaths
+    <span class="pull-right">Live Lord</span>
+</h3>
+<table class="table table-league">
+    <thead>
+    <tr>
+        <th class="text-center">#</th>
+        <th>Player</th>
+        <th class="text-center">Avg</th>
+        <th class="text-center">Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% set lvRank = 1 %}
+    {% for lv in alive %}
+    <tr class="row-league">
+        <th scope="row" class="text-center">{{ lvRank }}</th>
+        <td>
+            <a href="/league/player/{{ lv.player.slug }}">
+                {{ lv.player.name }}
+            </a>
+        </td>
+        <td class="text-center">{{ (lv.deaths / lv.game_total)|round(1, 'floor') }}</td>
+        <td class="text-center">{{ lv.deaths }}</td>
+    </tr>
+    {% set lvRank = lvRank + 1 %}
+    {% else %}
+    <tr class="row-league">
+        <td colspan="4">
+            No stats, yet.
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

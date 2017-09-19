@@ -1,5 +1,5 @@
 <div class="d-flex flex-row justify-content-end flex-column flex-md-row">
-    <div class="team-list mr-auto mb-2 mb-md-0">
+    <div class="flex-grow-one mr-auto mb-2 mb-md-0">
         <p class="small mb-0">{{ match.takes_place_at|date('M d, Y') }}</p>
         <h3>
             {% if match.winner_id == match.team_one %}
@@ -34,13 +34,15 @@
         </div>
         {% if match.winner_id is null %}
         {{ form_open({ request: __SELF__~'::onFinalizeMatch' }) }}
-            <input type="hidden" name="match_id" value="{{ match.id }}">
-            <button type="submit" data-attach-loading class="oc-loader btn btn-primary">Complete Match Series</button>
+        <input type="hidden" name="match_id" value="{{ match.id }}">
+        <button type="submit" data-attach-loading class="oc-loader btn btn-outline-primary">Complete Match Series
+        </button>
         {{ form_close() }}
         {% else %}
         {{ form_open({ request: __SELF__~'::onUnlockMatch' }) }}
         <input type="hidden" name="match_id" value="{{ match.id }}">
-        <button type="submit" data-attach-loading class="oc-loader btn btn-warning">Unlock Match to Edit</button>
+        <button type="submit" data-attach-loading class="oc-loader btn btn-outline-warning">Unlock Match to Edit
+        </button>
         {{ form_close() }}
         {% endif %}
         {% else %}

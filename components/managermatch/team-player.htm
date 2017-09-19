@@ -17,7 +17,7 @@
             <div class="mb-2">
                 <label class="sr-only" for="team_one_roster[{{ o }}][job]">Job</label>
                 <select class="form-control" id="team_one_roster[{{ o }}][job]" name="team_one_roster[{{ o }}][job]">
-                    <option>Select a job</option>
+                    <option value="0">Select a job</option>
                     {% for j in jobs %}
                     <option value="{{ j.abbr }}">{{ j.name }}</option>
                     {% endfor %}
@@ -93,7 +93,7 @@
             <div class="mb-2">
                 <label class="sr-only" for="team_two_roster[{{ t }}][job]">Job</label>
                 <select class="form-control" id="team_two_roster[{{ t }}][job]" name="team_two_roster[{{ t }}][job]">
-                    <option>Select a job</option>
+                    <option value="0">Select a job</option>
                     {% for k in jobs %}
                     <option value="{{ k.abbr }}">{{ k.name }}</option>
                     {% endfor %}

@@ -48,7 +48,7 @@ class MatchGame extends Model
     ];
 
     public $hasMany = [
-        'mgp' => [
+        'players' => [
             'Cleanse\League\Models\MatchGamePlayer',
             'key' => 'game_id',
             'otherKey' => 'id'
