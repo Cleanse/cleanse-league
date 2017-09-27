@@ -1,0 +1,10 @@
+[id^="week-"] {
+  padding: 80px 0 0;
+  margin: -80px 0 0;
+  -webkit-background-clip: content-box;
+  background-clip: content-box;
+}
+
+.league-schedule .card {
+  border-top: 0;
+}

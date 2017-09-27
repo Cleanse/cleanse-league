@@ -1,0 +1,27 @@
+@each $color, $value in $theme-colors {
+  @include bg-variant('.bg-#{$color}', $value);
+}
+
+.bg-league {
+  background-image: linear-gradient(
+                  to bottom,
+                  $gray-900,
+                  darken($gray-900, 2%)
+  );
+
+  @include hover {
+    background-image: linear-gradient(
+                    to bottom,
+                    lighten($gray-900, 5%),
+                    lighten($gray-900, 2%)
+    );
+  }
+}
+
+.bg-white {
+  background-color: $white !important;
+}
+
+.bg-transparent {
+  background-color: transparent !important;
+}

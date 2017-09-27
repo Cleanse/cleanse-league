@@ -1,0 +1,65 @@
+.league-standings .row-league .team-logo {
+  margin-right: .5rem;
+}
+
+.table-league {
+  color: rgba(255, 255, 255, 0.5);
+  background-color: #383f45;
+
+  th,
+  td,
+  thead th {
+    border-bottom: 1px solid #383f45;
+  }
+
+  .row-league {
+    &,
+    > th,
+    > td {
+      padding: 0.75rem;
+      background-image: linear-gradient(
+                      to bottom,
+                      $gray-900,
+                      darken($gray-900, 2%)
+      );
+    }
+
+    @include hover {
+      background-image: linear-gradient(
+                      to bottom,
+                      lighten($gray-900, 5%),
+                      lighten($gray-900, 2%)
+      );
+
+      > td,
+      > th {
+        background-image: linear-gradient(
+                        to bottom,
+                        lighten($gray-900, 5%),
+                        lighten($gray-900, 2%)
+        );
+      }
+    }
+  }
+
+  th:first-child,
+  td:first-child {
+    border-left: 1px solid #383f45;
+  }
+
+  th:last-child,
+  td:last-child {
+    border-right: 1px solid #383f45;
+  }
+
+  tbody th,
+  tbody td {
+    border-bottom: 1px solid #383f45;
+  }
+}
+
+@media (min-width: 768px) {
+  .league-standings .table-league {
+    font-size: 1.5rem;
+  }
+}

@@ -1,0 +1,67 @@
+/*!
+ * Leaguestrap v1.0.0-beta (https://github.com/cleanse)
+ * Copyright 2011-2017 The Bootstrap Authors
+ * Copyright 2011-2017 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+@import "bootstrap/bootstrap";
+@import "league-scss/leaguestrap";
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding-top: 78px;
+}
+
+#layout-content {
+  margin-bottom: 1.25rem;
+}
+
+
+.input-group-btn > .image-preview-input {
+  position: relative;
+  overflow: hidden;
+  margin: 0px;
+  color: theme-color("primary");
+  background-color: $gray-900;
+  border-color: theme-color("primary");
+  border-top-right-radius: .5rem;
+}
+
+.image-preview-input input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+.image-preview-input-title {
+  margin-left: 2px;
+}
+
+.flex-grow-one {
+  flex-grow: 1;
+}
+
+#footer {
+  margin-top: auto;
+  padding: 4rem 0 2rem;
+  background-image: linear-gradient(
+                  to bottom,
+                  $gray-900,
+                  darken($gray-900, 4%)
+  );
+  border-top: 1px solid rgba(122, 122, 122, .33);
+}
+
+.footer-links {
+  a:not(:last-child) {
+    margin-right: 1.25rem;
+  }
+}

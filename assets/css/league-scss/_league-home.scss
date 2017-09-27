@@ -1,0 +1,51 @@
+.cleanse-article {
+  padding: 0 0 .5rem;
+  margin-bottom: 1.5rem;
+  border-top: 2px solid theme-color("primary");
+  border-left: 0;
+  border-right: 0;
+
+  h2, .article-intro > p, article, p.info {
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
+  }
+
+  img:not(.xivdb-ii) {
+    max-width: 100%;
+    height: auto;
+    margin-right: auto !important;
+    margin-left: auto !important;
+    display: block !important;
+  }
+
+  .article-intro > h2 {
+    margin-top: .75rem;
+  }
+
+  .lead {
+    padding-bottom: .5rem;
+    border-bottom: 1px solid $gray-700;
+  }
+}
+
+.team-logo {
+  margin-right: 1.1rem;
+}
+
+.team-name-record {
+  h5 {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  p {
+    margin: 0;
+    font-size: .75rem;
+  }
+}
+
+a .record {
+  color: $white;
+}
+
+//*[@id="layout-content"]/div/div/div[2]/div/a[1]/div[1]/div[2]/p
