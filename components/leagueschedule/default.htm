@@ -7,9 +7,9 @@
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     By Team
                 </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupTeamPage">
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupTeamPage">
                     {% for team in teams %}
-                    <a class="dropdown-item" href="/league/team/{{ team.team.slug }}">
+                    <a class="dropdown-item" href="/league/team/{{ team.team.slug }}/schedule/{{ season.id }}">
                         <span class="d-none d-md-block">{{ team.team.name }}</span>
                         <span class="d-md-none">{{ team.team.initials }}</span>
                     </a>

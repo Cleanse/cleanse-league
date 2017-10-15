@@ -1,5 +1,7 @@
 <?php namespace Cleanse\League\Components;
 
+use Auth;
+use Event;
 use Flash;
 use Redirect;
 use Session;
@@ -19,6 +21,8 @@ class ManagerLeague extends ComponentBase
     public function onRun()
     {
         $this->addCss('assets/css/league.css');
+        $this->addJs('assets/js/bootstrap-4-min.js');
+
         $this->page['flashSuccess'] = Session::get('flashSuccess');
         $this->page['league'] = League::find(1);
     }
@@ -41,6 +45,9 @@ class ManagerLeague extends ComponentBase
         }
 
         $editLeague->save();
+
+        Event::fire('cleanse.league',
+            [Auth::getUser(), 'league.edit', $editLeague]);
 
         Flash::success('League ' . $editLeague->name . ' was edited.');
 

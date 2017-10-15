@@ -28,8 +28,8 @@ class TestBracket extends ComponentBase
 
     public function onRun()
     {
-        $this->addCss('/plugins/cleanse/league/assets/css/league.css');
-        $this->addCss('/plugins/cleanse/league/assets/css/grid.css');
+        $this->addCss('assets/css/league.css');
+        $this->addJs('assets/js/bootstrap-4-min.js');
 
         $this->tourney = $this->page['tourney'] = $this->getTourney();
         $this->matches = $this->page['matches'] = $this->getMatches();

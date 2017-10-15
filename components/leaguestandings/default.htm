@@ -1,5 +1,5 @@
 <div class="league-standings">
-    <h1>Standings</h1>
+    <h1>Standings <span class="text-muted">{{ season.name }}</span></h1>
     {% if teams|length > 0 %}
     {% partial '@team-standings' %}
     {% else %}

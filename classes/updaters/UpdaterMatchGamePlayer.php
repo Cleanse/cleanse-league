@@ -1,5 +1,7 @@
 <?php namespace Cleanse\League\Classes\Updaters;
 
+use Auth;
+use Cleanse\League\Classes\ManagerLog\LeagueHandler;
 use Cleanse\League\Models\Season;
 use Cleanse\League\Models\MatchGame;
 use Cleanse\League\Models\MatchGamePlayer;
@@ -37,6 +39,10 @@ class UpdaterMatchGamePlayer
         }
 
         $editMatchGame->save();
+
+        $log = new LeagueHandler();
+
+        $log->handle(Auth::getUser(), 'match.game.edit', $editMatchGame);
     }
 
     protected function deleteMatchGame($id)
@@ -46,14 +52,20 @@ class UpdaterMatchGamePlayer
         $matchGame = MatchGame::find($id);
 
         $matchGame->delete();
+
+        $log = new LeagueHandler();
+
+        $log->handle(Auth::getUser(), 'match.game.delete', $matchGame);
     }
 
     protected function updateMatchGameRosters()
     {
+        $logData = [];
+
         foreach ($this->post['team_one_roster'] as $player_a) {
 
             if ($player_a['player'] == "0" && isset($player_a['game_player_id'])) {
-                $this->deleteMatchGamePlayer($player_a['game_player_id']);
+                $logData[] = $this->deleteMatchGamePlayer($player_a['game_player_id']);
                 continue;
             }
 
@@ -62,17 +74,17 @@ class UpdaterMatchGamePlayer
             }
 
             if (isset($player_a['game_player_id'])) {
-                $this->updateMatchGamePlayer($player_a, $this->post['team_one']);
+                $logData[] = $this->updateMatchGamePlayer($player_a, $this->post['team_one']);
                 continue;
             }
 
-            $this->createMatchGamePlayer($player_a, $this->post['team_one']);
+            $logData[] = $this->createMatchGamePlayer($player_a, $this->post['team_one']);
         }
 
         foreach ($this->post['team_two_roster'] as $player_b) {
 
             if ($player_b['player'] == "0" && isset($player_b['game_player_id'])) {
-                $this->deleteMatchGamePlayer($player_b['game_player_id']);
+                $logData[] = $this->deleteMatchGamePlayer($player_b['game_player_id']);
                 continue;
             }
 
@@ -81,12 +93,15 @@ class UpdaterMatchGamePlayer
             }
 
             if (isset($player_b['game_player_id'])) {
-                $this->updateMatchGamePlayer($player_b, $this->post['team_two']);
+                $logData[] = $this->updateMatchGamePlayer($player_b, $this->post['team_two']);
                 continue;
             }
 
-            $this->createMatchGamePlayer($player_b, $this->post['team_two']);
+            $logData[] = $this->createMatchGamePlayer($player_b, $this->post['team_two']);
         }
+
+        $log = new LeagueHandler();
+        $log->handle(Auth::getUser(), 'match.game.roster', $logData);
     }
 
     protected function createMatchGamePlayer($player, $teamId)
@@ -112,6 +127,8 @@ class UpdaterMatchGamePlayer
         $newMatchGamePlayer->healing = $player['healing'];
 
         $newMatchGamePlayer->save();
+
+        return $newMatchGamePlayer;
     }
 
     protected function updateMatchGamePlayer($player, $teamId)
@@ -133,6 +150,8 @@ class UpdaterMatchGamePlayer
         $editMatchGamePlayer->healing = $player['healing'];
 
         $editMatchGamePlayer->save();
+
+        return $editMatchGamePlayer;
     }
 
     protected function deleteMatchGamePlayer($id)
@@ -140,6 +159,8 @@ class UpdaterMatchGamePlayer
         $matchGamePlayer = MatchGamePlayer::find($id);
 
         $matchGamePlayer->delete();
+
+        return $matchGamePlayer;
     }
 
     protected function firstOrCreateEventPlayer($player_id, $team_id)

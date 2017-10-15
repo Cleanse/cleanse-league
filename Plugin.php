@@ -1,6 +1,7 @@
 <?php namespace Cleanse\League;
 
 use Backend;
+use Event;
 use October\Rain\Database\Relations\Relation;
 use System\Classes\PluginBase;
 
@@ -9,10 +10,10 @@ class Plugin extends PluginBase
     public function pluginDetails()
     {
         return [
-            'name'        => 'PvPaissa League',
+            'name' => 'PvPaissa League',
             'description' => 'A plugin that adds league functionality.',
-            'author'      => 'Paul Lovato',
-            'icon'        => 'icon-newspaper-o'
+            'author' => 'Paul Lovato',
+            'icon' => 'icon-newspaper-o'
         ];
     }
 
@@ -24,52 +25,45 @@ class Plugin extends PluginBase
             'event' => 'Cleanse\League\Models\Event',
             'tourney' => 'Cleanse\League\Models\Tournament',
         ]);
+
+        Event::listen('cleanse.league',
+            'Cleanse\League\Classes\ManagerLog\LeagueHandler');
     }
 
     public function registerComponents()
     {
         return [
             //frontend "done"
-            'Cleanse\League\Components\LeagueHome' => 'cleanseLeagueHome',
             'Cleanse\League\Components\LeagueAbout' => 'cleanseLeagueAbout',
+            'Cleanse\League\Components\LeagueChampionshipPoints' => 'cleanseLeagueChampionshipPoints',
+            'Cleanse\League\Components\LeagueChampionshipStats' => 'cleanseLeagueChampionshipStats',
+            'Cleanse\League\Components\LeagueHome' => 'cleanseLeagueHome',
+            'Cleanse\League\Components\LeagueMatch' => 'cleanseLeagueMatch',
+            'Cleanse\League\Components\LeaguePlayer' => 'cleanseLeaguePlayer',
             'Cleanse\League\Components\LeagueRules' => 'cleanseLeagueRules',
+            'Cleanse\League\Components\LeagueSchedule' => 'cleanseLeagueSchedule',
+            'Cleanse\League\Components\LeagueScheduleTeam' => 'cleanseLeagueScheduleTeam',
             'Cleanse\League\Components\LeagueStandings' => 'cleanseLeagueStandings',
             'Cleanse\League\Components\LeagueStats' => 'cleanseLeagueStats',
-            'Cleanse\League\Components\LeagueSchedule' => 'cleanseLeagueSchedule',
-            'Cleanse\League\Components\LeagueMatch' => 'cleanseLeagueMatch',
             'Cleanse\League\Components\LeagueTeam' => 'cleanseLeagueTeam',
-            'Cleanse\League\Components\LeaguePlayer' => 'cleanseLeaguePlayer',
 
             //manager
-            'Cleanse\League\Components\ManagerPanel' => 'cleanseLeagueManagerPanel',
-            'Cleanse\League\Components\ManagerLeague' => 'cleanseLeagueManagerLeague',
             'Cleanse\League\Components\ManagerChampionship' => 'cleanseLeagueManagerChampionship',
-            'Cleanse\League\Components\ManagerSeason' => 'cleanseLeagueManagerSeason',
+            'Cleanse\League\Components\ManagerChampionshipPoints' => 'cleanseLeagueManagerChampionshipPoints',
+            'Cleanse\League\Components\ManagerGame' => 'cleanseLeagueManagerGame',
+            'Cleanse\League\Components\ManagerLeague' => 'cleanseLeagueManagerLeague',
             'Cleanse\League\Components\ManagerMatch' => 'cleanseLeagueManagerMatch',
             'Cleanse\League\Components\ManagerMatchList' => 'cleanseLeagueManagerMatchList',
-            'Cleanse\League\Components\ManagerGame' => 'cleanseLeagueManagerGame',
+            'Cleanse\League\Components\ManagerPanel' => 'cleanseLeagueManagerPanel',
+            'Cleanse\League\Components\ManagerPlayer' => 'cleanseLeagueManagerPlayer',
+            'Cleanse\League\Components\ManagerSeason' => 'cleanseLeagueManagerSeason',
+            'Cleanse\League\Components\ManagerSeasonOver' => 'cleanseLeagueManagerSeasonOver',
+            'Cleanse\League\Components\ManagerSeasonTeams' => 'cleanseLeagueManagerSeasonTeams',
             'Cleanse\League\Components\ManagerTeam' => 'cleanseLeagueManagerTeam',
             'Cleanse\League\Components\ManagerTeamEdit' => 'cleanseLeagueManagerTeamEdit',
-            'Cleanse\League\Components\ManagerEventTeam' => 'cleanseLeagueManagerEventTeam',
-            'Cleanse\League\Components\ManagerPlayer' => 'cleanseLeagueManagerPlayer',
 
             //test
             'Cleanse\League\Components\TestBracket' => 'leagueBracket',
-            'Cleanse\League\Components\TestLogos' => 'leagueLogos',
-
-            //tbd
-            'Cleanse\League\Components\SeasonStandings' => 'cleanseLeagueSeasonStandings',
-            'Cleanse\League\Components\SeasonStats' => 'cleanseLeagueSeasonStats',
-
-            'Cleanse\League\Components\SeasonTeam' => 'cleanseLeagueSeasonTeam',
-            'Cleanse\League\Components\SeasonPlayer' => 'cleanseLeagueSeasonPlayer',
-
-            'Cleanse\League\Components\TournamentGroups' => 'cleanseLeagueTourneyGroups',
-            'Cleanse\League\Components\TournamentBracket' => 'cleanseLeagueTourneyBracket',
-
-            'Cleanse\League\Components\ManagerLog' => 'cleanseLeagueManagerLog',
-
-            'Cleanse\League\Components\History' => 'cleanseLeagueHistory'
         ];
     }
 
@@ -77,7 +71,7 @@ class Plugin extends PluginBase
     {
         return [
             'cleanse.league.access_league' => [
-                'tab'   => 'League',
+                'tab' => 'League',
                 'label' => 'Manage Leagues'
             ]
         ];
@@ -87,24 +81,24 @@ class Plugin extends PluginBase
     {
         return [
             'league' => [
-                'label'       => 'League',
-                'url'         => Backend::url('cleanse/league/leagues'),
-                'icon'        => 'facetime-video',
-                'iconSvg'     => 'plugins/cleanse/league/assets/images/league.svg',
+                'label' => 'League',
+                'url' => Backend::url('cleanse/league/leagues'),
+                'icon' => 'facetime-video',
+                'iconSvg' => 'plugins/cleanse/league/assets/images/league.svg',
                 'permissions' => ['cleanse.league.*'],
-                'order'       => 30,
+                'order' => 30,
 
                 'sideMenu' => [
                     'new_streamer' => [
-                        'label'       => 'New League',
-                        'icon'        => 'icon-plus',
-                        'url'         => Backend::url('cleanse/league/leagues/create'),
+                        'label' => 'New League',
+                        'icon' => 'icon-plus',
+                        'url' => Backend::url('cleanse/league/leagues/create'),
                         'permissions' => ['cleanse.league.access_leagues']
                     ],
                     'streamersmini' => [
-                        'label'       => 'Leagues',
-                        'icon'        => 'icon-copy',
-                        'url'         => Backend::url('cleanse/league/leagues'),
+                        'label' => 'Leagues',
+                        'icon' => 'icon-copy',
+                        'url' => Backend::url('cleanse/league/leagues'),
                         'permissions' => ['cleanse.league.access_leagues']
                     ]
                 ]

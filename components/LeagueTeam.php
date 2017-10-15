@@ -29,7 +29,8 @@ class LeagueTeam extends ComponentBase
 
     public function onRun()
     {
-        $this->addCss('/plugins/cleanse/league/assets/css/league.css');
+        $this->addCss('assets/css/league.css');
+        $this->addJs('assets/js/bootstrap-4-min.js');
 
         $this->team = $this->page['team'] = $this->getTeam();
     }

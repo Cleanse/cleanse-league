@@ -17,34 +17,34 @@ class UpdaterEventPlayer
         $this->matches = Match::whereHas('players', function ($query) use ($player) {
             $query->where('player_id', $player->id);
         })
-                              ->with([
-                                  'players' => function ($query) use ($player) {
-                                      $query->where('player_id', $player->id);
+            ->with([
+                'players' => function ($query) use ($player) {
+                    $query->where('player_id', $player->id);
 
-                                  }
-                              ])
-                              ->where(function ($query) use ($player) {
-                                  $query->where('matchable_id', '=', $player->playerable_id)
-                                        ->where('matchable_type', '=', $player->playerable_type)
-                                        ->whereNotNull('winner_id');
-                              })
-                              ->get();
+                }
+            ])
+            ->where(function ($query) use ($player) {
+                $query->where('matchable_id', '=', $player->playerable_id)
+                    ->where('matchable_type', '=', $player->playerable_type)
+                    ->whereNotNull('winner_id');
+            })
+            ->get();
 
         $oldJobs = json_decode($player->jobs, true);
 
-        $player->jobs         = $this->jobsJson($oldJobs);
-        $player->kills        = $this->killsTotal();
-        $player->deaths       = $this->deathsTotal();
-        $player->assists      = $this->assistsTotal();
-        $player->damage       = $this->damageTotal();
-        $player->healing      = $this->healingTotal();
-        $player->medals       = $this->medalsTotal();
-        $player->match_total  = $this->matchTotal();
-        $player->match_wins   = $this->matchWins();
+        $player->jobs = $this->jobsJson($oldJobs);
+        $player->kills = $this->killsTotal();
+        $player->deaths = $this->deathsTotal();
+        $player->assists = $this->assistsTotal();
+        $player->damage = $this->damageTotal();
+        $player->healing = $this->healingTotal();
+        $player->medals = $this->medalsTotal();
+        $player->match_total = $this->matchTotal();
+        $player->match_wins = $this->matchWins();
         $player->match_losses = $this->matchLosses();
-        $player->game_total   = $this->gameTotal();
-        $player->game_wins    = $this->gameWins();
-        $player->game_losses  = $this->gameLosses();
+        $player->game_total = $this->gameTotal();
+        $player->game_wins = $this->gameWins();
+        $player->game_losses = $this->gameLosses();
 
         $player->save();
 
@@ -174,7 +174,7 @@ class UpdaterEventPlayer
         return $this->gameTotal() - $this->gameWins();
     }
 
-    protected function jobsJson()
+    protected function jobsJson($oldJobs)
     {
         $jobsStats = [];
 

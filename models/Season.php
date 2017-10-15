@@ -60,6 +60,10 @@ class Season extends Model
         'players' => [
             'Cleanse\League\Models\EventPlayer',
             'name' => 'playerable'
+        ],
+        'logs' => [
+            'Cleanse\League\Models\ManagerLog',
+            'name' => 'loggable'
         ]
     ];
 

@@ -1,5 +1,7 @@
 <?php namespace Cleanse\League\Components;
 
+use Auth;
+use Event;
 use Flash;
 use Input;
 use Redirect;
@@ -23,7 +25,9 @@ class ManagerTeam extends ComponentBase
     public function onRun()
     {
         $this->addCss('assets/css/league.css');
+        $this->addJs('assets/js/bootstrap-4-min.js');
         $this->addJs('assets/js/image-input.js');
+
         $this->page['flashSuccess'] = Session::get('flashSuccess');
         $this->page['teams'] = $this->getTeamsList();
     }
@@ -70,6 +74,9 @@ class ManagerTeam extends ComponentBase
 
             $newTeam->logo()->add($file);
         }
+
+        Event::fire('cleanse.league',
+            [Auth::getUser(), 'team.create', $newTeam]);
 
         Flash::success('Team was created.');
 

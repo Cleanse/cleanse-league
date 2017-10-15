@@ -29,26 +29,31 @@ class SeasonScheduler extends Scheduler
         $startDate = $postData['start'];
 
         $w = 0;
+        $seasonalSchedule = [];
         foreach ($matches as $week) {
             $date = $this->yearWeek($startDate, $w);
 
             foreach ($week as $match) {
                 //Check for BYE weeks.
                 if (isset($match[0]['id']) && isset($match[1]['id'])) {
-                    $this->addMatch($season, $match[0]['id'], $match[1]['id'], $date);
+                    $seasonalSchedule[] = $this->addMatch($season, $match[0]['id'], $match[1]['id'], $date);
                 }
             }
 
             $w++;
         }
+
+        return collect($seasonalSchedule);
     }
 
     private function addMatch(Season $season, $teamA, $teamB, $date)
     {
-        $season->matches()->firstOrCreate([
+        $match = $season->matches()->firstOrCreate([
             'team_one' => $teamA,
             'team_two' => $teamB,
             'takes_place_at' => $date
         ]);
+
+        return $match;
     }
 }

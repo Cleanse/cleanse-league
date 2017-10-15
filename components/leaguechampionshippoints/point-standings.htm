@@ -1,0 +1,28 @@
+<table class="table table-league">
+    <thead>
+    <tr>
+        <th class="text-center">#</th>
+        <th>Team</th>
+        <th class="text-center">Points</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% set rank = 1 %}
+    {% for team in teams %}
+    <tr class="row-league">
+        <th scope="row" class="text-center">{{ rank }}</th>
+        <td>
+            <a href="/league/team/{{ team.team.slug }}">
+                <img class="team-logo" src="{{ team.team.logo.getThumb(36, 36) }}">
+                <span class="d-none d-md-inline">{{ team.team.name }}</span>
+                <span class="d-md-none">{{ team.team.initials }}</span>
+            </a>
+        </td>
+        <td class="text-center">
+            {{ team.points }}
+        </td>
+    </tr>
+    {% set rank = rank + 1 %}
+    {% endfor %}
+    </tbody>
+</table>

@@ -12,3 +12,23 @@
 <button data-attach-loading class="oc-loader btn btn-outline-primary">Edit Season</button>
 
 {{ form_close() }}
+
+<hr>
+
+<h3>Accidentally create extra?</h3>
+<p>If you made a mistake and have not started adding to this season.</p>
+
+{{ form_open({ request: __SELF__~'::onDeleteSeason' }) }}
+
+<input type="hidden" name="season_id" value="{{ season.id }}">
+
+<button data-attach-loading class="oc-loader btn btn-outline-warning">Delete Season</button>
+
+{{ form_close() }}
+
+<hr>
+
+<h3>Season Over?</h3>
+<p>If the season is complete, click end season to setup the tournament.</p>
+
+<a href="/manager/season/over" class="btn btn-outline-warning">End Season</a>

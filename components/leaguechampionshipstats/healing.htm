@@ -1,0 +1,33 @@
+<h3 class="stat-table-head">Top Healing</h3>
+<table class="table table-league">
+    <thead>
+    <tr>
+        <th class="text-center">#</th>
+        <th>Player</th>
+        <th class="text-center">Avg</th>
+        <th class="text-center">Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% set healRank = 1 %}
+    {% for hl in healing %}
+    <tr class="row-league">
+        <th scope="row" class="text-center">{{ healRank }}</th>
+        <td>
+            <a href="/league/player/{{ hl.player.slug }}">
+                {{ hl.player.name }}
+            </a>
+        </td>
+        <td class="text-center">{{ (hl.healing / hl.game_total)|round(1, 'floor') }}</td>
+        <td class="text-center">{{ hl.healing }}</td>
+    </tr>
+    {% set healRank = healRank + 1 %}
+    {% else %}
+    <tr class="row-league">
+        <td colspan="4">
+            No stats, yet.
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

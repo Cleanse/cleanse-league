@@ -1,6 +1,8 @@
 <?php namespace Cleanse\League\Components;
 
+use Auth;
 use DB;
+use Event;
 use Flash;
 use Input;
 use Redirect;
@@ -28,6 +30,8 @@ class ManagerSeason extends ComponentBase
     public function onRun()
     {
         $this->addCss('assets/css/league.css');
+        $this->addJs('assets/js/bootstrap-4-min.js');
+
         $this->page['flashSuccess'] = Session::get('flashSuccess');
         $this->page['seasons'] = $this->getSeasonsList();
     }
@@ -99,6 +103,9 @@ class ManagerSeason extends ComponentBase
             'name' => $seasonName
         ]);
 
+        Event::fire('cleanse.league',
+            [Auth::getUser(), 'season.create', $season]);
+
         Flash::success('Season: "' . $season->name . '" was created.');
 
         Session::flash('flashSuccess', true);
@@ -121,7 +128,36 @@ class ManagerSeason extends ComponentBase
 
         $editSeason->save();
 
+        Event::fire('cleanse.league',
+            [Auth::getUser(), 'season.edit', $editSeason]);
+
         Flash::success('Season ' . $editSeason->name . ' was edited.');
+
+        Session::flash('flashSuccess', true);
+
+        return Redirect::refresh();
+    }
+
+    public function onDeleteSeason()
+    {
+        $deleteSeason = Season::find(post('season_id'));
+
+        $deleteSeasonCheck = $deleteSeason->teams->count();
+
+        if ($deleteSeasonCheck > 0) {
+            Flash::error('Season ' . $deleteSeason->name . ' cannot be deleted.');
+
+            Session::flash('flashSuccess', true);
+
+            return Redirect::refresh();
+        }
+
+        $deleteSeason->delete();
+
+        Event::fire('cleanse.league',
+            [Auth::getUser(), 'season.delete', $deleteSeason]);
+
+        Flash::success('Season ' . $deleteSeason->name . ' was deleted.');
 
         Session::flash('flashSuccess', true);
 
@@ -178,9 +214,12 @@ class ManagerSeason extends ComponentBase
         $season_id = post('season_id');
 
         $season = Season::with('teams')->find($season_id);
-        $season->teams()->create([
+        $createdTeam = $season->teams()->create([
             'team_id' => $team_id,
         ]);
+
+        Event::fire('cleanse.league',
+            [Auth::getUser(), 'season.team.add', $createdTeam]);
 
         $seasonTeams = DB::table('cleanse_league_event_teams')
             ->join('cleanse_league_teams', 'cleanse_league_event_teams.team_id', '=', 'cleanse_league_teams.id')
@@ -225,13 +264,19 @@ class ManagerSeason extends ComponentBase
 
         $newTeam->save();
 
+        Event::fire('cleanse.league',
+            [Auth::getUser(), 'team.create.season', $newTeam]);
+
         $team_id = $newTeam->id;
         $season_id = post('season_id');
 
         $season = Season::with('teams')->find($season_id);
-        $season->teams()->create([
+        $createTeam = $season->teams()->create([
             'team_id' => $team_id,
         ]);
+
+        Event::fire('cleanse.league',
+            [Auth::getUser(), 'season.team.add', $createTeam]);
 
         $seasonTeams = DB::table('cleanse_league_event_teams')
             ->join('cleanse_league_teams', 'cleanse_league_event_teams.team_id', '=', 'cleanse_league_teams.id')
@@ -259,7 +304,12 @@ class ManagerSeason extends ComponentBase
         $team_id = post('team_id');
         $season_id = post('season_id');
 
-        EventTeam::find($team_id)->delete();
+        $deleteTeam = EventTeam::find($team_id);
+
+        $deleteTeam->delete();
+
+        Event::fire('cleanse.league',
+            [Auth::getUser(), 'season.team.delete', $deleteTeam]);
 
         $seasonTeams = DB::table('cleanse_league_event_teams')
             ->join('cleanse_league_teams', 'cleanse_league_event_teams.team_id', '=', 'cleanse_league_teams.id')
@@ -350,7 +400,7 @@ class ManagerSeason extends ComponentBase
             return Redirect::refresh();
         }
 
-        $this->page['season'] = $season;
+        return $this->page['season'] = $season;
     }
 
     public function onCreateSchedule()
@@ -359,7 +409,10 @@ class ManagerSeason extends ComponentBase
 
         $schedule = new Scheduler;
 
-        $schedule->createSchedule($this->post);
+        $seasonSchedule = $schedule->createSchedule($this->post);
+
+        Event::fire('cleanse.league',
+            [Auth::getUser(), 'season.schedule.create', $seasonSchedule]);
 
         Flash::success('Schedule was created.');
         Session::flash('flashSuccess', true);

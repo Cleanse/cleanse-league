@@ -1,0 +1,36 @@
+<h3 class="stat-table-head">
+    Most Kills
+    <span class="pull-right">Killing Machine</span>
+</h3>
+<table class="table table-league">
+    <thead>
+    <tr>
+        <th class="text-center">#</th>
+        <th>Player</th>
+        <th class="text-center">Avg</th>
+        <th class="text-center">Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% set kllRank = 1 %}
+    {% for kll in kills %}
+    <tr class="row-league">
+        <th scope="row" class="text-center">{{ kllRank }}</th>
+        <td>
+            <a href="/league/player/{{ kll.player.slug }}">
+                {{ kll.player.name }}
+            </a>
+        </td>
+        <td class="text-center">{{ (kll.kills / kll.game_total)|round(1, 'floor') }}</td>
+        <td class="text-center">{{ kll.kills }}</td>
+    </tr>
+    {% set kllRank = kllRank + 1 %}
+    {% else %}
+    <tr class="row-league">
+        <td colspan="4">
+            No stats, yet.
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

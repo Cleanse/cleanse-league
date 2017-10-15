@@ -1,6 +1,7 @@
 <?php namespace Cleanse\League\Components;
 
 use Cms\Classes\ComponentBase;
+use Cleanse\League\Models\Season;
 use Cleanse\League\Models\EventTeam;
 
 class LeagueStandings extends ComponentBase
@@ -15,17 +16,65 @@ class LeagueStandings extends ComponentBase
         ];
     }
 
-    public function onRun()
+    public function defineProperties()
     {
-        $this->addCss('/plugins/cleanse/league/assets/css/league.css');
-
-        $this->teams = $this->page['teams'] = $this->getTeams();
+        return [
+            'season' => [
+                'title' => 'League Season',
+                'description' => 'The season of the league.',
+                'default' => '{{ :season }}',
+                'type' => 'string'
+            ]
+        ];
     }
 
-    public function getTeams()
+    public function onRun()
     {
-        //Needs to get current season team, not all.
+        $this->addCss('assets/css/league.css');
+        $this->addJs('assets/js/bootstrap-4-min.js');
+
+        if (!$this->getLeagueStandings()) {
+            return redirect('/league');
+        }
+
+        return;
+    }
+
+    public function getLeagueStandings()
+    {
+        $this->page['season'] = $season = $this->getSeason();
+
+        if (!isset($season)) {
+            return false;
+        }
+
+        $this->page['teams'] = $this->getTeams($season->id);
+
+        return true;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getSeason()
+    {
+        if ($season = $this->property('season')) {
+            return Season::find($season);
+        }
+
+        return Season::orderBy('id', 'desc')
+            ->first();
+    }
+
+    /**
+     * @param $season
+     * @return mixed
+     */
+    public function getTeams($season)
+    {
         $teams = EventTeam::with('team')
+            ->where('teamable_type', '=', 'season')
+            ->where('teamable_id', '=', $season)
             ->orderBy('match_wins', 'desc')
             ->get();
 

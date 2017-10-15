@@ -1,5 +1,7 @@
 <?php namespace Cleanse\League\Components;
 
+use Auth;
+use Event;
 use Input;
 use Flash;
 use Redirect;
@@ -60,6 +62,8 @@ class ManagerGame extends ComponentBase
     public function onRun()
     {
         $this->addCss('assets/css/league.css');
+        $this->addJs('assets/js/bootstrap-4-min.js');
+
         $this->page['flashSuccess'] = Session::get('flashSuccess');
 
         if (!$this->model) {

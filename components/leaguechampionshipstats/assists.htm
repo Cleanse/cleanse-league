@@ -1,0 +1,36 @@
+<h3 class="stat-table-head">
+    Most Assists
+    <span class="pull-right">Alley-oop</span>
+</h3>
+<table class="table table-league">
+    <thead>
+    <tr>
+        <th class="text-center">#</th>
+        <th>Player</th>
+        <th class="text-center">Avg</th>
+        <th class="text-center">Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% set astRank = 1 %}
+    {% for ast in assists %}
+    <tr class="row-league">
+        <th scope="row" class="text-center">{{ astRank }}</th>
+        <td>
+            <a href="/league/player/{{ ast.player.slug }}">
+                {{ ast.player.name }}
+            </a>
+        </td>
+        <td class="text-center">{{ (ast.assists / ast.game_total)|round(1, 'floor') }}</td>
+        <td class="text-center">{{ ast.assists }}</td>
+    </tr>
+    {% set astRank = astRank + 1 %}
+    {% else %}
+    <tr class="row-league">
+        <td colspan="4">
+            No stats, yet.
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,36 @@
+<h3 class="stat-table-head">
+    Least Medals
+    <span class="pull-right">Enough Already</span>
+</h3>
+<table class="table table-league">
+    <thead>
+    <tr>
+        <th class="text-center">#</th>
+        <th>Player</th>
+        <th class="text-center">Avg</th>
+        <th class="text-center">Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% set lstRank = 1 %}
+    {% for lst in least %}
+    <tr class="row-league">
+        <th scope="row" class="text-center">{{ lstRank }}</th>
+        <td>
+            <a href="/league/player/{{ lst.player.slug }}">
+                {{ lst.player.name }}
+            </a>
+        </td>
+        <td class="text-center">{{ (lst.medals / lst.game_total)|round(1, 'floor') }}</td>
+        <td class="text-center">{{ lst.medals }}</td>
+    </tr>
+    {% set lstRank = lstRank + 1 %}
+    {% else %}
+    <tr class="row-league">
+        <td colspan="4">
+            No stats, yet.
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

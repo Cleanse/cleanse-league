@@ -19,6 +19,8 @@ class ManagerMatchList extends ComponentBase
     public function onRun()
     {
         $this->addCss('assets/css/league.css');
+        $this->addJs('assets/js/bootstrap-4-min.js');
+
         $this->page['flashSuccess'] = Session::get('flashSuccess');
         $this->page['matches'] = $this->getIncompleteMatchesList();
         $this->page['completed'] = $this->getCompleteMatchesList();

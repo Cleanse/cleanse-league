@@ -86,10 +86,47 @@ class AddTeamPlayerTables extends Migration
             $table->integer('healing')->unsigned()->nullable();
             $table->timestamps();
         });
+
+        Schema::create('cleanse_league_championship_teams', function($table)
+        {
+            $table->engine = 'InnoDB';
+            $table->increments('id');
+            $table->integer('championship_id')->unsigned()->index();
+            $table->string('team_id')->index();
+            $table->integer('points')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('cleanse_league_championship_points', function($table)
+        {
+            $table->engine = 'InnoDB';
+            $table->increments('id');
+            $table->integer('championship_team_id')->unsigned()->index();
+            $table->integer('championship_id')->unsigned()->index();
+            $table->string('team_id')->index();
+            $table->string('source')->nullable();
+            $table->integer('value')->nullable();
+            $table->text('comment')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('cleanse_league_manager_logs', function($table)
+        {
+            $table->engine = 'InnoDB';
+            $table->increments('id');
+            $table->integer('admin_id')->unsigned()->index();
+            $table->string('ip')->index();
+            $table->string('method')->nullable();
+            $table->text('values')->nullable();
+            $table->timestamps();
+        });
     }
 
     public function down()
     {
+        Schema::dropIfExists('cleanse_league_manager_logs');
+        Schema::dropIfExists('cleanse_league_championship_points');
+        Schema::dropIfExists('cleanse_league_championship_teams');
         Schema::dropIfExists('cleanse_league_match_game_players');
         Schema::dropIfExists('cleanse_league_event_players');
         Schema::dropIfExists('cleanse_league_players');

@@ -1,5 +1,7 @@
 <?php namespace Cleanse\League\Components;
 
+use Auth;
+use Event;
 use Flash;
 use Redirect;
 use Session;
@@ -58,6 +60,8 @@ class ManagerTeamEdit extends ComponentBase
     public function onRun()
     {
         $this->addCss('assets/css/league.css');
+        $this->addJs('assets/js/bootstrap-4-min.js');
+
         $this->page['flashSuccess'] = Session::get('flashSuccess');
         $this->setupPage();
     }
@@ -93,6 +97,9 @@ class ManagerTeamEdit extends ComponentBase
 
         $editTeam->save();
 
+        Event::fire('cleanse.league',
+            [Auth::getUser(), 'team.edit', $editTeam]);
+
         Flash::success('Team ' . $editTeam->name . ' was edited.');
         Session::flash('flashSuccess', true);
 
@@ -120,6 +127,9 @@ class ManagerTeamEdit extends ComponentBase
 
         $editPlayer->save();
 
+        Event::fire('cleanse.league',
+            [Auth::getUser(), 'team.player.add', $editPlayer]);
+
         $this->setupPage();
     }
 
@@ -132,6 +142,9 @@ class ManagerTeamEdit extends ComponentBase
         $editPlayer->team_id = null;
 
         $editPlayer->save();
+
+        Event::fire('cleanse.league',
+            [Auth::getUser(), 'team.player.release', $editPlayer]);
 
         $this->setupPage();
     }

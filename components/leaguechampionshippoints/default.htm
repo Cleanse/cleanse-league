@@ -1,0 +1,8 @@
+<div class="league-standings">
+    <h1>Championship Points <span class="text-muted d-none d-md-block">{{ championship.name }}</span></h1>
+    {% if teams|length > 0 %}
+    {% partial '@point-standings' %}
+    {% else %}
+    {% partial '@no-teams' %}
+    {%endif %}
+</div>

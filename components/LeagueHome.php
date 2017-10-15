@@ -24,7 +24,9 @@ class LeagueHome extends ComponentBase
 
     public function onRun()
     {
-        $this->addCss('/plugins/cleanse/league/assets/css/league.css');
+        $this->addCss('assets/css/league.css');
+        $this->addJs('assets/js/bootstrap-4-min.js');
+
         $this->league = $this->page['league'] = $this->getLeague(); //??
 
         $this->getCurrentHappening();

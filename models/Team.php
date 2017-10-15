@@ -1,9 +1,7 @@
 <?php namespace Cleanse\League\Models;
 
 use Model;
-use Storage;
-use LasseRafn\Initials\Initials;
-use LasseRafn\InitialAvatarGenerator\InitialAvatar;
+use System\Models\File;
 
 /**
  * @property string $id
@@ -58,41 +56,33 @@ class Team extends Model
      * Relationships
      */
     public $hasMany = [
+        'championship_teams' => 'Cleanse\League\Models\ChampionshipTeam',
         'event_teams' => 'Cleanse\League\Models\EventTeam',
         'players' => 'Cleanse\League\Models\Player'
     ];
 
-    public function createDefaultInitials()
-    {
-        $initials = new Initials;
+    public $morphMany = [
+        'logs' => [
+            'Cleanse\League\Models\ManagerLog',
+            'name' => 'loggable'
+        ]
+    ];
 
-        return $initials->name($this->name)->length(3)->generate();
+    //if no logo
+    public function getLogoThumb($size = 48, $options = null)
+    {
+        if (is_string($options)) {
+            $options = ['default' => $options];
+        } elseif (!is_array($options)) {
+            $options = [];
+        }
+
+        if ($this->logo) {
+            return $this->logo->getThumb($size, $size, $options);
+        } else {
+            return '/themes/pvpaissa/assets/images/default-paissa.jpg';
+        }
     }
 
-    public function createDefaultLogo()
-    {
-        $teamLogoFileName = '/media/logo-team-' . $this->slug . '.png';
-
-        $logo = $this->makeLogo();
-
-        Storage::put($teamLogoFileName, $logo);
-        $logoUrl = '/storage/app' . $teamLogoFileName;
-
-        return $logoUrl;
-    }
-
-    public function makeLogo()
-    {
-        $logo = new InitialAvatar();
-
-        return $logo->name($this->name)
-            ->length(3)
-            ->fontSize(0.5)
-            ->size(400)
-            ->background('#00CE97')
-            ->color('#fff')
-            ->cache()
-            ->generate()
-            ->stream('png');
-    }
+    //if no initials
 }

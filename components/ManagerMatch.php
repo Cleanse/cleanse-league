@@ -1,11 +1,13 @@
 <?php namespace Cleanse\League\Components;
 
+use Auth;
 use Flash;
 use Input;
 use Redirect;
 use Session;
 use Cms\Classes\ComponentBase;
 use System\Models\File;
+use Cleanse\League\Classes\ManagerLog\LeagueHandler;
 use Cleanse\League\Classes\Updaters\UpdaterMatchGame;
 use Cleanse\League\Models\Match;
 
@@ -34,7 +36,9 @@ class ManagerMatch extends ComponentBase
     public function onRun()
     {
         $this->addCss('assets/css/league.css');
+        $this->addJs('assets/js/bootstrap-4-min.js');
         $this->addJs('assets/js/image-input.js');
+
         $this->page['flashSuccess'] = Session::get('flashSuccess');
         $this->initMatch();
     }
@@ -63,6 +67,9 @@ class ManagerMatch extends ComponentBase
 
             $matchGame->screenshot()->add($file);
         }
+
+        $log = new LeagueHandler();
+        $log->handle(Auth::getUser(), 'match.game.create', $matchGame);
 
         Flash::success('Game was added.');
 

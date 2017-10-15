@@ -1,0 +1,48 @@
+<div class="league-schedule">
+    <h1>{{ team.name }} <span class="text-muted">Schedule</span></h1>
+
+    {% set weekNum = 1 %}
+    {% for key, week in matches %}
+    <ol class="breadcrumb mb-0">
+        <li id="week-{{ weekNum }}" class="breadcrumb-item active"><a href="#week-{{ weekNum }}">Week {{ weekNum }}</a></li>
+        <li class="breadcrumb-item">{{ key|date('M d, Y') }}</li>
+    </ol>
+    <div class="card-group mb-2">
+        {% for match in week %}
+        <a class="card" href="/league/match/{{ match.id }}">
+            <div class="card-body bg-league">
+                <div class="d-flex flex-row mb-1">
+                    <div class="team-logo">
+                        <img src="{{ match.one.team.logo.getThumb(48, 48) }}">
+                    </div>
+                    <div class="team-name-record">
+                        <h5>
+                            <span class="team-name d-none d-md-block">{{ match.one.team.name }}</span>
+                            <span class="team-initials d-md-none">{{ match.one.team.initials }}</span>
+                        </h5>
+                        <p class="record">
+                            {{ match.team_one.match_wins ?? 0 }}W - {{ match.team_one.match_losses ?? 0 }}L
+                        </p>
+                    </div>
+                </div>
+                <div class="d-flex flex-row">
+                    <div class="team-logo">
+                        <img src="{{ match.two.team.logo.getThumb(48, 48) }}">
+                    </div>
+                    <div class="team-name-record">
+                        <h5>
+                            <span class="team-name d-none d-md-block">{{ match.two.team.name }}</span>
+                            <span class="team-initials d-md-none">{{ match.two.team.initials }}</span>
+                        </h5>
+                        <p class="record">
+                            {{ match.team_two.match_wins ?? 0 }}W - {{ match.team_two.match_losses ?? 0 }}L
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% set weekNum = weekNum + 1 %}
+    {% endfor %}
+</div>

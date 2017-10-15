@@ -1,6 +1,8 @@
 <?php namespace Cleanse\League\Classes\Updaters;
 
+use Auth;
 use DB;
+use Cleanse\League\Classes\ManagerLog\LeagueHandler;
 use Cleanse\League\Models\Season;
 use Cleanse\League\Models\Match;
 use Cleanse\League\Models\MatchGame;
@@ -41,6 +43,10 @@ class UpdaterMatchGame
             $match->save();
         }
 
+        $log = new LeagueHandler();
+
+        $log->handle(Auth::getUser(), 'match.game.finalize', $match);
+
         $this->updateMatchStats($match);
 
         return $match->winner->team->name;
@@ -52,6 +58,10 @@ class UpdaterMatchGame
 
         $match->winner_id = null;
         $match->save();
+
+        $log = new LeagueHandler();
+
+        $log->handle(Auth::getUser(), 'match.game.unlock', $match);
     }
 
     protected function createMatchGame()
@@ -75,6 +85,8 @@ class UpdaterMatchGame
 
     protected function createMatchGamePlayers()
     {
+        $logData = [];
+
         foreach ($this->post['team_one_roster'] as $oplayer) {
 
             if ($oplayer['player'] == "0") {
@@ -98,6 +110,8 @@ class UpdaterMatchGame
             $newMatchGamePlayer->healing = $this->checkPostInt($oplayer['healing']);
 
             $newMatchGamePlayer->save();
+
+            $logData[] = $newMatchGamePlayer;
         }
 
         foreach ($this->post['team_two_roster'] as $tplayer) {
@@ -123,7 +137,12 @@ class UpdaterMatchGame
             $newMatchGamePlayer->healing = $this->checkPostInt($tplayer['healing']);
 
             $newMatchGamePlayer->save();
+
+            $logData[] = $newMatchGamePlayer;
         }
+
+        $log = new LeagueHandler();
+        $log->handle(Auth::getUser(), 'match.game.create', $logData);
     }
 
     protected function firstOrCreateEventPlayer($player_id, $team_id)
@@ -157,6 +176,10 @@ class UpdaterMatchGame
         }
 
         $match->save();
+
+        $log = new LeagueHandler();
+
+        $log->handle(Auth::getUser(), 'match.game.score', $match);
     }
 
     protected function updateMatchStats($match)

@@ -16,6 +16,8 @@ class ManagerPanel extends ComponentBase
     public function onRun()
     {
         $this->addCss('assets/css/league.css');
+        $this->addJs('assets/js/bootstrap-4-min.js');
+
         $this->page['league'] = $this->getLeague();
     }
 

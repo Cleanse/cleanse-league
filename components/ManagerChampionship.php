@@ -1,5 +1,7 @@
 <?php namespace Cleanse\League\Components;
 
+use Auth;
+use Event;
 use Flash;
 use Redirect;
 use Session;
@@ -23,6 +25,8 @@ class ManagerChampionship extends ComponentBase
     public function onRun()
     {
         $this->addCss('assets/css/league.css');
+        $this->addJs('assets/js/bootstrap-4-min.js');
+
         $this->championship = $this->page['championship'] = $this->getChampionship();
         $this->championships = $this->page['championships'] = $this->getChampionships();
     }
@@ -88,6 +92,9 @@ class ManagerChampionship extends ComponentBase
             'slug' => $championshipSlug
         ]);
 
+        Event::fire('cleanse.league',
+            [Auth::getUser(), 'championship.create', $championship]);
+
         Flash::success('Championship: "' . $championship->name . '" was created.');
 
         Session::flash('flashSuccess', true);
@@ -121,6 +128,9 @@ class ManagerChampionship extends ComponentBase
 
         $championship->save();
 
+        Event::fire('cleanse.league',
+            [Auth::getUser(), 'championship.rules.update', $championshipRules]);
+
         Flash::success('Championship rules updated.');
 
         Session::flash('flashSuccess', true);
@@ -142,6 +152,9 @@ class ManagerChampionship extends ComponentBase
         $editChampionship->name = post('name');
 
         $editChampionship->save();
+
+        Event::fire('cleanse.league',
+            [Auth::getUser(), 'championship.edit', $editChampionship]);
 
         Flash::success('Championship ' . $editChampionship->name . ' was edited.');
 

@@ -1,10 +1,13 @@
+<h1>Rules are hard coded at the moment, if changes need to be made, email me, or dm me on Discord.</h1>
+<p><a href="mailto:plovato@gmail.com">plovato@gmail.com</a> / Cleanse#5554</p>
+
 {{ form_open({ request: __SELF__~'::onModifyRules' }) }}
 
-<input type="hidden" name="id" value="{{ championship.id }}">
+<input type="hidden" name="id" value="{{ championship.id }}" disabled>
 
 <div class="form-group">
     <label for="rules">Championship Series Rules</label>
-    <textarea class="form-control" id="rules" name="rules" rows="8">{{ championship.championship_rules }}</textarea>
+    <textarea class="form-control" id="rules" name="rules" rows="8" disabled>{{ championship.championship_rules }}</textarea>
     <p id="championshipRulesHelp" class="form-text small text-muted">
         Optional. Use <a href="https://help.github.com/articles/basic-writing-and-formatting-syntax/"
                          target="_blank">Markdown</a>.
@@ -12,6 +15,6 @@
     </p>
 </div>
 
-<button type="submit" data-attach-loading class="oc-loader btn btn-outline-primary">Add / Update Rules</button>
+<button type="submit" data-attach-loading class="oc-loader btn btn-outline-primary" disabled>Add / Update Rules</button>
 
 {{ form_close() }}
