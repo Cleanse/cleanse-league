@@ -26,6 +26,15 @@
     padding-bottom: .5rem;
     border-bottom: 1px solid $gray-700;
   }
+
+  p {
+    color: #b2cac8;
+
+    b,
+    strong {
+      font-weight: 700;
+    }
+  }
 }
 
 .league-home-scores .team-logo img {
@@ -52,5 +61,3 @@
 a .record {
   color: $white;
 }
-
-//*[@id="layout-content"]/div/div/div[2]/div/a[1]/div[1]/div[2]/p

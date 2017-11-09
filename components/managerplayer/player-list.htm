@@ -2,10 +2,7 @@
     <div class="flex-grow-one mr-auto mb-2 mb-md-0">
         <div id="team-list" class="list-group">
             {% for player in players %}
-            <a href="javascript:;"
-               data-request="{{ __SELF__ }}::onUpdate"
-               data-request-data="mode: 'edit', player_id: '{{ player.id }}'"
-               data-request-update="'{{ __SELF__ ~ '::edit-player' }}': '#editor-area'"
+            <a href="/manager/player/{{ player.id }}"
                class="list-group-item justify-content-between">{{ player.name }} &nbsp;&nbsp;&nbsp;<i class="fa fa-edit"></i></a>
             {% endfor %}
         </div>

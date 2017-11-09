@@ -400,7 +400,7 @@ class ManagerSeason extends ComponentBase
             return Redirect::refresh();
         }
 
-        return $this->page['season'] = $season;
+        $this->page['season'] = $season;
     }
 
     public function onCreateSchedule()

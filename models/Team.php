@@ -1,7 +1,7 @@
 <?php namespace Cleanse\League\Models;
 
 use Model;
-use System\Models\File;
+use Cleanse\League\Classes\Stats\TeamStats;
 
 /**
  * @property string $id
@@ -84,5 +84,30 @@ class Team extends Model
         }
     }
 
-    //if no initials
+    /**
+     * @return array
+     */
+    public function getLifetimeStats()
+    {
+        if (!$this->event_teams()->count() > 0) {
+            return [];
+        }
+
+        $stats = new TeamStats($this->players);
+
+        return $stats->seasonal();
+    }
+
+    public function getSeasonStats()
+    {
+        if (!$this->event_teams()->count() > 0) {
+            return [];
+        }
+
+        $players = [];
+
+        $stats = new TeamStats($this->players);
+
+        return $stats->seasonal();
+    }
 }

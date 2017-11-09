@@ -1,10 +1,27 @@
-{{ form_open({ request: __SELF__~'::onCreatePlayer' }) }}
+{{ form_open({ request: __SELF__~'::onCreatePlayer', files: true }) }}
 
 <div class="form-group">
     <label for="name">Player Name</label>
     <input class="form-control" id="name" name="name" placeholder="Enter a name for the player."
            aria-describedby="playerNameHelp" required>
     <small id="playerNameHelp" class="form-text text-muted">Enter a name for the player.</small>
+</div>
+
+<label for="image-file">Player Avatar</label>
+<div class="input-group image-preview mb-2">
+    <input class="form-control image-preview-filename">
+    <span class="input-group-btn">
+        <button type="button" class="btn btn-outline-primary image-preview-clear" style="display:none;">
+            <i class="fa fa-remove"></i> Clear
+        </button>
+    </span>
+    <span class="input-group-btn">
+        <div class="btn btn-primary image-preview-input">
+            <i class="fa fa-folder-open"></i>
+            <span class="image-preview-input-title">Choose File</span>
+            <input type="file" accept="image/png, image/jpeg, image/gif" id="image-file" name="avatar">
+        </div>
+    </span>
 </div>
 
 <button type="submit" data-attach-loading class="oc-loader btn btn-outline-primary">Create Player</button>

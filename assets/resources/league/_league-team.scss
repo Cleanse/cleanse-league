@@ -1,0 +1,38 @@
+.team-banner {
+  height: 150px;
+  background: linear-gradient(
+                  to bottom, #212529, #1c2023
+  ) no-repeat #212529;
+  border-top: 2px solid theme-color("primary");
+}
+
+.team-stats {
+  height: 75px;
+  background: #1c2023;
+  border-top: 1px solid #212529;
+}
+
+.team-stats .team-stat {
+  color: $white;
+}
+
+.team-stats .team-stat span {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.winloss {
+  border-left: 1px solid #212529;
+}
+
+.team-stat.percentage {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.team-roster-cards .team-logo img {
+  height: auto;
+  width: 48px;
+}
+
+@include responsive-headings(team-banner h1, 3.5rem, 1);

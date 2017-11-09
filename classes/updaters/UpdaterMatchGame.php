@@ -138,6 +138,8 @@ class UpdaterMatchGame
 
             $newMatchGamePlayer->save();
 
+
+
             $logData[] = $newMatchGamePlayer;
         }
 

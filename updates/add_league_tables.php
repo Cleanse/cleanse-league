@@ -82,6 +82,7 @@ class AddLeagueTables extends Migration
             $table->string('matchable_id')->index();
             $table->string('matchable_type');
             $table->timestamp('takes_place_at')->nullable();
+            $table->string('takes_place_during')->nullable();
             $table->timestamps();
         });
 

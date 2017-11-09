@@ -3,9 +3,11 @@
 use Auth;
 use Event;
 use Flash;
+use Input;
 use Redirect;
 use Session;
 use Cms\Classes\ComponentBase;
+use System\Models\File;
 use Cleanse\League\Models\Player;
 
 class ManagerPlayer extends ComponentBase
@@ -24,6 +26,7 @@ class ManagerPlayer extends ComponentBase
     {
         $this->addCss('assets/css/league.css');
         $this->addJs('assets/js/bootstrap-4-min.js');
+        $this->addJs('assets/js/image-input.js');
 
         $this->page['flashSuccess'] = Session::get('flashSuccess');
         $this->page['players'] = $this->getPlayersList();
@@ -63,6 +66,17 @@ class ManagerPlayer extends ComponentBase
 
         $newPlayer->save();
 
+        if (Input::hasFile('avatar')) {
+            $uploadedFile = Input::file('avatar');
+
+            $file = new File;
+            $file->data = $uploadedFile;
+            $file->is_public = true;
+            $file->save();
+
+            $newPlayer->avatar()->add($file);
+        }
+
         Event::fire('cleanse.league',
             [Auth::getUser(), 'player.create', $newPlayer]);
 
@@ -84,7 +98,7 @@ class ManagerPlayer extends ComponentBase
         Event::fire('cleanse.league',
             [Auth::getUser(), 'player.edit', $editPlayer]);
 
-        Flash::success('Player ' . $editPlayer->name . ' was edited.');
+        Flash::success('Player: ' . $editPlayer->name . ' was edited.');
 
         Session::flash('flashSuccess', true);
 

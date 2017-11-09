@@ -6,6 +6,7 @@ use Cleanse\League\Models\Team as TeamModel;
 class LeagueTeam extends ComponentBase
 {
     public $team;
+    public $roster;
 
     public function componentDetails()
     {
@@ -32,7 +33,18 @@ class LeagueTeam extends ComponentBase
         $this->addCss('assets/css/league.css');
         $this->addJs('assets/js/bootstrap-4-min.js');
 
-        $this->team = $this->page['team'] = $this->getTeam();
+        $this->setupLeagueTeam();
+    }
+
+    private function setupLeagueTeam()
+    {
+        $team = $this->getTeam();
+
+        if (!isset($team)) {
+            return redirect('/league');
+        }
+
+        return $this->page['team'] = $team;
     }
 
     public function getTeam()

@@ -103,7 +103,7 @@ class LeagueScheduleTeam extends ComponentBase
                 'matches' => function ($query) use ($team) {
                     $query->where('team_one', '=', $team->id);
                     $query->orWhere('team_two', '=', $team->id);
-                    $query->orderBy('takes_place_at', 'asc');
+                    $query->orderBy('takes_place_during', 'asc');
                     $query->with(['one.team', 'two.team']);
                 }])->first();
     }
@@ -116,7 +116,7 @@ class LeagueScheduleTeam extends ComponentBase
      */
     public function sortTeamMatches()
     {
-        $matches = $this->season->matches->groupBy('takes_place_at');
+        $matches = $this->season->matches->groupBy('takes_place_during');
 
         if ($week = $this->property('week')) {
             $matches = $matches->slice($week - 1, 1);

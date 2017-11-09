@@ -27,12 +27,12 @@ class LeagueHome extends ComponentBase
         $this->addCss('assets/css/league.css');
         $this->addJs('assets/js/bootstrap-4-min.js');
 
-        $this->league = $this->page['league'] = $this->getLeague(); //??
+        $this->league = $this->page['league'] = $this->getLeague();
 
         $this->getCurrentHappening();
     }
 
-    public function getLeague() //??
+    public function getLeague()
     {
         return League::first();
     }
@@ -59,6 +59,13 @@ class LeagueHome extends ComponentBase
             $this->page['matches'] = $seasonMatches;
             return;
         }
+
+        return $this->initialState();
+    }
+
+    private function initialState()
+    {
+        return;
     }
 
     protected function checkChampionship()
@@ -93,14 +100,18 @@ class LeagueHome extends ComponentBase
             ->with([
                 'matches' => function ($query) {
                     $query->whereNull('winner_id');
-                    $query->orderBy('takes_place_at', 'asc');
+                    $query->orderBy('takes_place_during', 'asc');
                     $query->with(['one.team', 'two.team']);
                 }
             ])->first();
 
+        if (!isset($season)) {
+            return false;
+        }
+
         $this->season = $season;
 
-        $matches = $season->matches->groupBy('takes_place_at');
+        $matches = $season->matches->groupBy('takes_place_during');
 
         return $matches->slice(0, 1);
     }
@@ -111,7 +122,9 @@ class LeagueHome extends ComponentBase
 
         $category = BlogCategory::whereSlug($slug)->first();
 
-        return BlogPost::with('categories')->listFrontEnd([
+        return BlogPost::with('categories')
+            ->orderBy('id', 'desc')
+            ->listFrontEnd([
             'perPage'    => 5,
             'category'   => $category->id
         ]);

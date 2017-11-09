@@ -18,7 +18,7 @@ class ManagerTeamEdit extends ComponentBase
     {
         return [
             'name' => 'Manage League Teams',
-            'description' => 'Manage the league\'s teams.'
+            'description' => 'Manage a league team.'
         ];
     }
 

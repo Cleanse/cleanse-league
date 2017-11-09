@@ -18,10 +18,17 @@
 </div>
 
 <div class="form-group">
-    <label for="weeks">Season Length</label>
-    <input class="form-control" id="weeks" name="weeks"
-           aria-describedby="weeksHelp" placeholder="Enter # of weeks." required>
-    <small id="weeksHelp" class="form-text text-muted">Enter # of weeks.</small>
+    <label for="matches">Team Matches Per Season</label>
+    <input class="form-control" id="length" name="length"
+           aria-describedby="lengthHelp" placeholder="Enter #." required>
+    <small id="lengthHelp" class="form-text text-muted">Enter number of matches a team plays per season.</small>
+</div>
+
+<div class="form-group">
+    <label for="weeks">Matches Per Week</label>
+    <input class="form-control" id="per" name="per"
+           aria-describedby="perHelp" placeholder="Enter # of matches." required>
+    <small id="perHelp" class="form-text text-muted">Enter # of matches per week.</small>
 </div>
 
 <button data-attach-loading class="oc-loader btn btn-outline-primary">Create Seasonal Schedule</button>

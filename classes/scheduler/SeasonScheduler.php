@@ -24,34 +24,37 @@ class SeasonScheduler extends Scheduler
             return;
         }
 
-        $matches = $this->buildSchedule($season->teams->toArray(), $postData['weeks'] ?? null);
+        $matches = $this->buildSchedule($season->teams->toArray(), $postData['length'] ?? null);
 
         $startDate = $postData['start'];
 
-        $w = 0;
+        $count = 1;
+        $week = 1;
         $seasonalSchedule = [];
-        foreach ($matches as $week) {
-            $date = $this->yearWeek($startDate, $w);
-
-            foreach ($week as $match) {
+        foreach ($matches as $round) {
+            foreach ($round as $match) {
                 //Check for BYE weeks.
                 if (isset($match[0]['id']) && isset($match[1]['id'])) {
-                    $seasonalSchedule[] = $this->addMatch($season, $match[0]['id'], $match[1]['id'], $date);
+                    $seasonalSchedule[] = $this->addMatch($season, $match[0]['id'], $match[1]['id'], $week);
                 }
             }
 
-            $w++;
+            if ($count % $postData['per'] == 0) {
+                $week++;
+            }
+
+            $count++;
         }
 
         return collect($seasonalSchedule);
     }
 
-    private function addMatch(Season $season, $teamA, $teamB, $date)
+    private function addMatch(Season $season, $teamA, $teamB, $week)
     {
         $match = $season->matches()->firstOrCreate([
             'team_one' => $teamA,
             'team_two' => $teamB,
-            'takes_place_at' => $date
+            'takes_place_during' => $week
         ]);
 
         return $match;

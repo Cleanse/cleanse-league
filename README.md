@@ -4,10 +4,13 @@ If you have an idea on features to add, send me an email: plovato@gmail.com
 
 To-do:
 - Manager componentDetails method names to 'League Manager: ComponentName'  
-- Add Event dispatching for logging of admin / staff actions.  
+- ~~Add Event dispatching for logging of admin / staff actions.~~  
 - Event Team's Season+Season tourney stats can be combined as a third entity if needed.  
 - Clean up Manager search ajax. (Match)  
 - Add team & player of the week to homepage.  
+- Add option for multiple vods to be added per game.  
+- 'matches' field 'takes_place_at' is now to be used by team leaders on an agreed time.  
+- 'matches' field 'takes_place_during' is used for grouping for the weekly schedule.
 
 ## Components
 **cleanseLeagueHome** (/league) - League home page containing upcoming matches and top team/player stats.  

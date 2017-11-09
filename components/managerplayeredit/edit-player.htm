@@ -1,0 +1,25 @@
+<div class="card p-2 d-flex justify-content-between flex-column flex-md-row">
+    <div class="flex-grow-one">
+        {{ form_open({ request: __SELF__~'::onEditPlayer' }) }}
+
+        <input type="hidden" name="player_id" value="{{ player.id }}">
+
+        <div class="form-group">
+            <label for="name">Player Name</label>
+            <input class="form-control" id="name" name="name" placeholder="Enter a name for the player."
+                   aria-describedby="playerNameHelp" value="{{ player.name }}" required>
+            <small id="playerNameHelp" class="form-text text-muted">Enter the player's name.</small>
+        </div>
+
+        <button data-attach-loading class="oc-loader btn btn-outline-primary">Edit Player</button>
+
+        {{ form_close() }}
+    </div>
+
+    <div class="ml-md-3 mt-2 mt-xs-0">
+        {{ form_open() }}
+        <label for="file_data">Logo</label>
+        {% component 'cleanseImageUploader' %}
+        {{ form_close() }}
+    </div>
+</div>

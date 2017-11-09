@@ -1,0 +1,17 @@
+<a class="card p-2 bg-league" href="/league/player/{{ player.slug }}">
+    <div class="d-flex flex-row mb-1">
+        <div class="team-logo">
+            <img src="{{ player.avatarThumb(48) }}">
+        </div>
+        <div class="team-name-record">
+            <h5>
+                {{ player.name }}
+            </h5>
+            <p class="record">
+                {{ player.seasonStats.kill_avg ?? '-' }}/
+                {{ player.seasonStats.death_avg ?? '-' }}/
+                {{ player.seasonStats.assist_avg ?? '-' }}
+            </p>
+        </div>
+    </div>
+</a>

@@ -7,4 +7,11 @@
 
 .league-schedule .card {
   border-top: 0;
+  min-width: 275px;
+}
+
+@media (max-width: 550px) {
+  .league-schedule .card {
+    min-width: 0;
+  }
 }

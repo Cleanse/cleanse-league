@@ -31,7 +31,7 @@ class Match extends Model
      *
      * @var array
      */
-    protected $fillable = ['team_one', 'team_two', 'takes_place_at'];
+    protected $fillable = ['team_one', 'team_two', 'takes_place_during'];
 
     /**
      * Relationships

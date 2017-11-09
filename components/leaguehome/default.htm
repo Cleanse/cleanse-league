@@ -1,25 +1,17 @@
 <div class="row">
     <div class="col-md-8">
+        {% partial '@league-news' %}
+    </div>
+
+    <div class="col-md-4">
         {% if championship %}
         {% partial '@championship' %}
         {% elseif seasonal %}
         {% partial '@seasonal' %}
         {% elseif season %}
-        {% partial '@league-news' %}
-        {% else %}
-        <h1 style="color: #fff;">None.</h1>
-        {% endif %}
-    </div>
-
-    <div class="col-md-4">
-        {% if championship %}
-        {% partial '@league-news' %}
-        {% elseif seasonal %}
-        {% partial '@league-news' %}
-        {% elseif season %}
         {% partial '@season' %}
         {% else %}
-        <h1 style="color: #fff;">None.</h1>
+        {% partial '@signup' %}
         {% endif %}
     </div>
 </div>

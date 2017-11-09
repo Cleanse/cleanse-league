@@ -23,7 +23,7 @@
     {% for key, week in matches %}
     <ol class="breadcrumb mb-0">
         <li id="week-{{ weekNum }}" class="breadcrumb-item active"><a href="#week-{{ weekNum }}">Week {{ weekNum }}</a></li>
-        <li class="breadcrumb-item">{{ key|date('M d, Y') }}</li>
+        <!--<li class="breadcrumb-item">{{ key|date('M d, Y') }}</li>-->
     </ol>
     <div class="card-group mb-2">
         {% for match in week %}

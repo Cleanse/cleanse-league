@@ -6,12 +6,14 @@ class LeagueHandler
 {
     public function handle($admin, $method, $data)
     {
+        $toCollection = collect($data);
+
         $log = new ManagerLog();
 
         $log->admin_id = $admin->id;
         $log->ip = $this->getIp();
         $log->method = $method;
-        $log->values = $data->toJson();
+        $log->values = $toCollection->toJson();
 
         $log->save();
     }
