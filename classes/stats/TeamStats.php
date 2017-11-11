@@ -16,7 +16,7 @@ class TeamStats
     public $game_losses;
     public $jobs;
 
-    public function __construct($player)
+    public function __construct($players)
     {
 //        $this->kills = $player['kills'];
 //        $this->deaths = $player['deaths'];
@@ -45,7 +45,7 @@ class TeamStats
      */
     private function buildArray()
     {
-        return ['kpg' => 2.3, 'dpg' => 0.3, 'apg' => 3.3, 'wins' => 98, 'losses' => 2, 'winPercentage' => 98];
+        return ['kpg' => 0, 'dpg' => 0, 'apg' => 0, 'wins' => 98, 'losses' => 2, 'winPercentage' => 98];
 
         return [
             'kills' => $this->kills,

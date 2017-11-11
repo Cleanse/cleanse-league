@@ -13,7 +13,7 @@
         <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item">Roster</li>
         </ol>
-        <div class="card-group mb-2 team-roster-cards">
+        <div class="card-group mb-2 team-roster-cards flex-column">
             {% for player in team.players %}
             {% partial '@player-card' player=player %}
             {% endfor %}

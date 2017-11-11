@@ -1,33 +1,36 @@
 <div class="team-stats d-flex flex-row justify-content-around align-items-center">
     <div class="flex-grow-one kpg pg_stat">
         <div class="team-stat d-flex flex-column justify-content-center align-items-center">
-            <abbr title="Kills Per Game">KPG</abbr>
+            <abbr title="Kills Per Game, coming soon.">KPG</abbr>
             <span>{{ team.seasonStats.kpg ?? '-' }}</span>
         </div>
     </div>
     <div class="flex-grow-one dpg pg_stat">
         <div class="team-stat d-flex flex-column justify-content-center align-items-center">
-            <abbr title="Deaths Per Game">DPG</abbr>
+            <abbr title="Deaths Per Game, coming soon.">DPG</abbr>
             <span>{{ team.seasonStats.dpg ?? '-' }}</span>
         </div>
     </div>
     <div class="flex-grow-one apg pg_stat">
         <div class="team-stat d-flex flex-column justify-content-center align-items-center">
-            <abbr title="Assists Per Game">APG</abbr>
+            <abbr title="Assists Per Game, coming soon.">APG</abbr>
             <span>{{ team.seasonStats.apg ?? '-' }}</span>
         </div>
     </div>
     <div class="flex-grow-one winloss d-flex flex-row justify-content-around align-items-center">
         <div class="team-stat d-flex flex-column justify-content-center align-items-center mr-2">
             <span class="letter"><abbr title="Wins">W</abbr></span>
-            <span class="stat">{{ team.seasonStats.wins ?? '-' }}</span>
+            <span class="stat">{{ team.event_teams[0].match_wins ?? '-' }}</span>
         </div>
         <div class="team-stat d-flex flex-column justify-content-center align-items-center mr-2">
             <span class="letter"><abbr title="Losses">L</abbr></span>
-            <span class="stat">{{ team.seasonStats.losses ?? '-' }}</span>
+            <span class="stat">{{ team.event_teams[0].match_losses ?? '-' }}</span>
         </div>
         <div class="team-stat percentage">
-            {{ team.seasonStats.winPercentage ?? '-' }}%
+            {% if team.event_teams[0].match_total %}
+            {% set win_perc = (team.event_teams[0].match_wins / team.event_teams[0].match_total * 100)|round %}
+            {% endif %}
+            {{ win_perc ?? '-' }}%
         </div>
     </div>
 </div>
