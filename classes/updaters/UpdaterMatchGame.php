@@ -71,6 +71,7 @@ class UpdaterMatchGame
         $newGame->team_one = $this->post['team_one'];
         $newGame->team_two = $this->post['team_two'];
         $newGame->winner_id = $this->post['winner_id'];
+        $newGame->duration = $this->convertDuration($this->post['duration']);
 
         if ($this->post['vod'] !== '') {
             $newGame->vod = $this->post['vod'];
@@ -100,6 +101,7 @@ class UpdaterMatchGame
             $newMatchGamePlayer->game_id = $this->gameId;
             $newMatchGamePlayer->team_id = $this->post['team_one'];
             $newMatchGamePlayer->game_winner_id = $this->post['winner_id'];
+            $newMatchGamePlayer->duration = $this->convertDuration($this->post['duration']);
             $newMatchGamePlayer->player_id = $eventPlayerOne->id;
             $newMatchGamePlayer->player_job = $oplayer['job'];
             $newMatchGamePlayer->medals = $this->checkPostInt($oplayer['medals']);
@@ -127,6 +129,7 @@ class UpdaterMatchGame
             $newMatchGamePlayer->game_id = $this->gameId;
             $newMatchGamePlayer->team_id = $this->post['team_two'];
             $newMatchGamePlayer->game_winner_id = $this->post['winner_id'];
+            $newMatchGamePlayer->duration = $this->convertDuration($this->post['duration']);
             $newMatchGamePlayer->player_id = $eventPlayerTwo->id;
             $newMatchGamePlayer->player_job = $tplayer['job'];
             $newMatchGamePlayer->medals = $this->checkPostInt($tplayer['medals']);
@@ -138,13 +141,27 @@ class UpdaterMatchGame
 
             $newMatchGamePlayer->save();
 
-
-
             $logData[] = $newMatchGamePlayer;
         }
 
         $log = new LeagueHandler();
         $log->handle(Auth::getUser(), 'match.game.create', $logData);
+    }
+
+    protected function convertDuration($time)
+    {
+        $findMe   = ':';
+        $needsConvert = strpos($time, $findMe);
+
+        if ($needsConvert) {
+            $str_time = $time;
+
+            sscanf($str_time, "%d:%d:%d", $hours, $minutes, $seconds);
+
+            return isset($seconds) ? $hours * 3600 + $minutes * 60 + $seconds : $hours * 60 + $minutes;
+        }
+
+        return 0;
     }
 
     protected function firstOrCreateEventPlayer($player_id, $team_id)
@@ -163,6 +180,7 @@ class UpdaterMatchGame
         $match = Match::find($this->post['match_id']);
 
         $matchGames = MatchGame::where('match_id', '=', $match->id)
+            ->where('value', '=', 1)
             ->select('winner_id', DB::raw('count(*) as total'))
             ->groupBy('winner_id')
             ->get();
