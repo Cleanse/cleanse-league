@@ -95,6 +95,8 @@ class AddLeagueTables extends Migration
             $table->integer('team_two')->unsigned();
             $table->integer('winner_id')->unsigned()->nullable();
             $table->string('vod')->nullable();
+            $table->integer('duration')->unsigned()->nullable();
+            $table->integer('value')->unsigned()->nullable()->default(1);
             $table->timestamps();
         });
     }
