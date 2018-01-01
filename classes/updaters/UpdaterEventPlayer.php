@@ -31,23 +31,30 @@ class UpdaterEventPlayer
             ->get();
 
         $oldJobs = json_decode($player->jobs, true);
-
         $player->jobs = $this->jobsJson($oldJobs);
+
         $player->kills = $this->killsTotal();
+        $player->kill_avg = $this->average($player->kills);
         $player->deaths = $this->deathsTotal();
+        $player->death_avg = $this->average($player->deaths);
         $player->assists = $this->assistsTotal();
+        $player->assist_avg = $this->average($player->assists);
         $player->damage = $this->damageTotal();
         $player->healing = $this->healingTotal();
         $player->medals = $this->medalsTotal();
-        $player->match_total = $this->matchTotal();
-        $player->match_wins = $this->matchWins();
-        $player->match_losses = $this->matchLosses();
+        $player->medals_avg = $this->average($player->medals);
         $player->game_total = $this->gameTotal();
         $player->game_wins = $this->gameWins();
         $player->game_losses = $this->gameLosses();
+        $player->match_total = $this->matchTotal();
+        $player->match_wins = $this->matchWins();
+        $player->match_losses = $this->matchLosses();
+        $player->duration = $this->gameDuration();
+        $player->duration_avg = $this->averageTime($player->duration);
+        $player->dps = $this->perSecond($player->damage, $player->duration);
+        $player->hps = $this->perSecond($player->healing, $player->duration);
 
         $player->save();
-
     }
 
     protected function killsTotal()
@@ -174,6 +181,12 @@ class UpdaterEventPlayer
         return $this->gameTotal() - $this->gameWins();
     }
 
+    /**
+     * Order jobs by most played.
+     *
+     * @param $oldJobs
+     * @return string
+     */
     protected function jobsJson($oldJobs)
     {
         $jobsStats = [];
@@ -199,5 +212,46 @@ class UpdaterEventPlayer
         }
 
         return json_encode($jobsStats);
+    }
+
+    protected function gameDuration()
+    {
+        $statTotal = 0;
+        foreach ($this->matches as $match) {
+            foreach ($match->players as $player) {
+                $statTotal = $statTotal + $player->duration;
+            }
+        }
+
+        return $statTotal;
+    }
+
+    private function average($stat)
+    {
+        if (!$this->gameTotal() > 0) {
+            return 0;
+        }
+
+        return round($stat / $this->gameTotal(), 1);
+    }
+
+    private function averageTime($stat)
+    {
+        if (!$this->gameTotal() > 0) {
+            return 0;
+        }
+
+        $time = round($stat / $this->gameTotal(), 0);
+
+        return (int)round($time);
+    }
+
+    private function perSecond($stat, $seconds)
+    {
+        if (!$this->gameTotal() > 0) {
+            return 0;
+        }
+
+        return round($stat / $seconds, 2);
     }
 }
