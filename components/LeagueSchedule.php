@@ -59,7 +59,7 @@ class LeagueSchedule extends ComponentBase
 
     public function getSeason()
     {
-        return Season::whereHas('matches', function ($query) {
+        $season = Season::whereHas('matches', function ($query) {
             if (!$slug = $this->property('season')) {
                 $query->whereNull('winner_id');
             } else {
@@ -68,19 +68,22 @@ class LeagueSchedule extends ComponentBase
         })
             ->with([
                 'matches' => function ($query) {
+                    $query->where('winner_id', '>', 0);
+                    $query->orWhereNull('winner_id');
                     $query->orderBy('takes_place_during', 'asc');
                     $query->with(['one.team', 'two.team']);
                 },
                 'teams.team'])->first();
+
+        return $season;
     }
 
     public function getMatches()
     {
         $matches = $this->season->matches->groupBy('takes_place_during');
 
-        if ($week = $this->property('week')) {
-            $matches = $matches->slice($week - 1, 1);
-        }
+        //Need to write a better season + week code.
+        //$week = $this->property('week');
 
         return $matches;
     }
