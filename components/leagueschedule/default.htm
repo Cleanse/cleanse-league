@@ -39,9 +39,12 @@
                             <span class="team-initials d-md-none">{{ match.one.team.initials }}</span>
                         </h5>
                         <p class="record">
-                            {{ match.team_one.match_wins ?? 0 }}W - {{ match.team_one.match_losses ?? 0 }}L
+                            {{ match.one.match_wins ?? 0 }}W - {{ match.one.match_losses ?? 0 }}L
                         </p>
                     </div>
+                    {% if match.winner_id %}
+                    <div class="ml-auto text-secondary">{{ match.team_one_score ?? 0 }}</div>
+                    {% endif %}
                 </div>
                 <div class="d-flex flex-row">
                     <div class="team-logo">
@@ -53,9 +56,12 @@
                             <span class="team-initials d-md-none">{{ match.two.team.initials }}</span>
                         </h5>
                         <p class="record">
-                            {{ match.team_two.match_wins ?? 0 }}W - {{ match.team_two.match_losses ?? 0 }}L
+                            {{ match.two.match_wins ?? 0 }}W - {{ match.two.match_losses ?? 0 }}L
                         </p>
                     </div>
+                    {% if match.winner_id %}
+                    <div class="ml-auto text-secondary">{{ match.team_two_score ?? 0 }}</div>
+                    {% endif %}
                 </div>
             </div>
         </a>
