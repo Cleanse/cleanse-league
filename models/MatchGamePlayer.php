@@ -16,6 +16,7 @@ use Model;
  * @property integer $assists
  * @property integer $damage
  * @property integer $healing
+ * @property integer $duration
  */
 class MatchGamePlayer extends Model
 {
@@ -36,7 +37,8 @@ class MatchGamePlayer extends Model
         'deaths',
         'assists',
         'damage',
-        'healing'
+        'healing',
+        'duration'
     ];
 
     public $hasOne = [
