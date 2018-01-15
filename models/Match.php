@@ -62,8 +62,6 @@ class Match extends Model
         'games' => 'Cleanse\League\Models\MatchGame'
     ];
 
-    //country -> users -> posts
-    //match   -> games -> players
     public $hasManyThrough = [
         'players' => [
             'Cleanse\League\Models\MatchGamePlayer',
