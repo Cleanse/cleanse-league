@@ -9,6 +9,8 @@ use Model;
  * @property integer $team_two
  * @property integer $winner_id
  * @property string  $vod
+ * @property integer $duration
+ * @property integer $value
  */
 class MatchGame extends Model
 {
@@ -19,7 +21,14 @@ class MatchGame extends Model
      *
      * @var array
      */
-    protected $fillable = ['match_id', 'team_one', 'team_two', 'winner_id', 'vod'];
+    protected $fillable = [
+        'match_id',
+        'team_one',
+        'team_two',
+        'winner_id',
+        'vod',
+        'duration'
+    ];
 
     /***
      * Screenshot
