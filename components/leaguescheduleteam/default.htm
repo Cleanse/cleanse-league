@@ -5,42 +5,52 @@
     {% for key, week in matches %}
     <ol class="breadcrumb mb-0">
         <li id="week-{{ weekNum }}" class="breadcrumb-item active"><a href="#week-{{ weekNum }}">Week {{ weekNum }}</a></li>
-        <li class="breadcrumb-item">{{ key|date('M d, Y') }}</li>
     </ol>
     <div class="card-group mb-2">
         {% for match in week %}
-        <a class="card" href="/league/match/{{ match.id }}">
-            <div class="card-body bg-league">
+        <div class="card">
+            <div class="card-body" style="background-image: linear-gradient(to bottom, #212529, #1c2023);">
                 <div class="d-flex flex-row mb-1">
                     <div class="team-logo">
-                        <img src="{{ match.one.team.logo.getThumb(48, 48) }}">
+                        <img src="{{ match.one.team.logo.getThumb(48, 48, {'mode': 'crop'}) }}">
                     </div>
                     <div class="team-name-record">
                         <h5>
-                            <span class="team-name d-none d-md-block">{{ match.one.team.name }}</span>
-                            <span class="team-initials d-md-none">{{ match.one.team.initials }}</span>
+                            <a href="/league/team/{{ match.one.team.slug }}">
+                                <span class="team-name d-none d-md-block">{{ match.one.team.name }}</span>
+                                <span class="team-initials d-md-none">{{ match.one.team.initials }}</span>
+                            </a>
                         </h5>
                         <p class="record">
-                            {{ match.team_one.match_wins ?? 0 }}W - {{ match.team_one.match_losses ?? 0 }}L
+                            {{ match.one.match_wins ?? 0 }}W - {{ match.one.match_losses ?? 0 }}L
                         </p>
                     </div>
+                    {% if match.winner_id %}
+                    <div class="ml-auto text-secondary">{{ match.team_one_score ?? 0 }}</div>
+                    {% endif %}
                 </div>
-                <div class="d-flex flex-row">
+                <div class="d-flex flex-row mb-3">
                     <div class="team-logo">
-                        <img src="{{ match.two.team.logo.getThumb(48, 48) }}">
+                        <img src="{{ match.two.team.logo.getThumb(48, 48, {'mode': 'crop'}) }}">
                     </div>
                     <div class="team-name-record">
                         <h5>
-                            <span class="team-name d-none d-md-block">{{ match.two.team.name }}</span>
-                            <span class="team-initials d-md-none">{{ match.two.team.initials }}</span>
+                            <a href="/league/team/{{ match.two.team.slug }}">
+                                <span class="team-name d-none d-md-block">{{ match.two.team.name }}</span>
+                                <span class="team-initials d-md-none">{{ match.two.team.initials }}</span>
+                            </a>
                         </h5>
                         <p class="record">
-                            {{ match.team_two.match_wins ?? 0 }}W - {{ match.team_two.match_losses ?? 0 }}L
+                            {{ match.two.match_wins ?? 0 }}W - {{ match.two.match_losses ?? 0 }}L
                         </p>
                     </div>
+                    {% if match.winner_id %}
+                    <div class="ml-auto text-secondary">{{ match.team_two_score ?? 0 }}</div>
+                    {% endif %}
                 </div>
+                <a class="btn btn-block btn-outline-primary" href="/league/match/{{ match.id }}">View Details</a>
             </div>
-        </a>
+        </div>
         {% endfor %}
     </div>
     {% set weekNum = weekNum + 1 %}
