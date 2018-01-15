@@ -87,7 +87,7 @@ class LeagueHome extends ComponentBase
         })
             ->with([
                 'tourneys' => function ($query) {
-                    $query->where('winner_id');
+                    $query->whereNull('winner_id');
                 }
             ])->first();
     }
