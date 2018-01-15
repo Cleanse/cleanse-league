@@ -6,8 +6,8 @@ use Cleanse\League\Models\Team;
 
 class LeagueScheduleTeam extends ComponentBase
 {
-    public $season;
-    public $matches;
+    private $season;
+    private $matches;
 
     public function componentDetails()
     {
@@ -53,7 +53,7 @@ class LeagueScheduleTeam extends ComponentBase
     /**
      * @return bool
      */
-    public function getTeamSchedule()
+    private function getTeamSchedule()
     {
         $team = $this->getEventTeam();
 
@@ -94,24 +94,22 @@ class LeagueScheduleTeam extends ComponentBase
      */
     private function getTeamMatches($team)
     {
-        return $matches = Season::where('id', '=', $team->teamable_id)
+        $matches = Season::where('id', '=', $team->teamable_id)
             ->whereHas('matches', function ($query) use ($team) {
                 $query->where('team_one', '=', $team->id);
                 $query->orWhere('team_two', '=', $team->id);
             })
-            ->with([
-                'matches' => function ($query) use ($team) {
-                    $query->where('team_one', '=', $team->id);
-                    $query->orWhere('team_two', '=', $team->id);
-                    $query->orderBy('takes_place_during', 'asc');
-                    $query->with(['one.team', 'two.team']);
-                }])->first();
+            ->with(['matches' => function ($query) use ($team) {
+                $query->where('team_one', '=', $team->id);
+                $query->orWhere('team_two', '=', $team->id);
+                $query->orderBy('takes_place_during', 'asc');
+                $query->with(['one.team', 'two.team']);
+            }])->first();
+
+        return $matches;
     }
 
     /**
-     * Using the class property $season->matches,
-     * we group matches by 'week'.
-     *
      * @return mixed $collection
      */
     public function sortTeamMatches()
