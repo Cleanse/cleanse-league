@@ -50,12 +50,18 @@ class LeagueMatch extends ComponentBase
     {
         $matchId = $this->property('match');
 
-        return Match::whereId($matchId)->with([
-            'one.team',
-            'two.team',
+        $match = Match::whereId($matchId)->with([
+            'one' => function ($o) {
+                $o->with(['team.players']);
+            },
+            'two' => function ($t) {
+                $t->with(['team.players']);
+            },
             'games' => function ($q) {
                 $q->with(['one', 'two', 'players.player.player']);
             }])
             ->first();
+
+        return $match;
     }
 }
