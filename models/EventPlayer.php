@@ -8,11 +8,15 @@ use Model;
  * @property integer $event_team_id
  * @property string $jobs
  * @property integer $kills
+ * @property float $kill_avg
  * @property integer $deaths
+ * @property float $death_avg
  * @property integer $assists
+ * @property float $assist_avg
  * @property integer $damage
  * @property integer $healing
  * @property integer $medals
+ * @property float $medal_avg
  * @property integer $match_total
  * @property integer $match_wins
  * @property integer $match_losses
@@ -20,6 +24,8 @@ use Model;
  * @property integer $game_wins
  * @property integer $game_losses
  * @property integer $game_ties
+ * @property float $dps
+ * @property float $hps
  * @property string $playerable_id
  * @property string $playerable_type
  */
